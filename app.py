@@ -1,6 +1,23 @@
 import streamlit as st
+from datetime import datetime
 
 st.title("Aplicación de Consultas BSC")
+
+# Obtener la hora actual
+ahora = datetime.now().time()
+hora_actual = ahora.hour
+minuto_actual = ahora.minute
+
+# Determinar el saludo según la hora
+if 0 <= hora_actual < 12:
+    saludo = "¡Bienvenido, buenos días!"
+elif 12 <= hora_actual < 18 or (hora_actual == 18 and minuto_actual == 0):
+    saludo = "¡Bienvenido, buenas tardes!"
+else:
+    saludo = "¡Bienvenido, buenas noches!"
+
+# Mostrar el saludo dinámico
+st.subheader(saludo)
 
 # 1. Entrada de usuario BSC
 usuario_bsc = st.text_input("Escribe tu usuario BSC:", "")
