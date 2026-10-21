@@ -1,7 +1,7 @@
 import streamlit as st
 from datetime import datetime
 
-st.title("Aplicación de Consultas BSC")
+st.title("Aplicación de consultas Tec Ops")
 
 # Obtener la hora actual
 ahora = datetime.now().time()
@@ -59,6 +59,9 @@ st.text_area("Texto procesado (en mayúsculas):", value=texto_mayusculas, height
 
 # Mostrar resumen de datos del formulario
 if st.button("Mostrar Resumen"):
+    st.write(f"**Usuario BSC:** {usuario_bsc}")
+    st.write(f"**Tipo de Consulta:** {tipo_consulta}")
+    st.write(f"**Longitud del texto:** {len(texto_entrada)} caracteres")
     st.write(f"**Usuario BSC:** {usuario_bsc}")
     st.write(f"**Tipo de Consulta:** {tipo_consulta}")
     st.write(f"**Longitud del texto:** {len(texto_entrada)} caracteres")
