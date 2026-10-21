@@ -22,19 +22,35 @@ st.subheader(saludo)
 # 1. Entrada de usuario BSC
 usuario_bsc = st.text_input("Escribe tu usuario BSC:", "")
 
-# 2. Dropdown ordenado alfabéticamente
-opciones = ["SLA", "proyectos", "Consulta de modeler por area", "Sharepoint Tec Ops", "COP", "otra"]
-opciones_ordenadas = sorted(opciones, key=str.lower)
+# 2. Dropdown ordenado alfabéticamente y enumerado
+opciones_base = [
+    "Consulta de modeler por área",
+    "SLA Work Orders",
+    "COP",
+    "Share Point Tec Ops",
+    "MUG",
+    "Path escalations",
+    "On-call"
+]
 
-tipo_consulta = st.selectbox("Selecciona el tipo de consulta:", opciones_ordenadas)
+# Ordenar alfabéticamente de manera insensible a mayúsculas/minúsculas
+opciones_ordenadas = sorted(opciones_base, key=str.lower)
 
-# Lógica condicional según la consulta seleccionada
-if tipo_consulta == "Consulta de modeler por area":
+# Enumerar la lista ordenada (ej: "1. COP", "2. Consulta de modeler por área", etc.)
+opciones_enumeradas = [f"{i+1}. {opcion}" for i, opcion in enumerate(opciones_ordenadas)]
+
+tipo_consulta = st.selectbox("Selecciona el tipo de consulta:", opciones_enumeradas)
+
+# Lógica condicional según la consulta seleccionada (limpiando el número del inicio)
+# Extraemos el texto después de la numeración "X. "
+tipo_consulta_limpio = tipo_consulta.split(". ", 1)[1] if ". " in tipo_consulta else tipo_consulta
+
+if tipo_consulta_limpio == "Consulta de modeler por área":
     area = st.text_input("Escribe el área:", "")
     if area.strip().lower() in ["opti", "fara"]:
         st.info("El nombre del modeler es: **Ana Laura Pineda**")
 
-elif tipo_consulta == "COP":
+elif tipo_consulta_limpio == "COP":
     opcion_cop = st.selectbox(
         "Selecciona una opción de COP:",
         ["Selecciona una opción...", "horario", "que material debo llevar al COP?"]
@@ -59,9 +75,6 @@ st.text_area("Texto procesado (en mayúsculas):", value=texto_mayusculas, height
 
 # Mostrar resumen de datos del formulario
 if st.button("Mostrar Resumen"):
-    st.write(f"**Usuario BSC:** {usuario_bsc}")
-    st.write(f"**Tipo de Consulta:** {tipo_consulta}")
-    st.write(f"**Longitud del texto:** {len(texto_entrada)} caracteres")
     st.write(f"**Usuario BSC:** {usuario_bsc}")
     st.write(f"**Tipo de Consulta:** {tipo_consulta}")
     st.write(f"**Longitud del texto:** {len(texto_entrada)} caracteres")
