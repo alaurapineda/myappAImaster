@@ -496,5 +496,3 @@ elif st.session_state.pagina_actual == "chatbot":
                     st.session_state.chat_messages.append({"role": "assistant", "content": assistant_response})
                 except Exception as e:
                     st.error(f"Error al conectar con el servicio de IA: {e}")
-
-```
