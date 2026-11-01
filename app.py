@@ -165,9 +165,9 @@ if st.session_state.pagina_actual == "principal":
 
     usuario_bsc = st.text_input("Escribe tu usuario BSC:", "").strip()
 
-    # Validación de al menos 5 caracteres alfanuméricos
+  # Validación de al menos 5 caracteres alfanuméricos
     if not usuario_bsc or len(usuario_bsc) < 5 or not usuario_bsc.isalnum():
-        st.warning("usuario no reconocido, recuerda que el user consta de al menos 5 caracteres alfanumericos.")
+        st.warning("⚠️ Usuario no reconocido. Por favor, verifica tus datos. Recuerda que el usuario BSC debe contener al menos 5 caracteres alfanuméricos.")
     else:
         opciones_base = [
             "Consulta de modeler por área",
