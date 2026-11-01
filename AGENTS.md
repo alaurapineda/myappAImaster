@@ -1,4 +1,4 @@
-# AGENTS.md · [Nombre de la app]
+# AGENTS.md · Aplicación de consultas Tec Ops
 
 > Este fichero lo leen los agentes de programación (Copilot, Cursor, Codex, Gemini CLI y otros) antes de tocar vuestro código. Para Claude Code, cread un `CLAUDE.md` con una sola línea: `Sigue las instrucciones de AGENTS.md`. Para Gemini CLI, haced lo mismo con `GEMINI.md`.
 
@@ -30,7 +30,7 @@ Portal web interactivo en Streamlit que centraliza consultas que tienen los inge
 - Casos de prueba (entrada → lo que esperamos):
 1. Usuario BSC válido + consulta de modeler para Packaging en CTG → Muestra el nombre correcto del modeler (Ana Pineda).
 2. SLA Work Orders con 25 documentos ingresados → Muestra la advertencia indicando que el cambio se clasifica como proyecto y debe coordinarse directamente con el modeler del área.
-3. Pregunta fuera de tema al Chatbot de IA ("¿Cómo preparar una receta de cocina?") → El asistente responde con amabilidad corporativa ofreciendo ayuda dentro del ámbito de Tec Ops o contactando al manager Francisco Castro.
+3. Pregunta fuera de tema al Chatbot de IA ("¿Cómo preparar una receta de cocina?") → El asistente responde con amabilidad corporativa ofreciendo ayuda dentro del ámbito del departamento Tec Ops.
 ## Qué no hacer
 - No borres ni reescribas el README sin preguntar.
 - No cambies el modelo ni la arquitectura sin preguntar.
