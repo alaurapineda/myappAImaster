@@ -23,17 +23,17 @@ st.markdown(
 
     /* --- ESTILOS DE ALTA FIDELIDAD PARA FAQ --- */
     .faq-card-wrapper {
-        background-color: #FFFFFF !important;
-        border-radius: 50px !important; /* Bordes redondeados idénticos a la imagen */
+        background-color: #E3F2FD !important; /* Fondo celeste para las tarjetas de pregunta */
+        border-radius: 50px !important; 
         padding: 12px 25px !important;
         margin-bottom: 16px !important;
-        box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1) !important;
-        border: none !important;
+        box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2) !important;
+        border: 1px solid #90CAF9 !important;
     }
     
     /* Círculo azul de interrogación izquierdo */
     .faq-circle-q-custom {
-        background-color: #1976D2 !important; /* Azul vibrante de la imagen */
+        background-color: #1976D2 !important; 
         color: #FFFFFF !important;
         border-radius: 50% !important;
         width: 42px !important;
@@ -47,30 +47,32 @@ st.markdown(
         margin-top: 2px !important;
     }
 
-    /* Contenedor de la respuesta en fondo celeste pastel con letras negras/gris oscuro */
+    /* Contenedor de la respuesta en fondo celeste pastel con letras negras */
     .faq-answer-container-clean {
-        background-color: #F0F8FF !important; /* Fondo celeste suave (Alice Blue) para contraste y legibilidad */
+        background-color: #E3F2FD !important; /* Mismo celeste consistente */
         border-radius: 24px !important;
         padding: 15px 25px !important;
-        border: 1px solid #D0E8FC !important;
+        border: 1px solid #90CAF9 !important;
         margin-top: 10px !important;
         margin-bottom: 5px !important;
     }
     
-    /* Forzar letras negras en todo el contenido de la respuesta para evitar texto invisible */
+    /* Forzar letras negras en todo el contenido de la tarjeta de preguntas y de las respuestas */
+    .faq-card-wrapper, 
+    .faq-card-wrapper *, 
+    .faq-answer-container-clean, 
+    .faq-answer-container-clean *, 
     .faq-answer-text-custom, 
     .faq-answer-text-custom p, 
     .faq-answer-text-custom strong, 
     .faq-answer-text-custom li, 
     .faq-answer-text-custom ul,
     .faq-answer-text-custom ol {
-        color: #1E293B !important; /* Gris carbón/negro de alta legibilidad */
-        font-size: 15px !important;
-        line-height: 1.6 !important;
+        color: #000000 !important; /* Todo en color negro para legibilidad óptima */
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
     }
 
-    /* Estilo e interactividad sobre los botones nativos de Streamlit */
+    /* Estilo e interactividad sobre los botones de pregunta (ahora con letra negra) */
     div[data-testid="column"] button {
         background: transparent !important;
         border: none !important;
@@ -80,17 +82,17 @@ st.markdown(
         text-align: left !important;
         box-shadow: none !important;
         height: 44px !important;
-        color: #1E293B !important; /* Color oscuro del texto de la pregunta */
+        color: #000000 !important; /* Letra negra de la pregunta */
         font-size: 17px !important;
-        font-weight: 500 !important;
+        font-weight: 600 !important;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
         transition: color 0.2s ease !important;
     }
     
-    /* Botón circular celeste para disparar interacción (+ / -) */
+    /* Botón circular celeste de control (+ / -) */
     div[data-testid="column"] button.faq-trigger-btn {
-        background-color: #E3F2FD !important; /* Celeste pastel de la imagen */
-        color: #1976D2 !important; /* Símbolo azul delgado */
+        background-color: #1976D2 !important; /* Azul para resaltar en el fondo celeste */
+        color: #FFFFFF !important; 
         border-radius: 50% !important;
         width: 38px !important;
         height: 38px !important;
@@ -98,7 +100,7 @@ st.markdown(
         align-items: center !important;
         justify-content: center !important;
         font-size: 22px !important;
-        font-weight: normal !important;
+        font-weight: bold !important;
         line-height: 1 !important;
         margin-top: 3px !important;
         text-align: center !important;
@@ -110,8 +112,8 @@ st.markdown(
         color: #1976D2 !important;
     }
     div[data-testid="column"] button.faq-trigger-btn:hover {
-        background-color: #D0E8FC !important; /* Hover sutil del disparador */
-        color: #1565C0 !important;
+        background-color: #1565C0 !important;
+        color: #FFFFFF !important;
     }
     div[data-testid="column"] p {
         margin: 0 !important;
