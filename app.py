@@ -13,10 +13,6 @@ st.set_page_config(
 if "pagina_actual" not in st.session_state:
     st.session_state.pagina_actual = "principal"
 
-# Inicializar almacenamiento de calificaciones en la sesión si no existe
-if "calificaciones" not in st.session_state:
-    st.session_state.calificaciones = []
-
 # --- CONFIGURACIÓN VISUAL GENERAL Y ESTILOS "TECH MED" ---
 st.markdown("""
 <style>
@@ -440,13 +436,10 @@ if st.session_state.pagina_actual == "principal":
         if feedback_estrella is not None:
             puntos = feedback_estrella + 1  # st.feedback devuelve índices de 0 a 4
             if st.button("Enviar Calificación", key="btn_enviar_calif"):
-                st.session_state.calificaciones.append(puntos)
-                st.success(f"¡Muchas gracias por calificar con {puntos} estrellas!")
-
-        # Mostrar promedio si hay calificaciones
-        if st.session_state.calificaciones:
-            promedio = sum(st.session_state.calificaciones) / len(st.session_state.calificaciones)
-            st.caption(f"Puntuación promedio de la app: **{promedio:.1f} / 5.0** (Basado en {len(st.session_state.calificaciones)} valoraciones)")
+                if puntos <= 3:
+                    st.info("💡 ¡Muchas gracias por tu comentario! Ten por seguro que seguiremos mejorando, ya que la aplicación está en constante cambio para brindarte una mejor experiencia.")
+                else:
+                    st.success(f"¡Muchas gracias por calificar con {puntos} estrellas! Nos alegra que disfrutes de la aplicación.")
 
 
 # ==============================================================================
