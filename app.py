@@ -447,51 +447,42 @@ else:
         st.write(f"**Tipo de Consulta:** {tipo_consulta}")
         st.write(f"**Longitud del texto:** {len(texto_entrada)} caracteres")
 
-    # --- CHATBOT CON GEMINI ---
-    st.markdown("---")
-    st.markdown("### ¿Necesitas ayuda extra?")
-    st.write("Chatea con nuestro asistente de IA impulsado por Gemini para resolver cualquier duda adicional sobre operaciones técnicas.")
+ # --- CHATBOT CON GEMINI ---
+st.markdown("---")
+st.markdown("### ¿Necesitas ayuda extra?")
+st.write("Chatea con nuestro asistente de IA impulsado por Gemini para resolver cualquier duda adicional sobre operaciones técnicas.")
 
-    # Inicializar cliente de Gemini si la variable de entorno está presente
-    api_key = os.environ.get("GEMINI_API_KEY")
-    
-    if not api_key:
-        st.info("ℹ️ Para habilitar el Chatbot, asegúrate de configurar la variable de entorno `GEMINI_API_KEY` con tu clave de API de Google Gemini.")
-    else:
-        # Inicializar historial de chat en session_state
-        if "chat_messages" not in st.session_state:
-            st.session_state.chat_messages = []
+api_key = os.environ.get("GEMINI_API_KEY")
 
-        # Mostrar historial de conversación previa
-        for message in st.session_state.chat_messages:
-            with st.chat_message(message["role"]):
-                st.markdown(message["content"])
+if not api_key:
+    st.info("ℹ️ Para habilitar el Chatbot, asegúrate de configurar la clave en Streamlit Secrets o como variable de entorno `GEMINI_API_KEY`.")
+else:
+    if "chat_messages" not in st.session_state:
+        st.session_state.chat_messages = []
 
-        # Input del usuario para el chat
-        if user_prompt := st.chat_input("Escribe tu consulta para el asistente..."):
-            # Mostrar mensaje del usuario
-            st.session_state.chat_messages.append({"role": "user", "content": user_prompt})
-            with st.chat_message("user"):
-                st.markdown(user_prompt)
+    # Mostrar mensajes anteriores
+    for message in st.session_state.chat_messages:
+        with st.chat_message(message["role"]):
+            st.markdown(message["content"])
 
-            # Generar respuesta con Gemini SDK
-            with st.chat_message("assistant"):
-                try:
-                    client = genai.Client(api_key=api_key)
-                    
-                    # Preparar historial formateado para la API
-                    formatted_contents = [
-                        {"role": m["role"], "parts": [{"text": m["content"]}]}
-                        for m in st.session_state.chat_messages
-                    ]
-                    
-                    response = client.models.generate_content(
-                        model="gemini-3.8-flash",
-                        contents=formatted_contents,
-                    )
-                    
-                    assistant_response = response.text
-                    st.markdown(assistant_response)
-                    st.session_state.chat_messages.append({"role": "assistant", "content": assistant_response})
-                except Exception as e:
-                    st.error(f"Error al conectar con Gemini: {e}")
+    # Capturar la entrada del usuario de forma limpia
+    if user_prompt := st.chat_input("Escribe tu consulta para el asistente..."):
+        st.session_state.chat_messages.append({"role": "user", "content": user_prompt})
+        with st.chat_message("user"):
+            st.markdown(user_prompt)
+
+        with st.chat_message("assistant"):
+            try:
+                client = genai.Client(api_key=api_key)
+                
+                # Llamada directa al modelo usando gemini-2.5-flash o gemini-3.8-flash según prefieras
+                response = client.models.generate_content(
+                    model="gemini-2.5-flash",
+                    contents=user_prompt,
+                )
+                assistant_response = response.text
+                st.markdown(assistant_response)
+                st.session_state.chat_messages.append({"role": "assistant", "content": assistant_response})
+            except Exception as e:
+                error_msg = f"Error al conectar con Gemini: {e}"
+                st.error(error_msg)
