@@ -475,9 +475,9 @@ else:
             try:
                 client = genai.Client(api_key=api_key)
                 
-                # Llamada directa al modelo usando gemini-2.5-flash o gemini-3.8-flash según prefieras
+                # Llamada directa al modelo usando gemini-3.8-flash
                 response = client.models.generate_content(
-                    model="gemini-2.5-flash",
+                    model="gemini-3.9-flash",
                     contents=user_prompt,
                 )
                 assistant_response = response.text
