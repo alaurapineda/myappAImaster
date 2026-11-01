@@ -117,92 +117,14 @@ else:
                     st.write("- **COP CTG** - Jueves 10am")
 
                 elif cop_limpio == "¿Qué material debo llevar al COP?":
-                    st.write("Por favor, consulta con tu encargado la lista de materiales requerida para la sesión de COP.")
+                    st.write("Para la sesión del COP, se recomienda preparar una presentación breve que permita explicar claramente el caso, el alcance del cambio y su propósito.")
+                    st.write("Es importante incluir la siguiente información:")
+                    st.write("- **Descripción del cambio:** explicar qué se desea modificar, por qué es necesario y cuál es el objetivo esperado.")
+                    st.write("- **Flujo de trabajo (Workflow):** incluir, preferiblemente, el flujo actual y/o propuesto para facilitar la comprensión del proceso y de los cambios requeridos.")
+                    st.write("- **Documentación de soporte:** adjuntar cualquier información, evidencia o referencia que ayude a los Modelers a comprender mejor el alcance y los requerimientos del cambio.")
+                    st.write("- **Fechas relevantes:** tener identificadas las fechas previstas de implementación, así como cualquier fecha límite o compromiso asociado al proyecto.")
+                    st.write("- **Impacto del cambio:** mencionar las áreas, procesos o sistemas que podrían verse involucrados, cuando corresponda.")
+                    st.info("💡 **Recomendación:** entre más clara y completa sea la información presentada, más efectiva será la evaluación del caso y la orientación que los Modelers puedan brindar durante la sesión.")
 
                 elif cop_limpio == "Representantes por área":
-                    areas_representantes = ["Boxing", "FP", "Labs", "Navegator", "Packaging", "ZWG"]
-                    rep_area_sel = st.selectbox("Selecciona el área para ver sus representantes:", ["Selecciona área..."] + areas_representantes)
-
-                    if rep_area_sel == "Boxing":
-                        st.write("**Boxing:**\n- **Ing. Manufactura:** Luis Sandoval\n- **Ing. Calidad:** Laura Pineda")
-                    elif rep_area_sel == "FP":
-                        st.write("**FP:**\n- **Ing. Manufactura:** Tania Villanueva\n- **Ing. Calidad:** Karol Hernández")
-                    elif rep_area_sel == "Labs":
-                        st.write("**Labs:**\n- **Ing. Manufactura:** Carlos Mendéz / Karla Mora\n- **Ing. Calidad:** Pablo González")
-                    elif rep_area_sel == "Navegator":
-                        st.write("**Navegator:**\n- **Ing. Manufactura:** Jorge Chaves\n- **Ing. Calidad:** María José Sanchez")
-                    elif rep_area_sel == "Packaging":
-                        st.write("**Packaging:**\n- **Ing. Manufactura:** Josué González\n- **Ing. Calidad:** Carolina Barrantes")
-                    elif rep_area_sel == "ZWG":
-                        st.write("**ZWG:**\n- **Ing. Calidad:** Luisa Hernández")
-
-                elif cop_limpio == "¿Cuándo debo llevar mi cambio o proyecto al COP?":
-                    st.write("Por favor consulta los lineamientos de tu planta para verificar los disparadores de presentación de cambios.")
-
-                elif cop_limpio == "COP Leads":
-                    st.write("Contacta a los líderes de COP de tu respectivo site para más información.")
-
-        # --- MUG ---
-        elif tipo_consulta_limpio == "MUG":
-            st.write("Para accesar al MUG haz click en el siguiente enlace: https://MUG.guide1234.com")
-            st.write("Si tienes feedback para la guía por favor contactar a uno de los modelers o deja tu comentario en la siguiente caja.")
-            st.text_area("Déjanos tus comentarios sobre MUG:", "", key="feedback_mug")
-
-        # --- ON-CALL ---
-        elif tipo_consulta_limpio == "On-call":
-            st.info("El servicio de oncall se da únicamente para líneas detenidas, en turno C, feriados y fines de semana.")
-            st.write("**Teléfonos de contacto:**")
-            st.write("- **CYL:** 8888-8881")
-            st.write("- **HRD:** 8888-8882")
-            st.write("- **CTG:** 8888-8883")
-            st.write("- **DRD:** 8888-8884")
-            st.warning("⚠️ Solo llamadas, no mensajes ni llamadas por WhatsApp.")
-            st.write("Al llamar asegúrese de abrir el tiquete primero con toda la evidencia y explicación del issue. Si no recibe respuesta por favor escalar el caso con el manager del departamento **Francisco Castro**.")
-
-        # --- PATH ESCALATIONS ---
-        elif tipo_consulta_limpio == "Path escalations":
-            st.write("Si necesita ayuda urgente con la aprobación de un incidente, work order, acceso, aprobación de máscara o aprobación de CN por favor contacte primero al site lead que corresponda o con el manager.")
-            st.info("Todas las escalafones deben documentarse por correo con la explicación de porqué se le debe de dar prioridad.")
-
-        # --- SHARE POINT TEC OPS ---
-        elif tipo_consulta_limpio == "Share Point Tec Ops":
-            st.write("Visita nuestro share point a través del siguiente enlace: https://tecopssharepoint1234.com")
-            st.write("Si tienes feedback para la guía por favor contactar a uno de los modelers o deja tu comentario en la siguiente caja.")
-            st.text_area("Déjanos tu feedback sobre Share Point:", "", key="feedback_sp")
-
-        # --- SLA WORK ORDERS ---
-        elif tipo_consulta_limpio == "SLA Work Orders":
-            docs_input = st.text_input("¿Cuántos documentos vas a someter en el cambio?", "")
-            if docs_input:
-                # Validación de número entero estricto
-                if not docs_input.isdigit():
-                    st.error("Número inválido. Por favor, ingresa únicamente números enteros sin letras, comas ni signos.")
-                else:
-                    num_docs = int(docs_input)
-                    if 1 <= num_docs <= 4:
-                        st.success("El SLA es de **3 días**.")
-                    elif 5 <= num_docs <= 10:
-                        st.success("El SLA es de **5 días**.")
-                    elif 11 <= num_docs <= 20:
-                        st.success("El SLA es de **9 días**.")
-                    elif num_docs >= 21:
-                        st.warning("El SLA debe verse directamente con el modeler ya que por la cantidad de markups el mismo sería un proyecto.")
-                    else:
-                        st.error("Por favor ingresa un número mayor a 0.")
-
-    # 3. Caja de texto para procesar (máximo 1000 caracteres)
-    st.markdown("---")
-    texto_entrada = st.text_area("Escribe el texto a procesar (máx. 1000 caracteres):", "", max_chars=1000)
-
-    # Procesamiento del texto (en mayúsculas)
-    texto_mayusculas = texto_entrada.upper()
-
-    # Desplegar resultado procesado
-    st.subheader("Resultado del procesamiento")
-    st.text_area("Texto procesado (en mayúsculas):", value=texto_mayusculas, height=150)
-
-    # Mostrar resumen de datos del formulario
-    if st.button("Mostrar Resumen"):
-        st.write(f"**Usuario BSC:** {usuario_bsc}")
-        st.write(f"**Tipo de Consulta:** {tipo_consulta}")
-        st.write(f"**Longitud del texto:** {len(texto_entrada)} caracteres")
+                    areas_representantes = [
