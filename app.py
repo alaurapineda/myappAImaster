@@ -21,10 +21,10 @@ st.markdown(
         color: #000000 !important;
     }
 
-    /* --- ESTILOS DE ALTA FIDELIDAD PARA FAQ --- */
+    /* --- ESTILOS DE ALTA FIDELIDAD PARA FAQ (CELESTE Y NEGRO) --- */
     .faq-card-wrapper {
-        background-color: #E3F2FD !important; /* Fondo celeste para las tarjetas de pregunta */
-        border-radius: 50px !important; 
+        background-color: #E3F2FD !important; /* Fondo celeste suave */
+        border-radius: 50px !important;
         padding: 12px 25px !important;
         margin-bottom: 16px !important;
         box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2) !important;
@@ -33,7 +33,7 @@ st.markdown(
     
     /* Círculo azul de interrogación izquierdo */
     .faq-circle-q-custom {
-        background-color: #1976D2 !important; 
+        background-color: #1976D2 !important;
         color: #FFFFFF !important;
         border-radius: 50% !important;
         width: 42px !important;
@@ -58,21 +58,22 @@ st.markdown(
     }
     
     /* Forzar letras negras en todo el contenido de la tarjeta de preguntas y de las respuestas */
-    .faq-card-wrapper, 
-    .faq-card-wrapper *, 
-    .faq-answer-container-clean, 
-    .faq-answer-container-clean *, 
-    .faq-answer-text-custom, 
-    .faq-answer-text-custom p, 
-    .faq-answer-text-custom strong, 
-    .faq-answer-text-custom li, 
+    .faq-card-wrapper,
+    .faq-card-wrapper *,
+    .faq-answer-container-clean,
+    .faq-answer-container-clean *,
+    .faq-answer-text-custom,
+    .faq-answer-text-custom p,
+    .faq-answer-text-custom strong,
+    .faq-answer-text-custom li,
     .faq-answer-text-custom ul,
-    .faq-answer-text-custom ol {
-        color: #000000 !important; /* Todo en color negro para legibilidad óptima */
+    .faq-answer-text-custom ol,
+    div[data-testid="column"] button * {
+        color: #000000 !important; /* Texto negro absoluto para una legibilidad perfecta */
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
     }
 
-    /* Estilo e interactividad sobre los botones de pregunta (ahora con letra negra) */
+    /* Estilo e interactividad sobre los botones de pregunta (ahora con letra negra garantizada) */
     div[data-testid="column"] button {
         background: transparent !important;
         border: none !important;
@@ -82,7 +83,7 @@ st.markdown(
         text-align: left !important;
         box-shadow: none !important;
         height: 44px !important;
-        color: #000000 !important; /* Letra negra de la pregunta */
+        color: #000000 !important; 
         font-size: 17px !important;
         font-weight: 600 !important;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
@@ -91,8 +92,8 @@ st.markdown(
     
     /* Botón circular celeste de control (+ / -) */
     div[data-testid="column"] button.faq-trigger-btn {
-        background-color: #1976D2 !important; /* Azul para resaltar en el fondo celeste */
-        color: #FFFFFF !important; 
+        background-color: #1976D2 !important; /* Azul para resaltar */
+        color: #FFFFFF !important;
         border-radius: 50% !important;
         width: 38px !important;
         height: 38px !important;
@@ -106,6 +107,10 @@ st.markdown(
         text-align: center !important;
     }
     
+    div[data-testid="column"] button.faq-trigger-btn * {
+        color: #FFFFFF !important; /* El signo + y - permanece blanco */
+    }
+    
     div[data-testid="column"] button:hover {
         background: transparent !important;
         border: none !important;
@@ -113,7 +118,6 @@ st.markdown(
     }
     div[data-testid="column"] button.faq-trigger-btn:hover {
         background-color: #1565C0 !important;
-        color: #FFFFFF !important;
     }
     div[data-testid="column"] p {
         margin: 0 !important;
@@ -265,7 +269,7 @@ else:
 
                 elif cop_limpio == "Representantes por área":
                     st.write("**Consulta de Representantes por Area y Site**")
-                    sites_cop = ["Selecciona site...", "CTG", "CYL", "DRD", "HRD"]
+                    sites_cop = ["Selecciona site...", "CTG", "CYL", "DRD"]
                     site_cop_sel = st.selectbox("Selecciona el site para los representantes:", sites_cop)
                     
                     if site_cop_sel != "Selecciona site...":
@@ -273,7 +277,6 @@ else:
                         rep_area_sel = st.selectbox("Selecciona el área para ver sus representantes:", ["Selecciona área..."] + areas_representantes)
 
                         if rep_area_sel != "Selecciona área...":
-                            # Base de datos estructurada con representantes por Site y Área
                             representantes_database = {
                                 "CTG": {
                                     "Boxing": {"mfg": "Luis Sandoval", "qa": "Laura Pineda"},
@@ -298,14 +301,6 @@ else:
                                     "Navegator": {"mfg": "David Brenes", "qa": "Lucía Madrigal"},
                                     "Packaging": {"mfg": "Francisco Fonseca", "qa": "Elena Carvajal"},
                                     "ZWG": {"mfg": "Daniela Ortiz", "qa": "Gabriel Navarro"}
-                                },
-                                "HRD": {
-                                    "Boxing": {"mfg": "Felipe Peralta", "qa": "Natalia Quesada"},
-                                    "FP": {"mfg": "Valeria Araya", "qa": "Alonso Méndez"},
-                                    "Labs": {"mfg": "Oscar Bolaños", "qa": "Clara Leitón"},
-                                    "Navegator": {"mfg": "Adrián Saborío", "qa": "Daniela Porras"},
-                                    "Packaging": {"mfg": "Kevin Matarrita", "qa": "Patricia Núñez"},
-                                    "ZWG": {"mfg": "Sofia Barahona", "qa": "Mariano Trejos"}
                                 }
                             }
 
@@ -372,11 +367,9 @@ else:
                     st.rerun()
             with col3:
                 signo_1 = "−" if st.session_state.faq_1_expanded else "+"
-                # El círculo derecho es un botón nativo estilizado para conmutar también el estado
                 if st.button(signo_1, key="q1_trigger", help="Presiona para expandir o contraer"):
                     st.session_state.faq_1_expanded = not st.session_state.faq_1_expanded
                     st.rerun()
-                # Inyección del selector CSS especial de forma local sobre este botón
                 st.markdown('<script>document.querySelectorAll("button[key=\"q1_trigger\"]").forEach(b => b.classList.add("faq-trigger-btn"));</script>', unsafe_allow_html=True)
             
             if st.session_state.faq_1_expanded:
