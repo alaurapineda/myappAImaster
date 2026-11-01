@@ -166,21 +166,55 @@ else:
                     st.info("💡 **Recomendación:** entre más clara y completa sea la información presentada, más efectiva será la evaluación del caso y la orientación que los Modelers puedan brindar durante la sesión.")
 
                 elif cop_limpio == "Representantes por área":
-                    areas_representantes = ["Boxing", "FP", "Labs", "Navegator", "Packaging", "ZWG"]
-                    rep_area_sel = st.selectbox("Selecciona el área para ver sus representantes:", ["Selecciona área..."] + areas_representantes)
+                    st.write("**Consulta de Representantes por Area y Site**")
+                    sites_cop = ["Selecciona site...", "CTG", "CYL", "DRD", "HRD"]
+                    site_cop_sel = st.selectbox("Selecciona el site para los representantes:", sites_cop)
+                    
+                    if site_cop_sel != "Selecciona site...":
+                        areas_representantes = ["Boxing", "FP", "Labs", "Navegator", "Packaging", "ZWG"]
+                        rep_area_sel = st.selectbox("Selecciona el área para ver sus representantes:", ["Selecciona área..."] + areas_representantes)
 
-                    if rep_area_sel == "Boxing":
-                        st.write("**Boxing:**\n- **Ing. Manufactura:** Luis Sandoval\n- **Ing. Calidad:** Laura Pineda")
-                    elif rep_area_sel == "FP":
-                        st.write("**FP:**\n- **Ing. Manufactura:** Tania Villanueva\n- **Ing. Calidad:** Karol Hernández")
-                    elif rep_area_sel == "Labs":
-                        st.write("**Labs:**\n- **Ing. Manufactura:** Carlos Mendéz / Karla Mora\n- **Ing. Calidad:** Pablo González")
-                    elif rep_area_sel == "Navegator":
-                        st.write("**Navegator:**\n- **Ing. Manufactura:** Jorge Chaves\n- **Ing. Calidad:** María José Sanchez")
-                    elif rep_area_sel == "Packaging":
-                        st.write("**Packaging:**\n- **Ing. Manufactura:** Josué González\n- **Ing. Calidad:** Carolina Barrantes")
-                    elif rep_area_sel == "ZWG":
-                        st.write("**ZWG:**\n- **Ing. Manufactura:** Luisa Soto\n- **Ing. Calidad:** Luisa Hernández")
+                        if rep_area_sel != "Selecciona área...":
+                            # Base de datos estructurada con combinaciones únicas de Ingenieros de Manufactura y Calidad por Site y Área
+                            representantes_database = {
+                                "CTG": {
+                                    "Boxing": {"mfg": "Luis Sandoval", "qa": "Laura Pineda"},
+                                    "FP": {"mfg": "Tania Villanueva", "qa": "Karol Hernández"},
+                                    "Labs": {"mfg": "Carlos Mendéz", "qa": "Pablo González"},
+                                    "Navegator": {"mfg": "Jorge Chaves", "qa": "María José Sanchez"},
+                                    "Packaging": {"mfg": "Josué González", "qa": "Carolina Barrantes"},
+                                    "ZWG": {"mfg": "Luisa Soto", "qa": "Luisa Hernández"}
+                                },
+                                "CYL": {
+                                    "Boxing": {"mfg": "Andrés Morales", "qa": "Diana Calderón"},
+                                    "FP": {"mfg": "Silvia Castro", "qa": "Fabián Ruiz"},
+                                    "Labs": {"mfg": "Guillermo Solano", "qa": "Rebeca Campos"},
+                                    "Navegator": {"mfg": "Gabriel Arguedas", "qa": "Mónica Villalobos"},
+                                    "Packaging": {"mfg": "Esteban Marín", "qa": "Beatriz Rojas"},
+                                    "ZWG": {"mfg": "Laura Cubero", "qa": "Federico Gutiérrez"}
+                                },
+                                "DRD": {
+                                    "Boxing": {"mfg": "Rodolfo Vargas", "qa": "Jimena Zamora"},
+                                    "FP": {"mfg": "Paula Céspedes", "qa": "Mario Alfaro"},
+                                    "Labs": {"mfg": "Karla Mora", "qa": "Santiago Fallas"},
+                                    "Navegator": {"mfg": "David Brenes", "qa": "Lucía Madrigal"},
+                                    "Packaging": {"mfg": "Francisco Fonseca", "qa": "Elena Carvajal"},
+                                    "ZWG": {"mfg": "Daniela Ortiz", "qa": "Gabriel Navarro"}
+                                },
+                                "HRD": {
+                                    "Boxing": {"mfg": "Felipe Peralta", "qa": "Natalia Quesada"},
+                                    "FP": {"mfg": "Valeria Araya", "qa": "Alonso Méndez"},
+                                    "Labs": {"mfg": "Oscar Bolaños", "qa": "Clara Leitón"},
+                                    "Navegator": {"mfg": "Adrián Saborío", "qa": "Daniela Porras"},
+                                    "Packaging": {"mfg": "Kevin Matarrita", "qa": "Patricia Núñez"},
+                                    "ZWG": {"mfg": "Sofia Barahona", "qa": "Mariano Trejos"}
+                                }
+                            }
+
+                            rep_info = representantes_database.get(site_cop_sel, {}).get(rep_area_sel, {})
+                            st.write(f"**Representantes de {rep_area_sel} en {site_cop_sel}:**")
+                            st.write(f"- **Ing. Manufactura:** {rep_info.get('mfg', 'No asignado')}")
+                            st.write(f"- **Ing. Calidad:** {rep_info.get('qa', 'No asignado')}")
 
                 elif cop_limpio == "¿Cuándo debo llevar mi cambio o proyecto al COP?":
                     st.write("Debes presentar tu cambio o proyecto en el COP cuando se presente alguna de las siguientes condiciones:")
@@ -219,10 +253,11 @@ else:
             st.info("Todas las escalaciones deben documentarse por correo con la explicación de porqué se le debe de dar prioridad.")
             
             st.markdown("### Preguntas sugeridas:")
-            pregunta_escalacion = st.selectbox(
-                "Selecciona una pregunta sugerida:",
+            # Se cambia el selectbox por st.radio para que la selección sea directa (no desplegable)
+            pregunta_escalacion = st.radio(
+                "Selecciona una de las siguientes opciones para consultar:",
                 [
-                    "Selecciona una pregunta...",
+                    "Ver opciones...",
                     "¿Quiénes son los site leads?",
                     "¿Quién es el manager de Tec Ops?",
                     "¿Qué pasa si mi escalación ocurre un feriado o fin de semana?"
