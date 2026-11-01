@@ -470,9 +470,25 @@ else:
             try:
                 client = genai.Client(api_key=api_key)
                 
+                # Contexto o instrucciones base para que el chatbot sea experto en Tec Ops
+                contexto_tec_ops = """
+                Eres el asistente virtual experto en Tec Ops. Tienes la siguiente información oficial:
+                - Modelers por site y área:
+                  * CTG: Packaging (Ana Pineda), Boxing (Carlos Alvarado), FP (Victor Campos), ZWG (Jose Acuña), Labs (Sofía Soto), Navegator (Brayan Sanchez)
+                  * CYL: Packaging (Mauricio Solís), Boxing (Juan Hernández), FP (Mariana Rojas), ZWG (Esteban Chaves), Labs (Gabriela Quirós), Navegator (Andrés Fonseca)
+                  * DRD: Packaging (Valeria Gamboa), Boxing (Roberto Delgado), FP (Natalia Esquivel), ZWG (Kenneth Barboza), Labs (Daniela Meléndez), Navegator (Alejandro Orozco)
+                  * HRD: Packaging (Lucía Mora), Boxing (Felipe Herrera), FP (Diego Gutiérrez), ZWG (Tatiana Vargas), Labs (Melissa Blanco), Navegator (Ricardo Brenes)
+                - Horarios COP: CYL (Lunes 10am), HRD (Martes 10am), DRD (Miércoles 10am), CTG (Jueves 10am).
+                - COP Leads: CTG (Eduardo Jenkins), CYL (Sergio Monge), DRD (Rebeca Alfaro), HRD (Amanda Solano).
+                - Manager de Tec Ops: Francisco Castro.
+                - On-call: Exclusivo para líneas detenidas (CYL: 8888-8881, HRD: 8888-8882, CTG: 8888-8883, DRD: 8888-8884). Solo llamadas.
+                Responde de manera amable, profesional y directa a cualquier duda relacionada con operaciones técnicas de la empresa.
+                """
+
+                # Incluimos las instrucciones de sistema en la llamada
                 response = client.models.generate_content(
                     model="gemini-3.8-flash",
-                    contents=user_prompt,
+                    contents=f"{contexto_tec_ops}\n\nPregunta del usuario: {user_prompt}",
                 )
                 assistant_response = response.text
                 st.markdown(assistant_response)
