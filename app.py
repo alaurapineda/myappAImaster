@@ -172,7 +172,7 @@ if st.session_state.pagina_actual == "principal":
 
     ahora = datetime.now().time()
     hora_actual = ahora.hour
-    minuto_actual = ahora.minute
+    minuto_actual = me = ahora.minute
 
     if 0 <= hora_actual < 12:
         saludo = "¡Bienvenido, buenos días!"
@@ -185,7 +185,10 @@ if st.session_state.pagina_actual == "principal":
 
     usuario_bsc = st.text_input("Escribe tu usuario BSC:", "").strip()
 
-    if not usuario_bsc or len(usuario_bsc) < 5 or not usuario_bsc.isalnum():
+    # --- NUEVA LÓGICA DE VALIDACIÓN ---
+    if not usuario_bsc:
+        st.info("Recuerda que el usuario BSC debe contener al menos 5 caracteres alfanuméricos.")
+    elif len(usuario_bsc) < 5 or not usuario_bsc.isalnum():
         st.warning("⚠️ Usuario no reconocido. Por favor, verifica tus datos. Recuerda que el usuario BSC debe contener al menos 5 caracteres alfanuméricos.")
     else:
         opciones_base = [
@@ -432,7 +435,7 @@ if st.session_state.pagina_actual == "principal":
 
 
 # ==============================================================================
-# PÁGINA INDEPENDIENTE DEL CHATBOT CON PERSONALIDAD AMABLE
+# PÁGINA INDEPENDIENTE DEL CHATBOT
 # ==============================================================================
 elif st.session_state.pagina_actual == "chatbot":
 
@@ -474,7 +477,6 @@ elif st.session_state.pagina_actual == "chatbot":
                 try:
                     client = genai.Client(api_key=api_key)
                     
-                    # Contexto con tono sumamente amable, educado y servicial
                     contexto_tec_ops = """
                     Eres el asistente virtual oficial del departamento de Tec Ops. 
                     
@@ -507,4 +509,8 @@ elif st.session_state.pagina_actual == "chatbot":
                     st.markdown(assistant_response)
                     st.session_state.chat_messages.append({"role": "assistant", "content": assistant_response})
                 except Exception as e:
-                    st.error(f"Error al conectar con el servicio de IA: {e}")
+                    # Captura limpia y profesional del error de cuota sin mostrar trazas de código
+                    if "429" in str(e) or "RESOURCE_EXHAUSTED" in str(e):
+                        st.warning("⚠️ En este momento el asistente ha alcanzado el límite diario de consultas de la API. Por favor, intenta de nuevo más tarde.")
+                    else:
+                        st.error(f"Error al conectar con el servicio de IA: {e}")
