@@ -376,6 +376,10 @@ if str_app.session_state.pagina_actual == "principal":
             # --- MUG ---
             elif tipo_consulta_limpio == "MUG":
                 str_app.write("Para accesar al MUG haz click en el siguiente enlace: https://MUG.guide1234.com")
+                str_app.markdown("""
+                **¿Qué es el MUG (Mark Ups Guide)?**  
+                Es una guía interactiva que sirve de apoyo visual para realizar los markups. Cabe destacar que la misma **no reemplaza el procedimiento B1009040**.
+                """)
                 str_app.write("Si tienes feedback para la guía por favor contactar a uno de los modelers o deja tu comentario en la siguiente caja.")
                 
                 with str_app.form(key="form_feedback_mug"):
@@ -555,6 +559,7 @@ elif str_app.session_state.pagina_actual == "chatbot":
                     4. NUNCA dejes al usuario sin respuesta. Si te pregunta algo de lo que no tienes datos específicos o no logras comprender del todo la consulta, responde con amabilidad (por ejemplo: "Muchas gracias por tu consulta. Lamentablemente no cuento con la información exacta sobre ese tema en este momento, pero con mucho gusto te puedo ayudar a contactar con tu Site Lead o el Manager Francisco Castro para orientarte mejor. ¿Deseas que te comparta sus contactos?").
 
                     BASE DE DATOS DE TEC OPS:
+                    - MUG (Mark Ups Guide): Es una guía interactiva que sirve de apoyo visual para realizar los markups. No reemplaza el procedimiento B1009040.
                     - Modelers por site y área:
                       * CTG: Packaging (Ana Pineda), Boxing (Carlos Alvarado), FP (Victor Campos), ZWG (Jose Acuña), Labs (Sofía Soto), Navegator (Brayan Sanchez)
                       * CYL: Packaging (Mauricio Solís), Boxing (Juan Hernández), FP (Mariana Rojas), ZWG (Esteban Chaves), Labs (Gabriela Quirós), Navegator (Andrés Fonseca)
