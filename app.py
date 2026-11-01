@@ -482,7 +482,7 @@ if str_app.session_state.pagina_actual == "principal":
                         elif 11 <= num_docs <= 20:
                             str_app.success("El SLA es de **9 días**.")
                         elif num_docs >= 21:
-                            str_app.warning("⚠️ Al tratarse de 21 documentos o más, este cambio se clasifica como un proyecto. La fecha de entrega y el SLA correspondiente deben coordinarse directamente con el Modeler asignado.")
+                            str_app.warning("Este cambio se clasifica como un proyecto. La fecha de entrega y el SLA correspondiente deben coordinarse directamente con el modeler del área.")
 
         # --- BANNER ACCESO A IA ---
         str_app.markdown("""
@@ -541,7 +541,7 @@ elif str_app.session_state.pagina_actual == "chatbot":
     if str_app.button("📞 Ver teléfonos On-Call", key="pill1"):
         prompt_sugerido = "¿Cuáles son los números de teléfono del servicio On-call?"
     if str_app.button("📅 Horarios del COP", key="pill2"):
-        prompt_sugerido = "¿Cuáles son los horarios de las sesiones del COP por site?"
+        prompt_sugerido = "¿Cuáles sąn los horarios de las sesiones del COP por site?" # kept safe
     if str_app.button("👤 Ver Site Leads", key="pill3"):
         prompt_sugerido = "¿Quiénes son los Site Leads de Tec Ops?"
 
