@@ -1,131 +1,126 @@
 import streamlit as st
 from datetime import datetime
 
-# Configuración de fondo azul medianoche y estilos de tarjetas FAQ
-st.markdown(
-    """
-    <style>
-    .stApp {
-        background-color: midnightblue; /* Color azul noche */
-    }
-    /* Asegurar legibilidad general */
-    .stApp, p, h1, h2, h3, h4, h5, h6, label {
-        color: #FFFFFF;
-    }
-    /* Estilo para los mensajes de recomendación (info) en celeste claro */
-    div[data-testid="stNotification"] {
-        background-color: #87CEFA !important;
-        color: #000000 !important;
-    }
-    div[data-testid="stNotification"] p {
-        color: #000000 !important;
-    }
+# CONFIGURACIÓN VISUAL GENERAL Y ESTILOS
+st.markdown("""
+<style>
 
-    /* --- ESTILOS DE ALTA FIDELIDAD PARA FAQ (CELESTE Y NEGRO) --- */
-    .faq-card-wrapper {
-        background-color: #E3F2FD !important; /* Fondo celeste suave */
-        border-radius: 50px !important;
-        padding: 12px 25px !important;
-        margin-bottom: 16px !important;
-        box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2) !important;
-        border: 1px solid #90CAF9 !important;
-    }
-    
-    /* Círculo azul de interrogación izquierdo */
-    .faq-circle-q-custom {
-        background-color: #1976D2 !important;
-        color: #FFFFFF !important;
-        border-radius: 50% !important;
-        width: 42px !important;
-        height: 42px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        font-weight: bold !important;
-        font-size: 20px !important;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
-        margin-top: 2px !important;
-    }
+/* Fondo principal */
+.stApp,
+[data-testid="stAppViewContainer"] {
+    background-color: #191970 !important;
+}
 
-    /* Contenedor de la respuesta en fondo celeste pastel con letras negras */
-    .faq-answer-container-clean {
-        background-color: #E3F2FD !important; /* Mismo celeste consistente */
-        border-radius: 24px !important;
-        padding: 15px 25px !important;
-        border: 1px solid #90CAF9 !important;
-        margin-top: 10px !important;
-        margin-bottom: 5px !important;
-    }
-    
-    /* Forzar letras negras en todo el contenido de la tarjeta de preguntas y de las respuestas */
-    .faq-card-wrapper,
-    .faq-card-wrapper *,
-    .faq-answer-container-clean,
-    .faq-answer-container-clean *,
-    .faq-answer-text-custom,
-    .faq-answer-text-custom p,
-    .faq-answer-text-custom strong,
-    .faq-answer-text-custom li,
-    .faq-answer-text-custom ul,
-    .faq-answer-text-custom ol,
-    div[data-testid="column"] button * {
-        color: #000000 !important; /* Texto negro absoluto para una legibilidad perfecta */
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
-    }
+/* Encabezado */
+[data-testid="stHeader"] {
+    background-color: transparent !important;
+}
 
-    /* Estilo e interactividad sobre los botones de pregunta (ahora con letra negra garantizada) */
-    div[data-testid="column"] button {
-        background: transparent !important;
-        border: none !important;
-        padding: 0 !important;
-        margin: 0 !important;
-        width: 100% !important;
-        text-align: left !important;
-        box-shadow: none !important;
-        height: 44px !important;
-        color: #000000 !important; 
-        font-size: 17px !important;
-        font-weight: 600 !important;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
-        transition: color 0.2s ease !important;
-    }
-    
-    /* Botón circular celeste de control (+ / -) */
-    div[data-testid="column"] button.faq-trigger-btn {
-        background-color: #1976D2 !important; /* Azul para resaltar */
-        color: #FFFFFF !important;
-        border-radius: 50% !important;
-        width: 38px !important;
-        height: 38px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        font-size: 22px !important;
-        font-weight: bold !important;
-        line-height: 1 !important;
-        margin-top: 3px !important;
-        text-align: center !important;
-    }
-    
-    div[data-testid="column"] button.faq-trigger-btn * {
-        color: #FFFFFF !important; /* El signo + y - permanece blanco */
-    }
-    
-    div[data-testid="column"] button:hover {
-        background: transparent !important;
-        border: none !important;
-        color: #1976D2 !important;
-    }
-    div[data-testid="column"] button.faq-trigger-btn:hover {
-        background-color: #1565C0 !important;
-    }
-    div[data-testid="column"] p {
-        margin: 0 !important;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+/* Texto general */
+h1, h2, h3, h4, h5, h6,
+p, li, label,
+[data-testid="stMarkdownContainer"] {
+    color: #FFFFFF !important;
+}
+
+/* Títulos */
+h1 {
+    font-weight: 700 !important;
+}
+
+h2, h3 {
+    font-weight: 600 !important;
+}
+
+/* Inputs: fondo blanco y texto oscuro */
+input,
+textarea,
+[data-baseweb="input"] input {
+    background-color: #FFFFFF !important;
+    color: #202020 !important;
+    -webkit-text-fill-color: #202020 !important;
+    border-radius: 8px !important;
+}
+
+/* Etiquetas de los campos */
+[data-testid="stTextInput"] label,
+[data-testid="stTextArea"] label,
+[data-testid="stSelectbox"] label {
+    color: #FFFFFF !important;
+}
+
+/* Dropdowns */
+[data-baseweb="select"] {
+    background-color: #FFFFFF !important;
+    border-radius: 8px !important;
+}
+
+[data-baseweb="select"] * {
+    color: #202020 !important;
+}
+
+/* Opciones de los dropdowns */
+[role="listbox"],
+[role="option"] {
+    background-color: #FFFFFF !important;
+    color: #202020 !important;
+}
+
+/* Botones */
+.stButton > button {
+    border-radius: 10px !important;
+    font-weight: 600 !important;
+}
+
+/* Alertas informativas */
+[data-testid="stAlert"] {
+    background-color: #D9F0FA !important;
+    border-radius: 12px !important;
+}
+
+[data-testid="stAlert"] p,
+[data-testid="stAlert"] strong {
+    color: #172B3A !important;
+}
+
+/* FAQ: tarjetas claras */
+[data-testid="stExpander"] {
+    background-color: #EAF7F7 !important;
+    border: 1px solid #D2EEEE !important;
+    border-radius: 28px !important;
+    margin-bottom: 16px !important;
+    overflow: hidden;
+}
+
+/* Texto de las preguntas */
+[data-testid="stExpander"] summary,
+[data-testid="stExpander"] summary p {
+    color: #172B3A !important;
+    font-size: 17px !important;
+    font-weight: 600 !important;
+}
+
+/* Respuestas FAQ */
+[data-testid="stExpander"] [data-testid="stMarkdownContainer"],
+[data-testid="stExpander"] p,
+[data-testid="stExpander"] li,
+[data-testid="stExpander"] strong {
+    color: #172B3A !important;
+}
+
+/* Separación interna de las respuestas */
+[data-testid="stExpander"] [data-testid="stExpanderDetails"] {
+    padding: 12px 22px !important;
+}
+
+/* Texto procesado */
+[data-testid="stTextArea"] textarea {
+    background-color: #FFFFFF !important;
+    color: #202020 !important;
+}
+
+</style>
+""", unsafe_allow_html=True)
 
 st.title("Aplicación de consultas Tec Ops")
 
@@ -227,7 +222,6 @@ else:
                         }
                     }
 
-                    # Obtener el nombre correspondiente de la base de datos
                     modeler_nombre = modelers_database.get(site_seleccionado, {}).get(area_limpia, "Modeler no asignado")
                     st.info(f"El modeler de **{area_limpia}** para **{site_seleccionado}** es **{modeler_nombre}**")
 
@@ -240,7 +234,6 @@ else:
                 "¿Cuándo debo llevar mi cambio o proyecto al COP?",
                 "COP Leads"
             ]
-            # Ordenar alfabéticamente y enumerar
             cop_ordenado = sorted(opciones_cop, key=str.lower)
             cop_enumerado = [f"{i+1}. {opcion}" for i, opcion in enumerate(cop_ordenado)]
             cop_con_placeholder = ["Selecciona una opción de COP..."] + cop_enumerado
@@ -345,127 +338,53 @@ else:
             st.write("Si necesita ayuda urgente con la aprobación de un incidente, work order, acceso, aprobación de máscara o aprobación de CN por favor contacte primero al site lead que corresponda o con el manager.")
             st.info("Todas las escalaciones deben documentarse por correo con la explicación de porqué se le debe de dar prioridad.")
 
-            st.markdown("### Preguntas sugeridas:")
+            st.markdown("### Preguntas sugeridas")
 
-            # Inicializar los estados de expansión de las preguntas en la sesión
-            if "faq_1_expanded" not in st.session_state:
-                st.session_state.faq_1_expanded = False
-            if "faq_2_expanded" not in st.session_state:
-                st.session_state.faq_2_expanded = False
-            if "faq_3_expanded" not in st.session_state:
-                st.session_state.faq_3_expanded = False
-
-            # --- TARJETA 1 ---
-            st.markdown('<div class="faq-card-wrapper">', unsafe_allow_html=True)
-            col1, col2, col3 = st.columns([1, 8, 1])
-            with col1:
-                st.markdown('<div class="faq-circle-q-custom">?</div>', unsafe_allow_html=True)
-            with col2:
-                # Clic en la pregunta conmuta el estado
-                if st.button("¿Quiénes son los Site Leads?", key="q1_btn"):
-                    st.session_state.faq_1_expanded = not st.session_state.faq_1_expanded
-                    st.rerun()
-            with col3:
-                signo_1 = "−" if st.session_state.faq_1_expanded else "+"
-                if st.button(signo_1, key="q1_trigger", help="Presiona para expandir o contraer"):
-                    st.session_state.faq_1_expanded = not st.session_state.faq_1_expanded
-                    st.rerun()
-                st.markdown('<script>document.querySelectorAll("button[key=\"q1_trigger\"]").forEach(b => b.classList.add("faq-trigger-btn"));</script>', unsafe_allow_html=True)
-            
-            if st.session_state.faq_1_expanded:
+            with st.expander("❔ ¿Quiénes son los Site Leads?"):
                 st.markdown("""
-                <div class="faq-answer-container-clean">
-                    <div class="faq-answer-text-custom">
-                        <strong>Site Leads designados:</strong><br>
-                        Los líderes a cargo de coordinar y dar aprobación preliminar en cada planta son los correspondientes <strong>COP Leads</strong>:<br>
-                        <ul>
-                            <li><strong>Site Lead CTG:</strong> Eduardo Jenkins</li>
-                            <li><strong>Site Lead CYL:</strong> Sergio Monge</li>
-                            <li><strong>Site Lead DRD:</strong> Rebeca Alfaro</li>
-                            <li><strong>Site Lead HRD:</strong> Amanda Solano</li>
-                        </ul>
-                    </div>
-                </div>
-                """, unsafe_allow_html=True)
-            st.markdown('</div>', unsafe_allow_html=True)
+                **Site Leads designados:**
 
-            # --- TARJETA 2 ---
-            st.markdown('<div class="faq-card-wrapper">', unsafe_allow_html=True)
-            col1, col2, col3 = st.columns([1, 8, 1])
-            with col1:
-                st.markdown('<div class="faq-circle-q-custom">?</div>', unsafe_allow_html=True)
-            with col2:
-                if st.button("¿Quién es el Manager de Tec Ops?", key="q2_btn"):
-                    st.session_state.faq_2_expanded = not st.session_state.faq_2_expanded
-                    st.rerun()
-            with col3:
-                signo_2 = "−" if st.session_state.faq_2_expanded else "+"
-                if st.button(signo_2, key="q2_trigger"):
-                    st.session_state.faq_2_expanded = not st.session_state.faq_2_expanded
-                    st.rerun()
+                - **CTG:** Eduardo Jenkins
+                - **CYL:** Sergio Monge
+                - **DRD:** Rebeca Alfaro
+                - **HRD:** Amanda Solano
+                """)
 
-            if st.session_state.faq_2_expanded:
+            with st.expander("❔ ¿Quién es el Manager de Tec Ops?"):
                 st.markdown("""
-                <div class="faq-answer-container-clean">
-                    <div class="faq-answer-text-custom">
-                        El manager del departamento de Tec Ops es <strong>Francisco Castro</strong>. Puedes escalar tu caso con él directamente si tras abrir el tiquete de soporte técnico y seguir los canales de primera línea no has obtenido respuesta.
-                    </div>
-                </div>
-                """, unsafe_allow_html=True)
-            st.markdown('</div>', unsafe_allow_html=True)
+                El manager del departamento de Tec Ops es 
+                **Francisco Castro**. 
 
-            # --- TARJETA 3 ---
-            st.markdown('<div class="faq-card-wrapper">', unsafe_allow_html=True)
-            col1, col2, col3 = st.columns([1, 8, 1])
-            with col1:
-                st.markdown('<div class="faq-circle-q-custom">?</div>', unsafe_allow_html=True)
-            with col2:
-                if st.button("¿Qué pasa si mi escalación ocurre un feriado o fin de semana?", key="q3_btn"):
-                    st.session_state.faq_3_expanded = not st.session_state.faq_3_expanded
-                    st.rerun()
-            with col3:
-                signo_3 = "−" if st.session_state.faq_3_expanded else "+"
-                if st.button(signo_3, key="q3_trigger"):
-                    st.session_state.faq_3_expanded = not st.session_state.faq_3_expanded
-                    st.rerun()
+                Puedes escalar tu caso con él si, después de abrir 
+                el tiquete de soporte y seguir los canales de 
+                atención correspondientes, no has obtenido respuesta.
+                """)
 
-            if st.session_state.faq_3_expanded:
+            with st.expander("❔ ¿Qué pasa si mi escalación ocurre un feriado o fin de semana?"):
                 st.markdown("""
-                <div class="faq-answer-container-clean">
-                    <div class="faq-answer-text-custom">
-                        <strong>Protocolo para Feriados y Fines de Semana:</strong><br>
-                        Si el caso ocurre durante el fin de semana, un día festivo nacional, o en el Turno C, el servicio se centraliza mediante los contactos del servicio <strong>On-call</strong> únicamente para situaciones críticas de línea detenida.<br><br>
-                        <strong>Pasos obligatorios:</strong>
-                        <ol>
-                            <li>Asegúrate de abrir el tiquete correspondiente adjuntando toda la evidencia disponible y descripción del problema.</li>
-                            <li>Llama directamente por teléfono regular (no mensajes ni WhatsApp) al contacto On-call de tu respectiva planta:
-                                <ul>
-                                    <li><strong>CYL:</strong> 8888-8881</li>
-                                    <li><strong>HRD:</strong> 8888-8882</li>
-                                    <li><strong>CTG:</strong> 8888-8883</li>
-                                    <li><strong>DRD:</strong> 8888-8884</li>
-                                </ul>
-                            </li>
-                        </ol>
-                    </div>
-                </div>
-                """, unsafe_allow_html=True)
-            st.markdown('</div>', unsafe_allow_html=True)
+                **Protocolo para feriados y fines de semana**
 
-            # Script inyectado para asegurar que todos los disparadores laterales hereden el estilo circular celeste
-            st.markdown(
-                """
-                <script>
-                const triggers = parent.document.querySelectorAll('button');
-                triggers.forEach(btn => {
-                    if (btn.innerText === '+' || btn.innerText === '−') {
-                        btn.classList.add('faq-trigger-btn');
-                    }
-                });
-                </script>
-                """,
-                unsafe_allow_html=True
-            )
+                El servicio On-call está disponible para situaciones 
+                críticas de líneas detenidas, durante el Turno C, 
+                feriados y fines de semana.
+
+                **Pasos a seguir:**
+
+                1. Abre el tiquete correspondiente con toda la 
+                   evidencia y descripción del problema.
+                2. Contacta telefónicamente al servicio On-call 
+                   de tu respectivo site.
+
+                **Contactos On-call:**
+
+                - **CYL:** 8888-8881
+                - **HRD:** 8888-8882
+                - **CTG:** 8888-8883
+                - **DRD:** 8888-8884
+
+                **Importante:** únicamente llamadas telefónicas. 
+                No se atienden mensajes ni llamadas por WhatsApp.
+                """)
 
         # --- SHARE POINT TEC OPS ---
         elif tipo_consulta_limpio == "Share Point Tec Ops":
@@ -477,7 +396,6 @@ else:
         elif tipo_consulta_limpio == "SLA Work Orders":
             docs_input = st.text_input("¿Cuántos documentos vas a someter en el cambio?", "")
             if docs_input:
-                # Validación de número entero estricto
                 if not docs_input.isdigit():
                     st.error("Número inválido. Por favor, ingresa únicamente números enteros sin letras, comas ni signos.")
                 else:
