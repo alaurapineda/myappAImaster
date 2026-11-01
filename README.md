@@ -1,3 +1,4 @@
+<img width="1440" height="900" alt="Captura de Pantalla 2026-11-01 a la(s) 17 37 55" src="https://github.com/user-attachments/assets/b837b3b3-4f25-41b6-9ffb-9ba062cff1b3" />
 **Aplicación de consultas Tec Ops**
 
 **Enlace a la app:** [https://…streamlit.app o https://…hf.space](https://myappaimaster-7fbuupho2edbt8g9b87dzp.streamlit.app/)
@@ -47,3 +48,4 @@ Los ingenieros de manufactura, calidad, producción o cualquier cliente operativ
 
 ## Capturas
 <img width="1440" height="900" alt="Captura de Pantalla 2026-11-01 a la(s) 17 34 15" src="https://github.com/user-attachments/assets/1e4cb767-668e-487e-b362-c2d9cde73843" /> <img width="1440" height="900" alt="Captura de Pantalla 2026-11-01 a la(s) 17 35 14" src="https://github.com/user-attachments/assets/a1eec67b-2253-4612-b99f-664eed097a85" /> <img width="1440" height="900" alt="Captura de Pantalla 2026-11-01 a la(s) 17 35 55" src="https://github.com/user-attachments/assets/3404ef7a-39c5-462b-883f-f013d030c699" />
+<img width="1440" height="900" alt="Captura de Pantalla 2026-11-01 a la(s) 17 38 15" src="https://github.com/user-attachments/assets/cc8950fc-aea6-4120-b1f2-3a1380b92b71" />
