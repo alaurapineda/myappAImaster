@@ -514,6 +514,8 @@ elif st.session_state.pagina_actual == "chatbot":
                         st.warning("⚠️ En este momento el asistente ha alcanzado el límite diario de consultas de la API. Por favor, intenta de nuevo más tarde.")
                     else:
                         st.error(f"Error al conectar con el servicio de IA: {e}")
+}
+                        
 /* Tarjetas con estilo Vidrio / Tech Med */
 .stAlert, [data-testid="stExpander"], .bot-card-banner {
     background: rgba(255, 255, 255, 0.05) !important;
