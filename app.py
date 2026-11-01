@@ -1,8 +1,3 @@
-¡Disculpa por eso! Vamos a completar el código asegurando que no falte ninguna de las secciones, opciones ni bases de datos de los 4 sites (CTG, CYL, DRD, HRD) y de todas las consultas que me habías enviado previamente.
-
-Aquí tienes el **código completo, integrado y sin cortes**:
-
-```python
 import os
 import streamlit as st
 from datetime import datetime
