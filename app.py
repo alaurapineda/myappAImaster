@@ -514,3 +514,27 @@ elif st.session_state.pagina_actual == "chatbot":
                         st.warning("⚠️ En este momento el asistente ha alcanzado el límite diario de consultas de la API. Por favor, intenta de nuevo más tarde.")
                     else:
                         st.error(f"Error al conectar con el servicio de IA: {e}")
+/* Tarjetas con estilo Vidrio / Tech Med */
+.stAlert, [data-testid="stExpander"], .bot-card-banner {
+    background: rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(0, 229, 255, 0.2) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37) !important;
+}
+
+/* Botones con brillo futurista */
+.stButton > button {
+    background: linear-gradient(135deg, #00E5FF 0%, #0072FF 100%) !important;
+    color: #FFFFFF !important;
+    border: none !important;
+    border-radius: 10px !important;
+    font-weight: 700 !important;
+    box-shadow: 0px 4px 15px rgba(0, 229, 255, 0.3) !important;
+}
+
+.stButton > button:hover {
+    box-shadow: 0px 6px 20px rgba(0, 229, 255, 0.6) !important;
+    transform: translateY(-2px);
+}
