@@ -1,4 +1,4 @@
-# Especificación · [Nombre del producto]
+# Especificación · **Aplicación de consultas Tec Ops**
 
 > Una buena especificación es la que otro asistente de IA podría construir sin haceros preguntas. Rellenadla en la semana 2 y usadla como prompt principal con vuestro asistente o agente. De ella sale la ficha del **hito de la semana 2**.
 
