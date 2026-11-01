@@ -500,7 +500,7 @@ elif st.session_state.pagina_actual == "chatbot":
                     """
 
                     response = client.models.generate_content(
-                        model="gemini-3.8-flash",
+                        model="gemini-1.5-flash",
                         contents=f"{contexto_tec_ops}\n\nPregunta del usuario: {user_prompt}",
                     )
                     assistant_response = response.text
