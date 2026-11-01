@@ -1,6 +1,22 @@
 import streamlit as st
 from datetime import datetime
 
+# Configuración de fondo azul con CSS personalizado
+st.markdown(
+    """
+    <style>
+    .stApp {
+        background-color: #1E3A8A; /* Color azul (puedes cambiar este código hexadecimal por el tono de azul que prefieras) */
+    }
+    /* Cambiar el color del texto para asegurar que sea legible sobre el fondo azul */
+    .stApp, .stMarkdown, p, h1, h2, h3, h4, h5, h6, label {
+        color: #FFFFFF !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 st.title("Aplicación de consultas Tec Ops")
 
 # Obtener la hora actual
@@ -60,7 +76,7 @@ else:
 
             if area_seleccionada != "Selecciona una opción de área...":
                 area_limpia = area_seleccionada.split(". ", 1)[1] if ". " in area_seleccionada else area_seleccionada
-                
+
                 if area_limpia == "Packaging":
                     st.info("El modeler de Packaging es **Ana Pineda**")
                 elif area_limpia == "Boxing":
@@ -77,36 +93,36 @@ else:
         # --- COP ---
         elif tipo_consulta_limpio == "COP":
             opciones_cop = [
-                "Horarios", 
-                "¿Qué material debo llevar al COP?", 
-                "Representantes por área", 
-                "¿Cuándo debo llevar mi cambio o proyecto al COP?", 
+                "Horarios",
+                "¿Qué material debo llevar al COP?",
+                "Representantes por área",
+                "¿Cuándo debo llevar mi cambio o proyecto al COP?",
                 "COP Leads"
             ]
             # Ordenar alfabéticamente y enumerar
             cop_ordenado = sorted(opciones_cop, key=str.lower)
             cop_enumerado = [f"{i+1}. {opcion}" for i, opcion in enumerate(cop_ordenado)]
             cop_con_placeholder = ["Selecciona una opción de COP..."] + cop_enumerado
-            
+
             opcion_cop = st.selectbox("Selecciona una opción de COP:", cop_con_placeholder)
-            
+
             if opcion_cop != "Selecciona una opción de COP...":
                 cop_limpio = opcion_cop.split(". ", 1)[1] if ". " in opcion_cop else opcion_cop
-                
+
                 if cop_limpio == "Horarios":
                     st.write("**Horarios de sesiones COP:**")
                     st.write("- **COP CYL** - Lunes 10am")
                     st.write("- **COP HRD** - Martes 10am")
                     st.write("- **COP DRD** - Miércoles 10am")
                     st.write("- **COP CTG** - Jueves 10am")
-                
+
                 elif cop_limpio == "¿Qué material debo llevar al COP?":
                     st.write("Por favor, consulta con tu encargado la lista de materiales requerida para la sesión de COP.")
-                    
+
                 elif cop_limpio == "Representantes por área":
                     areas_representantes = ["Boxing", "FP", "Labs", "Navegator", "Packaging", "ZWG"]
                     rep_area_sel = st.selectbox("Selecciona el área para ver sus representantes:", ["Selecciona área..."] + areas_representantes)
-                    
+
                     if rep_area_sel == "Boxing":
                         st.write("**Boxing:**\n- **Ing. Manufactura:** Luis Sandoval\n- **Ing. Calidad:** Laura Pineda")
                     elif rep_area_sel == "FP":
@@ -119,10 +135,10 @@ else:
                         st.write("**Packaging:**\n- **Ing. Manufactura:** Josué González\n- **Ing. Calidad:** Carolina Barrantes")
                     elif rep_area_sel == "ZWG":
                         st.write("**ZWG:**\n- **Ing. Calidad:** Luisa Hernández")
-                
+
                 elif cop_limpio == "¿Cuándo debo llevar mi cambio o proyecto al COP?":
                     st.write("Por favor consulta los lineamientos de tu planta para verificar los disparadores de presentación de cambios.")
-                
+
                 elif cop_limpio == "COP Leads":
                     st.write("Contacta a los líderes de COP de tu respectivo site para más información.")
 
@@ -170,7 +186,7 @@ else:
                     elif 11 <= num_docs <= 20:
                         st.success("El SLA es de **9 días**.")
                     elif num_docs >= 21:
-                        st.warning("El SLA debe verse directamente con el modeler ya que entraría como proyecto.")
+                        st.warning("El SLA debe verse directamente con el modeler ya que por la cantidad de markups el mismo sería un proyecto.")
                     else:
                         st.error("Por favor ingresa un número mayor a 0.")
 
