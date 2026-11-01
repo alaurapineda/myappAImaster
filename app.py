@@ -1,12 +1,12 @@
 import streamlit as st
 from datetime import datetime
 
-# Configuración de fondo azul con CSS personalizado
+# Configuración de fondo azul medianoche (midnightblue) con CSS personalizado
 st.markdown(
     """
     <style>
     .stApp {
-        background-color: #191970; /* Color azul (puedes cambiar este código hexadecimal por el tono de azul que prefieras) */
+        background-color: midnightblue; /* Color azul noche */
     }
     /* Cambiar el color del texto para asegurar que sea legible sobre el fondo azul */
     .stApp, .stMarkdown, p, h1, h2, h3, h4, h5, h6, label {
