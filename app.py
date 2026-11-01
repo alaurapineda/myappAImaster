@@ -110,7 +110,7 @@ textarea,
     padding: 12px 22px !important;
 }
 
-/* === ESTILOS FORZADOS A LETRA NEGRA PARA EL CHATBOT === */
+/* === ESTILOS FORZADOS A LETRA NEGRA Y BARRA DE CHAT MÁS GRANDE === */
 
 [data-testid="stChatMessage"] {
     background-color: #FFFFFF !important;
@@ -125,6 +125,26 @@ textarea,
 [data-testid="stChatMessage"] span, 
 [data-testid="stChatMessage"] strong,
 [data-testid="stChatMessage"] div {
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
+}
+
+[data-testid="stBottomBlockContainer"] {
+    background-color: #191970 !important;
+    padding-bottom: 25px !important;
+    padding-top: 10px !important;
+}
+
+[data-testid="stChatInput"] {
+    background-color: #FFFFFF !important;
+    border-radius: 14px !important;
+    border: 2px solid #4A90E2 !important;
+    box-shadow: 0px 4px 15px rgba(0,0,0,0.3) !important;
+    padding: 4px !important;
+}
+
+[data-testid="stChatInput"] textarea {
+    font-size: 16px !important;
     color: #000000 !important;
     -webkit-text-fill-color: #000000 !important;
 }
@@ -165,7 +185,6 @@ if st.session_state.pagina_actual == "principal":
 
     usuario_bsc = st.text_input("Escribe tu usuario BSC:", "").strip()
 
-  # Validación de al menos 5 caracteres alfanuméricos
     if not usuario_bsc or len(usuario_bsc) < 5 or not usuario_bsc.isalnum():
         st.warning("⚠️ Usuario no reconocido. Por favor, verifica tus datos. Recuerda que el usuario BSC debe contener al menos 5 caracteres alfanuméricos.")
     else:
@@ -413,17 +432,22 @@ if st.session_state.pagina_actual == "principal":
 
 
 # ==============================================================================
-# PÁGINA INDEPENDIENTE DEL CHATBOT
+# PÁGINA INDEPENDIENTE DEL CHATBOT CON PERSONALIDAD AMABLE
 # ==============================================================================
 elif st.session_state.pagina_actual == "chatbot":
 
-    col_nav1, col_nav2 = st.columns([7, 3])
+    col_nav1, col_nav2, col_nav3 = st.columns([5, 2.5, 2.5])
     with col_nav1:
         st.title("🤖 Asistente Virtual Tec Ops")
         st.caption("Inteligencia Artificial especializada para soporte de Tec Ops")
     with col_nav2:
         st.markdown("<br>", unsafe_allow_html=True)
-        if st.button("⬅️ Regresar al Menú Principal", key="btn_regresar"):
+        if st.button("🗑️ Limpiar Chat", key="btn_limpiar"):
+            st.session_state.chat_messages = []
+            st.rerun()
+    with col_nav3:
+        st.markdown("<br>", unsafe_allow_html=True)
+        if st.button("⬅️ Menú Principal", key="btn_regresar"):
             st.session_state.pagina_actual = "principal"
             st.rerun()
 
@@ -450,24 +474,29 @@ elif st.session_state.pagina_actual == "chatbot":
                 try:
                     client = genai.Client(api_key=api_key)
                     
+                    # Contexto con tono sumamente amable, educado y servicial
                     contexto_tec_ops = """
-                    Eres el asistente virtual oficial del departamento de Tec Ops. Cuentas con la siguiente información:
+                    Eres el asistente virtual oficial del departamento de Tec Ops. 
+                    
+                    INSTRUCCIONES DE COMPORTAMIENTO Y TONO:
+                    1. Sé siempre extremadamente amable, respetuoso, cálido y educado. Usa un lenguaje profesional pero cercano.
+                    2. Siempre saluda amablemente cuando el usuario diga "hola", "buenos días", "buenas tardes", etc. (por ejemplo: "¡Hola! Es un gusto saludarte. ¿En qué puedo colaborarte el día de hoy?").
+                    3. Da las gracias de manera cordial y muestra siempre disposición para ayudar.
+                    4. NUNCA dejes al usuario sin respuesta. Si te pregunta algo de lo que no tienes datos específicos o no logras comprender del todo la consulta, responde con amabilidad (por ejemplo: "Muchas gracias por tu consulta. Lamentablemente no cuento con la información exacta sobre ese tema en este momento, pero con mucho gusto te puedo ayudar a contactar con tu Site Lead o el Manager Francisco Castro para orientarte mejor. ¿Deseas que te comparta sus contactos?").
+
+                    BASE DE DATOS DE TEC OPS:
                     - Modelers por site y área:
                       * CTG: Packaging (Ana Pineda), Boxing (Carlos Alvarado), FP (Victor Campos), ZWG (Jose Acuña), Labs (Sofía Soto), Navegator (Brayan Sanchez)
                       * CYL: Packaging (Mauricio Solís), Boxing (Juan Hernández), FP (Mariana Rojas), ZWG (Esteban Chaves), Labs (Gabriela Quirós), Navegator (Andrés Fonseca)
                       * DRD: Packaging (Valeria Gamboa), Boxing (Roberto Delgado), FP (Natalia Esquivel), ZWG (Kenneth Barboza), Labs (Daniela Meléndez), Navegator (Alejandro Orozco)
                       * HRD: Packaging (Lucía Mora), Boxing (Felipe Herrera), FP (Diego Gutiérrez), ZWG (Tatiana Vargas), Labs (Melissa Blanco), Navegator (Ricardo Brenes)
                     - Sesiones COP:
-                      * COP CYL - Lunes 10am
-                      * COP HRD - Martes 10am
-                      * COP DRD - Miércoles 10am
-                      * COP CTG - Jueves 10am
+                      * COP CYL - Lunes 10am | COP HRD - Martes 10am | COP DRD - Miércoles 10am | COP CTG - Jueves 10am
                     - COP Leads & Site Leads:
                       * CTG: Eduardo Jenkins | CYL: Sergio Monge | DRD: Rebeca Alfaro | HRD: Amanda Solano
                     - Manager de Tec Ops: Francisco Castro.
                     - Teléfonos de Servicio On-call (líneas detenidas, Turno C, feriados/fines de semana, solo llamadas):
                       * CYL: 8888-8881 | HRD: 8888-8882 | CTG: 8888-8883 | DRD: 8888-8884
-                    Responde de forma clara, directa, amable y profesional.
                     """
 
                     response = client.models.generate_content(
