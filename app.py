@@ -89,18 +89,45 @@ else:
                 if area_seleccionada != "Selecciona una opción de área...":
                     area_limpia = area_seleccionada.split(". ", 1)[1] if ". " in area_seleccionada else area_seleccionada
 
-                    if area_limpia == "Packaging":
-                        st.info(f"El modeler de Packaging para {site_seleccionado} es **Ana Pineda**")
-                    elif area_limpia == "Boxing":
-                        st.info(f"El modeler de Boxing para {site_seleccionado} es **Juan Hernández**")
-                    elif area_limpia == "FP":
-                        st.info(f"El modeler de FP para {site_seleccionado} es **Victor Campos**")
-                    elif area_limpia == "ZWG":
-                        st.info(f"El modeler de ZWG para {site_seleccionado} es **Jose Acuña**")
-                    elif area_limpia == "Labs":
-                        st.info(f"El modeler de Labs para {site_seleccionado} es **Sofía Soto**")
-                    elif area_limpia == "Navegator":
-                        st.info(f"El modeler de Navegator para {site_seleccionado} es **Brayan Sanchez**")
+                    # Definición de modeladores específicos para cada site y área
+                    modelers_database = {
+                        "CTG": {
+                            "Packaging": "Ana Pineda",
+                            "Boxing": "Carlos Alvarado",
+                            "FP": "Victor Campos",
+                            "ZWG": "Jose Acuña",
+                            "Labs": "Sofía Soto",
+                            "Navegator": "Brayan Sanchez"
+                        },
+                        "CYL": {
+                            "Packaging": "Mauricio Solís",
+                            "Boxing": "Juan Hernández",
+                            "FP": "Mariana Rojas",
+                            "ZWG": "Esteban Chaves",
+                            "Labs": "Gabriela Quirós",
+                            "Navegator": "Andrés Fonseca"
+                        },
+                        "DRD": {
+                            "Packaging": "Valeria Gamboa",
+                            "Boxing": "Roberto Delgado",
+                            "FP": "Natalia Esquivel",
+                            "ZWG": "Kenneth Barboza",
+                            "Labs": "Daniela Meléndez",
+                            "Navegator": "Alejandro Orozco"
+                        },
+                        "HRD": {
+                            "Packaging": "Lucía Mora",
+                            "Boxing": "Felipe Herrera",
+                            "FP": "Diego Gutiérrez",
+                            "ZWG": "Tatiana Vargas",
+                            "Labs": "Melissa Blanco",
+                            "Navegator": "Ricardo Brenes"
+                        }
+                    }
+
+                    # Obtener el nombre correspondiente de la base de datos
+                    modeler_nombre = modelers_database.get(site_seleccionado, {}).get(area_limpia, "Modeler no asignado")
+                    st.info(f"El modeler de **{area_limpia}** para **{site_seleccionado}** es **{modeler_nombre}**")
 
         # --- COP ---
         elif tipo_consulta_limpio == "COP":
