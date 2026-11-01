@@ -1,3 +1,4 @@
+%%writefile app.py
 import os
 import streamlit as st
 from datetime import datetime
@@ -272,7 +273,6 @@ else:
 
                 elif cop_limpio == "Representantes por área":
                     st.write("**Consulta de Representantes por Área y Site**")
-                    # Incluye CTG, CYL, HRD y DRD
                     sites_cop = ["Selecciona site...", "CTG", "CYL", "DRD", "HRD"]
                     site_cop_sel = st.selectbox("Selecciona el site para los representantes:", sites_cop)
                     
@@ -447,7 +447,7 @@ else:
         st.write(f"**Tipo de Consulta:** {tipo_consulta}")
         st.write(f"**Longitud del texto:** {len(texto_entrada)} caracteres")
 
- # --- CHATBOT CON GEMINI ---
+# --- CHATBOT CON GEMINI ---
 st.markdown("---")
 st.markdown("### ¿Necesitas ayuda extra?")
 st.write("Chatea con nuestro asistente de IA impulsado por Gemini para resolver cualquier duda adicional sobre operaciones técnicas.")
@@ -467,28 +467,3 @@ else:
 
     # Capturar la entrada del usuario de forma limpia
     if user_prompt := st.chat_input("Escribe tu consulta para el asistente..."):
-    st.session_state.chat_messages.append({"role": "user", "content": user_prompt})
-    with st.chat_message("user"):
-        st.markdown(user_prompt)
-
-    with st.chat_message("assistant"):
-        try:
-            client = genai.Client(api_key=api_key)
-            
-            # Envía directamente el texto del usuario para evitar errores internos del historial
-            response = client.models.generate_content(
-                model="gemini-2.5-flash",
-                contents=user_prompt,
-            )
-            assistant_response = response.text
-            st.markdown(assistant_response)
-            st.session_state.chat_messages.append({"role": "assistant", "content": assistant_response})
-        except Exception as e:
-            st.error(f"Error al conectar con Gemini: {e}")
-                )
-                assistant_response = response.text
-                st.markdown(assistant_response)
-                st.session_state.chat_messages.append({"role": "assistant", "content": assistant_response})
-            except Exception as e:
-                error_msg = f"Error al conectar con Gemini: {e}"
-                st.error(error_msg)
