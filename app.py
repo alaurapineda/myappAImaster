@@ -251,19 +251,18 @@ else:
         elif tipo_consulta_limpio == "Path escalations":
             st.write("Si necesita ayuda urgente con la aprobación de un incidente, work order, acceso, aprobación de máscara o aprobación de CN por favor contacte primero al site lead que corresponda o con el manager.")
             st.info("Todas las escalaciones deben documentarse por correo con la explicación de porqué se le debe de dar prioridad.")
-            
+
             st.markdown("### Preguntas sugeridas:")
-            # Se cambia el selectbox por st.radio para que la selección sea directa (no desplegable)
+            # Se eliminó la opción "Ver opciones..." para que el usuario interactúe directamente con las preguntas
             pregunta_escalacion = st.radio(
                 "Selecciona una de las siguientes opciones para consultar:",
                 [
-                    "Ver opciones...",
                     "¿Quiénes son los site leads?",
                     "¿Quién es el manager de Tec Ops?",
                     "¿Qué pasa si mi escalación ocurre un feriado o fin de semana?"
                 ]
             )
-            
+
             if pregunta_escalacion == "¿Quiénes son los site leads?":
                 st.info("**Site Leads designados:**\nLos líderes a cargo de coordinar y dar aprobación preliminar en cada planta son los correspondientes **COP Leads**: \n- **Site Lead CTG:** Eduardo Jenkins\n- **Site Lead CYL:** Sergio Monge\n- **Site Lead DRD:** Rebeca Alfaro\n- **Site Lead HRD:** Amanda Solano")
             elif pregunta_escalacion == "¿Quién es el manager de Tec Ops?":
