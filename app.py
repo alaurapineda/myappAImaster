@@ -47,15 +47,24 @@ st.markdown(
         margin-top: 2px !important;
     }
 
-    /* Estilos del texto de respuesta integrado limpiamente sin cuadro blanco extra */
+    /* Contenedor de la respuesta en fondo celeste pastel con letras negras/gris oscuro */
     .faq-answer-container-clean {
-        padding: 15px 25px 5px 25px !important;
-        border-top: 1px solid #F1F5F9 !important;
+        background-color: #F0F8FF !important; /* Fondo celeste suave (Alice Blue) para contraste y legibilidad */
+        border-radius: 24px !important;
+        padding: 15px 25px !important;
+        border: 1px solid #D0E8FC !important;
         margin-top: 10px !important;
+        margin-bottom: 5px !important;
     }
     
-    .faq-answer-text-custom, .faq-answer-text-custom strong, .faq-answer-text-custom li, .faq-answer-text-custom ul {
-        color: #334155 !important;
+    /* Forzar letras negras en todo el contenido de la respuesta para evitar texto invisible */
+    .faq-answer-text-custom, 
+    .faq-answer-text-custom p, 
+    .faq-answer-text-custom strong, 
+    .faq-answer-text-custom li, 
+    .faq-answer-text-custom ul,
+    .faq-answer-text-custom ol {
+        color: #1E293B !important; /* Gris carbón/negro de alta legibilidad */
         font-size: 15px !important;
         line-height: 1.6 !important;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
