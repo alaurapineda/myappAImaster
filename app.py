@@ -12,6 +12,14 @@ st.markdown(
     .stApp, .stMarkdown, p, h1, h2, h3, h4, h5, h6, label {
         color: #FFFFFF !important;
     }
+    /* Estilo para los mensajes de recomendación (info) en celeste claro con texto oscuro para legibilidad */
+    div[data-testid="stNotification"] {
+        background-color: #87CEFA !important; /* Celeste claro (LightSkyBlue) */
+        color: #000000 !important;
+    }
+    div[data-testid="stNotification"] p {
+        color: #000000 !important;
+    }
     </style>
     """,
     unsafe_allow_html=True
@@ -67,28 +75,32 @@ else:
 
         # --- CONSULTA MODELER POR ÁREA ---
         if tipo_consulta_limpio == "Consulta de modeler por área":
-            sub_opciones_base = ["Navegator", "Packaging", "Boxing", "FP", "ZWG", "Labs"]
-            sub_opciones_ordenadas = sorted(sub_opciones_base, key=str.lower)
-            sub_opciones_enumeradas = [f"{i+1}. {opcion}" for i, opcion in enumerate(sub_opciones_ordenadas)]
-            sub_opciones_con_placeholder = ["Selecciona una opción de área..."] + sub_opciones_enumeradas
+            sites_disponibles = ["Selecciona un site...", "CTG", "CYL", "DRD", "HRD"]
+            site_seleccionado = st.selectbox("Selecciona el site:", sites_disponibles)
 
-            area_seleccionada = st.selectbox("Selecciona el área:", sub_opciones_con_placeholder)
+            if site_seleccionado != "Selecciona un site...":
+                sub_opciones_base = ["Navegator", "Packaging", "Boxing", "FP", "ZWG", "Labs"]
+                sub_opciones_ordenadas = sorted(sub_opciones_base, key=str.lower)
+                sub_opciones_enumeradas = [f"{i+1}. {opcion}" for i, opcion in enumerate(sub_opciones_ordenadas)]
+                sub_opciones_con_placeholder = ["Selecciona una opción de área..."] + sub_opciones_enumeradas
 
-            if area_seleccionada != "Selecciona una opción de área...":
-                area_limpia = area_seleccionada.split(". ", 1)[1] if ". " in area_seleccionada else area_seleccionada
+                area_seleccionada = st.selectbox("Selecciona el área:", sub_opciones_con_placeholder)
 
-                if area_limpia == "Packaging":
-                    st.info("El modeler de Packaging es **Ana Pineda**")
-                elif area_limpia == "Boxing":
-                    st.info("El modeler de Boxing es **Juan Hernández**")
-                elif area_limpia == "FP":
-                    st.info("El modeler de FP es **Victor Campos**")
-                elif area_limpia == "ZWG":
-                    st.info("El modeler de ZWG es **Jose Acuña**")
-                elif area_limpia == "Labs":
-                    st.info("El modeler de Labs es **Sofía Soto**")
-                elif area_limpia == "Navegator":
-                    st.info("El modeler de Navegator es **Brayan Sanchez**")
+                if area_seleccionada != "Selecciona una opción de área...":
+                    area_limpia = area_seleccionada.split(". ", 1)[1] if ". " in area_seleccionada else area_seleccionada
+
+                    if area_limpia == "Packaging":
+                        st.info(f"El modeler de Packaging para {site_seleccionado} es **Ana Pineda**")
+                    elif area_limpia == "Boxing":
+                        st.info(f"El modeler de Boxing para {site_seleccionado} es **Juan Hernández**")
+                    elif area_limpia == "FP":
+                        st.info(f"El modeler de FP para {site_seleccionado} es **Victor Campos**")
+                    elif area_limpia == "ZWG":
+                        st.info(f"El modeler de ZWG para {site_seleccionado} es **Jose Acuña**")
+                    elif area_limpia == "Labs":
+                        st.info(f"El modeler de Labs para {site_seleccionado} es **Sofía Soto**")
+                    elif area_limpia == "Navegator":
+                        st.info(f"El modeler de Navegator para {site_seleccionado} es **Brayan Sanchez**")
 
         # --- COP ---
         elif tipo_consulta_limpio == "COP":
