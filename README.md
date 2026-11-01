@@ -1,6 +1,6 @@
 **Aplicación de consultas Tec Ops**
 
-**Enlace a la app:** https://…streamlit.app o https://…hf.space
+**Enlace a la app:** [https://…streamlit.app o https://…hf.space](https://myappaimaster-7fbuupho2edbt8g9b87dzp.streamlit.app/)
 **Autor/a:** Ana Laura Pineda Palma
 
 ## Pitch
