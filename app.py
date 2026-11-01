@@ -1,4 +1,3 @@
-%%writefile app.py
 import os
 import streamlit as st
 from datetime import datetime
@@ -169,16 +168,12 @@ else:
         "On-call"
     ]
 
-    # Ordenar alfabéticamente de manera insensible a mayúsculas/minúsculas
     opciones_ordenadas = sorted(opciones_base, key=str.lower)
-
-    # Enumerar la lista ordenada
     opciones_enumeradas = [f"{i+1}. {opcion}" for i, opcion in enumerate(opciones_ordenadas)]
     opciones_con_placeholder = ["Selecciona una opción..."] + opciones_enumeradas
 
     tipo_consulta = st.selectbox("Selecciona el tipo de consulta:", opciones_con_placeholder)
 
-    # Lógica condicional según la consulta seleccionada
     if tipo_consulta != "Selecciona una opción...":
         tipo_consulta_limpio = tipo_consulta.split(". ", 1)[1] if ". " in tipo_consulta else tipo_consulta
 
@@ -467,3 +462,20 @@ else:
 
     # Capturar la entrada del usuario de forma limpia
     if user_prompt := st.chat_input("Escribe tu consulta para el asistente..."):
+        st.session_state.chat_messages.append({"role": "user", "content": user_prompt})
+        with st.chat_message("user"):
+            st.markdown(user_prompt)
+
+        with st.chat_message("assistant"):
+            try:
+                client = genai.Client(api_key=api_key)
+                
+                response = client.models.generate_content(
+                    model="gemini-2.5-flash",
+                    contents=user_prompt,
+                )
+                assistant_response = response.text
+                st.markdown(assistant_response)
+                st.session_state.chat_messages.append({"role": "assistant", "content": assistant_response})
+            except Exception as e:
+                st.error(f"Error al conectar con Gemini: {e}")
