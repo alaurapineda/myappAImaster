@@ -6,7 +6,7 @@ st.markdown(
     """
     <style>
     .stApp {
-        background-color: #1E3A8A; /* Color azul (puedes cambiar este código hexadecimal por el tono de azul que prefieras) */
+        background-color: #191970; /* Color azul (puedes cambiar este código hexadecimal por el tono de azul que prefieras) */
     }
     /* Cambiar el color del texto para asegurar que sea legible sobre el fondo azul */
     .stApp, .stMarkdown, p, h1, h2, h3, h4, h5, h6, label {
