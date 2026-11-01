@@ -6,7 +6,7 @@ from google import genai
 # --- CONFIGURACIÓN DE PÁGINA Y NAVEGACIÓN ---
 st.set_page_config(
     page_title="Tec Ops Portal - MedTech Support",
-    page_icon="⚡",
+    page_icon="💻",
     layout="wide"
 )
 
@@ -41,8 +41,7 @@ h2, h3 { font-weight: 600 !important; }
 /* Tarjetas con efecto Vidrio / Glassmorphism */
 [data-testid="stAlert"], 
 [data-testid="stExpander"], 
-.bot-card-banner,
-div[data-testid="stMetricValue"] {
+.bot-card-banner {
     background: rgba(255, 255, 255, 0.04) !important;
     backdrop-filter: blur(12px) !important;
     -webkit-backdrop-filter: blur(12px) !important;
@@ -50,16 +49,6 @@ div[data-testid="stMetricValue"] {
     border-radius: 16px !important;
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3) !important;
 }
-
-/* Métricas en el Header */
-[data-testid="stMetric"] {
-    background: rgba(15, 23, 42, 0.6) !important;
-    border: 1px solid rgba(0, 229, 255, 0.2) !important;
-    border-radius: 14px !important;
-    padding: 12px 16px !important;
-}
-[data-testid="stMetricLabel"] { color: #94A3B8 !important; }
-[data-testid="stMetricValue"] { color: #00E5FF !important; font-weight: 700 !important; }
 
 /* === GARANTÍA DE LEGIBILIDAD EN INPUTS Y BOTONES === */
 
@@ -185,20 +174,7 @@ textarea,
 # ==============================================================================
 if st.session_state.pagina_actual == "principal":
 
-    # --- HEADER TECH CON MÉTRICAS OPERACIONALES ---
-    st.title("⚡ Portal Operativo Tec Ops")
-    st.caption("Sistema Centralizado de Soporte y Consultas MedTech")
-
-    m1, m2, m3, m4 = st.columns(4)
-    with m1:
-        st.metric(label="Estado del Sistema", value="🟢 Operativo")
-    with m2:
-        st.metric(label="SLA Estimado", value="3 - 9 Días")
-    with m3:
-        st.metric(label="Servicio On-Call", value="Activo (24/7)")
-    with m4:
-        st.metric(label="Manager Depto.", value="F. Castro")
-
+    st.title("💻 Sistema de consultas generales del departamento Tec Ops")
     st.markdown("---")
 
     ahora = datetime.now().time()
@@ -481,7 +457,7 @@ elif st.session_state.pagina_actual == "chatbot":
             prompt_sugerido = "¿Cuáles son los números de teléfono del servicio On-call?"
     with cp2:
         if st.button("📅 Horarios del COP", key="pill2"):
-            prompt_sugerido = "¿Cuáles son los horarios de las sesiones del COP por site?"
+            prompt_sugerido = "¿Cuáles są los horarios de las sesiones del COP por site?"
     with cp3:
         if st.button("👤 Ver Site Leads", key="pill3"):
             prompt_sugerido = "¿Quiénes son los Site Leads de Tec Ops?"
@@ -536,7 +512,7 @@ elif st.session_state.pagina_actual == "chatbot":
                     """
 
                     response = client.models.generate_content(
-                        model="gemini-1.5-flash",
+                        model="gemini-3.8-flash",
                         contents=f"{contexto_tec_ops}\n\nPregunta del usuario: {user_prompt}",
                     )
                     assistant_response = response.text
