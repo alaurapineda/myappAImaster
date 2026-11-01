@@ -1,20 +1,20 @@
 import os
-import streamlit as st
+import streamlit as str_app
 from datetime import datetime
 from google import genai
 
 # --- CONFIGURACIÓN DE PÁGINA Y NAVEGACIÓN ---
-st.set_page_config(
+str_app.set_page_config(
     page_title="Tec Ops Portal - MedTech Support",
     page_icon="💻",
     layout="wide"
 )
 
-if "pagina_actual" not in st.session_state:
-    st.session_state.pagina_actual = "principal"
+if "pagina_actual" not in str_app.session_state:
+    str_app.session_state.pagina_actual = "principal"
 
 # --- CONFIGURACIÓN VISUAL GENERAL Y ESTILOS "TECH MED" ---
-st.markdown("""
+str_app.markdown("""
 <style>
 
 /* Fondo degradado Tech Med */
@@ -173,10 +173,10 @@ textarea,
 # ==============================================================================
 # PÁGINA PRINCIPAL
 # ==============================================================================
-if st.session_state.pagina_actual == "principal":
+if str_app.session_state.pagina_actual == "principal":
 
-    st.title("💻 Sistema de consultas generales del departamento Tec Ops")
-    st.markdown("---")
+    str_app.title("💻 Sistema de consultas generales del departamento Tec Ops")
+    str_app.markdown("---")
 
     ahora = datetime.now().time()
     hora_actual = ahora.hour
@@ -189,15 +189,15 @@ if st.session_state.pagina_actual == "principal":
     else:
         saludo = "¡Bienvenido, buenas noches!"
 
-    st.subheader(saludo)
+    str_app.subheader(saludo)
 
-    usuario_bsc = st.text_input("Escribe tu usuario BSC:", "").strip()
+    usuario_bsc = str_app.text_input("Escribe tu usuario BSC:", "").strip()
 
     # Validación de usuario BSC
     if not usuario_bsc:
-        st.info("Recuerda que el usuario BSC debe contener al menos 5 caracteres alfanuméricos.")
+        str_app.info("Recuerda que el usuario BSC debe contener al menos 5 caracteres alfanuméricos.")
     elif len(usuario_bsc) < 5 or not usuario_bsc.isalnum():
-        st.warning("⚠️ Usuario no reconocido. Por favor, verifica tus datos. Recuerda que el usuario BSC debe contener al menos 5 caracteres alfanuméricos.")
+        str_app.warning("⚠️ Usuario no reconocido. Por favor, verifica tus datos. Recuerda que el usuario BSC debe contener al menos 5 caracteres alfanuméricos.")
     else:
         opciones_base = [
             "Consulta de modeler por área",
@@ -213,7 +213,7 @@ if st.session_state.pagina_actual == "principal":
         opciones_enumeradas = [f"{i+1}. {opcion}" for i, opcion in enumerate(opciones_ordenadas)]
         opciones_con_placeholder = ["Selecciona una opción..."] + opciones_enumeradas
 
-        tipo_consulta = st.selectbox("Selecciona el tipo de consulta:", opciones_con_placeholder)
+        tipo_consulta = str_app.selectbox("Selecciona el tipo de consulta:", opciones_con_placeholder)
 
         if tipo_consulta != "Selecciona una opción...":
             tipo_consulta_limpio = tipo_consulta.split(". ", 1)[1] if ". " in tipo_consulta else tipo_consulta
@@ -221,7 +221,7 @@ if st.session_state.pagina_actual == "principal":
             # --- CONSULTA MODELER POR ÁREA ---
             if tipo_consulta_limpio == "Consulta de modeler por área":
                 sites_disponibles = ["Selecciona un site...", "CTG", "CYL", "DRD", "HRD"]
-                site_seleccionado = st.selectbox("Selecciona el site:", sites_disponibles)
+                site_seleccionado = str_app.selectbox("Selecciona el site:", sites_disponibles)
 
                 if site_seleccionado != "Selecciona un site...":
                     sub_opciones_base = ["Navegator", "Packaging", "Boxing", "FP", "ZWG", "Labs"]
@@ -229,7 +229,7 @@ if st.session_state.pagina_actual == "principal":
                     sub_opciones_enumeradas = [f"{i+1}. {opcion}" for i, opcion in enumerate(sub_opciones_ordenadas)]
                     sub_opciones_con_placeholder = ["Selecciona una opción de área..."] + sub_opciones_enumeradas
 
-                    area_seleccionada = st.selectbox("Selecciona el área:", sub_opciones_con_placeholder)
+                    area_seleccionada = str_app.selectbox("Selecciona el área:", sub_opciones_con_placeholder)
 
                     if area_seleccionada != "Selecciona una opción de área...":
                         area_limpia = area_seleccionada.split(". ", 1)[1] if ". " in area_seleccionada else area_seleccionada
@@ -254,7 +254,7 @@ if st.session_state.pagina_actual == "principal":
                         }
 
                         modeler_nombre = modelers_database.get(site_seleccionado, {}).get(area_limpia, "Modeler no asignado")
-                        st.info(f"El modeler de **{area_limpia}** para **{site_seleccionado}** es **{modeler_nombre}**")
+                        str_app.info(f"El modeler de **{area_limpia}** para **{site_seleccionado}** es **{modeler_nombre}**")
 
             # --- COP ---
             elif tipo_consulta_limpio == "COP":
@@ -269,36 +269,36 @@ if st.session_state.pagina_actual == "principal":
                 cop_enumerado = [f"{i+1}. {opcion}" for i, opcion in enumerate(cop_ordenado)]
                 cop_con_placeholder = ["Selecciona una opción de COP..."] + cop_enumerado
 
-                opcion_cop = st.selectbox("Selecciona una opción de COP:", cop_con_placeholder)
+                opcion_cop = str_app.selectbox("Selecciona una opción de COP:", cop_con_placeholder)
 
                 if opcion_cop != "Selecciona una opción de COP...":
                     cop_limpio = opcion_cop.split(". ", 1)[1] if ". " in opcion_cop else opcion_cop
 
                     if cop_limpio == "Horarios":
-                        st.write("**Horarios de sesiones COP:**")
-                        st.write("- **COP CYL** - Lunes 10am")
-                        st.write("- **COP HRD** - Martes 10am")
-                        st.write("- **COP DRD** - Miércoles 10am")
-                        st.write("- **COP CTG** - Jueves 10am")
+                        str_app.write("**Horarios de sesiones COP:**")
+                        str_app.write("- **COP CYL** - Lunes 10am")
+                        str_app.write("- **COP HRD** - Martes 10am")
+                        str_app.write("- **COP DRD** - Miércoles 10am")
+                        str_app.write("- **COP CTG** - Jueves 10am")
 
                     elif cop_limpio == "¿Qué material debo llevar al COP?":
-                        st.write("Para la sesión del COP, se recomienda preparar una presentación breve que permita explicar claramente el caso, el alcance del cambio y su propósito.")
-                        st.write("Es importante incluir la siguiente información:")
-                        st.write("- **Descripción del cambio:** explicar qué se desea modificar, por qué es necesario y cuál es el objetivo esperado.")
-                        st.write("- **Flujo de trabajo (Workflow):** incluir, preferiblemente, el flujo actual y/o propuesto para facilitar la comprensión del proceso y de los cambios requeridos.")
-                        st.write("- **Documentación de soporte:** adjuntar cualquier información, evidencia o referencia que ayude a los Modelers a comprender mejor el alcance y los requerimientos del cambio.")
-                        st.write("- **Fechas relevantes:** tener identificadas las fechas previstas de implementación, así como cualquier fecha límite o compromiso asociado al proyecto.")
-                        st.write("- **Impacto del cambio:** mencionar las áreas, procesos o sistemas que podrían verse involucrados, cuando corresponda.")
-                        st.info("💡 **Recomendación:** entre más clara y completa sea la información presentada, más efectiva será la evaluación del caso y la orientación que los Modelers puedan brindar durante la sesión.")
+                        str_app.write("Para la sesión del COP, se recomienda preparar una presentación breve que permita explicar claramente el caso, el alcance del cambio y su propósito.")
+                        str_app.write("Es importante incluir la siguiente información:")
+                        str_app.write("- **Descripción del cambio:** explicar qué se desea modificar, por qué es necesario y cuál es el objetivo esperado.")
+                        str_app.write("- **Flujo de trabajo (Workflow):** incluir, preferiblemente, el flujo actual y/o propuesto para facilitar la comprensión del proceso y de los cambios requeridos.")
+                        str_app.write("- **Documentación de soporte:** adjuntar cualquier información, evidencia o referencia que ayude a los Modelers a comprender mejor el alcance y los requerimientos del cambio.")
+                        str_app.write("- **Fechas relevantes:** tener identificadas las fechas previstas de implementación, así como cualquier fecha límite o compromiso asociado al proyecto.")
+                        str_app.write("- **Impacto del cambio:** mencionar las áreas, procesos o sistemas que podrían verse involucrados, cuando corresponda.")
+                        str_app.info("💡 **Recomendación:** entre más clara y completa sea la información presentada, más efectiva será la evaluación del caso y la orientación que los Modelers puedan brindar durante la sesión.")
 
                     elif cop_limpio == "Representantes por área":
-                        st.write("**Consulta de Representantes por Área y Site**")
+                        str_app.write("**Consulta de Representantes por Área y Site**")
                         sites_cop = ["Selecciona site...", "CTG", "CYL", "DRD", "HRD"]
-                        site_cop_sel = st.selectbox("Selecciona el site para los representantes:", sites_cop)
+                        site_cop_sel = str_app.selectbox("Selecciona el site para los representantes:", sites_cop)
                         
                         if site_cop_sel != "Selecciona site...":
                             areas_representantes = ["Boxing", "FP", "Labs", "Navegator", "Packaging", "ZWG"]
-                            rep_area_sel = st.selectbox("Selecciona el área para ver sus representantes:", ["Selecciona área..."] + areas_representantes)
+                            rep_area_sel = str_app.selectbox("Selecciona el área para ver sus representantes:", ["Selecciona área..."] + areas_representantes)
 
                             if rep_area_sel != "Selecciona área...":
                                 representantes_database = {
@@ -337,50 +337,50 @@ if st.session_state.pagina_actual == "principal":
                                 }
 
                                 rep_info = representantes_database.get(site_cop_sel, {}).get(rep_area_sel, {})
-                                st.write(f"**Representantes de {rep_area_sel} en {site_cop_sel}:**")
-                                st.write(f"- **Ing. Manufactura:** {rep_info.get('mfg', 'No asignado')}")
-                                st.write(f"- **Ing. Calidad:** {rep_info.get('qa', 'No asignado')}")
+                                str_app.write(f"**Representantes de {rep_area_sel} en {site_cop_sel}:**")
+                                str_app.write(f"- **Ing. Manufactura:** {rep_info.get('mfg', 'No asignado')}")
+                                str_app.write(f"- **Ing. Calidad:** {rep_info.get('qa', 'No asignado')}")
 
                     elif cop_limpio == "¿Cuándo debo llevar mi cambio o proyecto al COP?":
-                        st.write("Debes presentar tu cambio o proyecto en el COP cuando se presente alguna de las siguientes condiciones:")
-                        st.write("- **El cambio esté relacionado con un CAPA o un NCEP.**")
-                        st.write("- **Se trate de un cambio complejo que requiera evaluación o discusión multidisciplinaria.**")
-                        st.write("- **El Modeler recomiende presentar el cambio o proyecto ante el COP.**")
-                        st.write("- **Tengas dudas sobre el desarrollo, alcance o implementación del proyecto y necesites orientación, recomendaciones o acompañamiento para su adecuada ejecución.**")
+                        str_app.write("Debes presentar tu cambio o proyecto en el COP cuando se presente alguna de las siguientes condiciones:")
+                        str_app.write("- **El cambio esté relacionado con un CAPA o un NCEP.**")
+                        str_app.write("- **Se trate de un cambio complejo que requiera evaluación o discusión multidisciplinaria.**")
+                        str_app.write("- **El Modeler recomiende presentar el cambio o proyecto ante el COP.**")
+                        str_app.write("- **Tengas dudas sobre el desarrollo, alcance o implementación del proyecto y necesites orientación, recomendaciones o acompañamiento para su adecuada ejecución.**")
 
                     elif cop_limpio == "COP Leads":
-                        st.write("**Líderes de COP por cada Site:**")
-                        st.write("- **Lead de COP CTG:** Eduardo Jenkins")
-                        st.write("- **Lead de COP CYL:** Sergio Monge")
-                        st.write("- **Lead de COP DRD:** Rebeca Alfaro")
-                        st.write("- **Lead de COP HRD:** Amanda Solano")
+                        str_app.write("**Líderes de COP por cada Site:**")
+                        str_app.write("- **Lead de COP CTG:** Eduardo Jenkins")
+                        str_app.write("- **Lead de COP CYL:** Sergio Monge")
+                        str_app.write("- **Lead de COP DRD:** Rebeca Alfaro")
+                        str_app.write("- **Lead de COP HRD:** Amanda Solano")
 
             # --- MUG ---
             elif tipo_consulta_limpio == "MUG":
-                st.write("Para accesar al MUG haz click en el siguiente enlace: https://MUG.guide1234.com")
-                st.write("Si tienes feedback para la guía por favor contactar a uno de los modelers o deja tu comentario en la siguiente caja.")
-                st.text_area("Déjanos tus comentarios sobre MUG:", "", key="feedback_mug")
+                str_app.write("Para accesar al MUG haz click en el siguiente enlace: https://MUG.guide1234.com")
+                str_app.write("Si tienes feedback para la guía por favor contactar a uno de los modelers o deja tu comentario en la siguiente caja.")
+                str_app.text_area("Déjanos tus comentarios sobre MUG:", "", key="feedback_mug")
 
             # --- ON-CALL ---
             elif tipo_consulta_limpio == "On-call":
-                st.info("El servicio de oncall se da únicamente para líneas detenidas, en turno C, feriados y fines de semana.")
-                st.write("**Teléfonos de contacto:**")
-                st.write("- **CYL:** 8888-8881")
-                st.write("- **HRD:** 8888-8882")
-                st.write("- **CTG:** 8888-8883")
-                st.write("- **DRD:** 8888-8884")
-                st.warning("⚠️ Solo llamadas, no mensajes ni llamadas por WhatsApp.")
-                st.write("Al llamar asegúrese de abrir el tiquete primero con toda la evidencia y explicación del issue. Si no recibe respuesta por favor escalar el caso con el manager del departamento **Francisco Castro**.")
+                str_app.info("El servicio de oncall se da únicamente para líneas detenidas, en turno C, feriados y fines de semana.")
+                str_app.write("**Teléfonos de contacto:**")
+                str_app.write("- **CYL:** 8888-8881")
+                str_app.write("- **HRD:** 8888-8882")
+                str_app.write("- **CTG:** 8888-8883")
+                str_app.write("- **DRD:** 8888-8884")
+                str_app.warning("⚠️ Solo llamadas, no mensajes ni llamadas por WhatsApp.")
+                str_app.write("Al llamar asegúrese de abrir el tiquete primero con toda la evidencia y explicación del issue. Si no recibe respuesta por favor escalar el caso con el manager del departamento **Francisco Castro**.")
 
             # --- PATH ESCALATIONS ---
             elif tipo_consulta_limpio == "Path escalations":
-                st.write("Si necesita ayuda urgente con la aprobación de un incidente, work order, acceso, aprobación de máscara o aprobación de CN por favor contacte primero al site lead que corresponda o con el manager.")
-                st.info("Todas las escalaciones deben documentarse por correo con la explicación de porqué se le debe de dar prioridad.")
+                str_app.write("Si necesita ayuda urgente con la aprobación de un incidente, work order, acceso, aprobación de máscara o aprobación de CN por favor contacte primero al site lead que corresponda o con el manager.")
+                str_app.info("Todas las escalaciones deben documentarse por correo con la explicación de porqué se le debe de dar prioridad.")
 
-                st.markdown("### Preguntas sugeridas")
+                str_app.markdown("### Preguntas sugeridas")
 
-                with st.expander("Control de Escalaciones"):
-                    st.markdown("""
+                with str_app.expander("Control de Escalaciones"):
+                    str_app.markdown("""
                     **Site Leads designados:**
                     - **CTG:** Eduardo Jenkins
                     - **CYL:** Sergio Monge
@@ -392,28 +392,28 @@ if st.session_state.pagina_actual == "principal":
 
             # --- SHARE POINT TEC OPS ---
             elif tipo_consulta_limpio == "Share Point Tec Ops":
-                st.write("Visita nuestro share point a través del siguiente enlace: https://tecopssharepoint1234.com")
-                st.text_area("Déjanos tu feedback sobre Share Point:", "", key="feedback_sp")
+                str_app.write("Visita nuestro share point a través del siguiente enlace: https://tecopssharepoint1234.com")
+                str_app.text_area("Déjanos tu feedback sobre Share Point:", "", key="feedback_sp")
 
             # --- SLA WORK ORDERS ---
             elif tipo_consulta_limpio == "SLA Work Orders":
-                docs_input = st.text_input("¿Cuántos documentos vas a someter en el cambio?", "")
+                docs_input = str_app.text_input("¿Cuántos documentos vas a someter en el cambio?", "")
                 if docs_input:
                     if not docs_input.isdigit():
-                        st.error("Número inválido. Por favor, ingresa únicamente números enteros.")
+                        str_app.error("Número inválido. Por favor, ingresa únicamente números enteros.")
                     else:
                         num_docs = int(docs_input)
                         if 1 <= num_docs <= 4:
-                            st.success("El SLA es de **3 días**.")
+                            str_app.success("El SLA es de **3 días**.")
                         elif 5 <= num_docs <= 10:
-                            st.success("El SLA es de **5 días**.")
+                            str_app.success("El SLA es de **5 días**.")
                         elif 11 <= num_docs <= 20:
-                            st.success("El SLA es de **9 días**.")
+                            str_app.success("El SLA es de **9 días**.")
                         elif num_docs >= 21:
-                            st.warning("El SLA debe verse directamente con el modeler ya que es un proyecto.")
+                            str_app.warning("El SLA debe verse directamente con el modeler ya que es un proyecto.")
 
         # --- BANNER ACCESO A IA ---
-        st.markdown("""
+        str_app.markdown("""
         <div class="bot-card-banner">
             <h3 style="margin: 0 0 10px 0; color: #FFFFFF !important;">🤖 Asistente Virtual Inteligente Tec Ops</h3>
             <p style="margin: 0; color: #E0E6ED !important;">
@@ -422,84 +422,81 @@ if st.session_state.pagina_actual == "principal":
         </div>
         """, unsafe_allow_html=True)
 
-        if st.button("🤖 Abrir Chatbot de Asistencia Tec Ops", key="btn_abrir_chat"):
-            st.session_state.pagina_actual = "chatbot"
-            st.rerun()
+        if str_app.button("🤖 Abrir Chatbot de Asistencia Tec Ops", key="btn_abrir_chat"):
+            str_app.session_state.pagina_actual = "chatbot"
+            str_app.rerun()
 
         # --- SECCIÓN DE CALIFICACIÓN POR ESTRELLAS INTERACTIVA ---
-        st.markdown("<br>", unsafe_allow_html=True)
-        st.markdown("### ⭐ Califica tu experiencia con la aplicación")
+        str_app.markdown("<br>", unsafe_allow_html=True)
+        str_app.markdown("### ⭐ Califica tu experiencia con la aplicación")
         
         # Componente interactivo de estrellas integrado en Streamlit
-        feedback_estrella = st.feedback("stars", key="rating_stars")
+        feedback_estrella = str_app.feedback("stars", key="rating_stars")
 
         if feedback_estrella is not None:
             puntos = feedback_estrella + 1  # st.feedback devuelve índices de 0 a 4
-            if st.button("Enviar Calificación", key="btn_enviar_calif"):
+            if str_app.button("Enviar Calificación", key="btn_enviar_calif"):
                 if puntos <= 3:
-                    st.info("💡 ¡Muchas gracias por tu comentario! Ten por seguro que seguiremos mejorando, ya que la aplicación está en constante cambio para brindarte una mejor experiencia.")
+                    str_app.info("💡 ¡Muchas gracias por tu comentario! Ten por seguro que seguiremos mejorando, ya que la aplicación está en constante cambio para brindarte una mejor experiencia.")
                 else:
-                    st.success(f"¡Muchas gracias por calificar con {puntos} estrellas! Nos alegra que disfrutes de la aplicación.")
+                    str_app.success(f"¡Muchas gracias por calificar con {puntos} estrellas! Nos alegra que disfrutes de la aplicación.")
 
 
 # ==============================================================================
 # PÁGINA INDEPENDIENTE DEL CHATBOT
 # ==============================================================================
-elif st.session_state.pagina_actual == "chatbot":
+elif str_app.session_state.pagina_actual == "chatbot":
 
-    col_nav1, col_nav2, col_nav3 = st.columns([5, 2.5, 2.5])
+    col_nav1, col_nav2, col_nav3 = str_app.columns([5, 2.5, 2.5])
     with col_nav1:
-        st.title("🤖 Asistente Virtual Tec Ops")
-        st.caption("Inteligencia Artificial especializada para soporte de Tec Ops")
+        str_app.title("🤖 Asistente Virtual Tec Ops")
+        str_app.caption("Inteligencia Artificial especializada para soporte de Tec Ops")
     with col_nav2:
-        st.markdown("<br>", unsafe_allow_html=True)
-        if st.button("🗑️ Limpiar Chat", key="btn_limpiar"):
-            st.session_state.chat_messages = []
-            st.rerun()
+        str_app.markdown("<br>", unsafe_allow_html=True)
+        if str_app.button("🗑️ Limpiar Chat", key="btn_limpiar"):
+            str_app.session_state.chat_messages = []
+            str_app.rerun()
     with col_nav3:
-        st.markdown("<br>", unsafe_allow_html=True)
-        if st.button("⬅️ Menú Principal", key="btn_regresar"):
-            st.session_state.pagina_actual = "principal"
-            st.rerun()
+        str_app.markdown("<br>", unsafe_allow_html=True)
+        if str_app.button("⬅️ Menú Principal", key="btn_regresar"):
+            str_app.session_state.pagina_actual = "principal"
+            str_app.rerun()
 
-    st.markdown("---")
+    str_app.markdown("---")
 
-    # --- PILLS / SUGERENCIAS RÁPIDAS DE PREGUNTAS ---
-    st.write("**Consultas rápidas:**")
-    cp1, cp2, cp3 = st.columns(3)
+    # --- CONSULTAS RÁPIDAS (EN FORMATO VERTICAL) ---
+    str_app.write("**Consultas rápidas:**")
     prompt_sugerido = None
-    with cp1:
-        if st.button("📞 Ver teléfonos On-Call", key="pill1"):
-            prompt_sugerido = "¿Cuáles son los números de teléfono del servicio On-call?"
-    with cp2:
-        if st.button("📅 Horarios del COP", key="pill2"):
-            prompt_sugerido = "¿Cuáles son los horarios de las sesiones del COP por site?"
-    with cp3:
-        if st.button("👤 Ver Site Leads", key="pill3"):
-            prompt_sugerido = "¿Quiénes son los Site Leads de Tec Ops?"
+    
+    if str_app.button("📞 Ver teléfonos On-Call", key="pill1"):
+        prompt_sugerido = "¿Cuáles son los números de teléfono del servicio On-call?"
+    if str_app.button("📅 Horarios del COP", key="pill2"):
+        prompt_sugerido = "¿Cuáles son los horarios de las sesiones del COP por site?"
+    if str_app.button("👤 Ver Site Leads", key="pill3"):
+        prompt_sugerido = "¿Quiénes son los Site Leads de Tec Ops?"
 
     api_key = os.environ.get("GEMINI_API_KEY")
 
     if not api_key:
-        st.info("ℹ️ Para habilitar el Chatbot, asegura la configuración de la clave en Streamlit Secrets o como variable de entorno `GEMINI_API_KEY`.")
+        str_app.info("ℹ️ Para habilitar el Chatbot, asegura la configuración de la clave en Streamlit Secrets o como variable de entorno `GEMINI_API_KEY`.")
     else:
-        if "chat_messages" not in st.session_state:
-            st.session_state.chat_messages = []
+        if "chat_messages" not in str_app.session_state:
+            str_app.session_state.chat_messages = []
 
         # Historial de mensajes
-        for message in st.session_state.chat_messages:
-            with st.chat_message(message["role"]):
-                st.markdown(message["content"])
+        for message in str_app.session_state.chat_messages:
+            with str_app.chat_message(message["role"]):
+                str_app.markdown(message["content"])
 
         # Captura de entrada del usuario o botón sugerido
-        user_prompt = st.chat_input("Escribe tu consulta sobre Tec Ops...") or prompt_sugerido
+        user_prompt = str_app.chat_input("Escribe tu consulta sobre Tec Ops...") or prompt_sugerido
 
         if user_prompt:
-            st.session_state.chat_messages.append({"role": "user", "content": user_prompt})
-            with st.chat_message("user"):
-                st.markdown(user_prompt)
+            str_app.session_state.chat_messages.append({"role": "user", "content": user_prompt})
+            with str_app.chat_message("user"):
+                str_app.markdown(user_prompt)
 
-            with st.chat_message("assistant"):
+            with str_app.chat_message("assistant"):
                 try:
                     client = genai.Client(api_key=api_key)
                     
@@ -532,10 +529,10 @@ elif st.session_state.pagina_actual == "chatbot":
                         contents=f"{contexto_tec_ops}\n\nPregunta del usuario: {user_prompt}",
                     )
                     assistant_response = response.text
-                    st.markdown(assistant_response)
-                    st.session_state.chat_messages.append({"role": "assistant", "content": assistant_response})
+                    str_app.markdown(assistant_response)
+                    str_app.session_state.chat_messages.append({"role": "assistant", "content": assistant_response})
                 except Exception as e:
                     if "429" in str(e) or "RESOURCE_EXHAUSTED" in str(e):
-                        st.warning("⚠️ En este momento el asistente ha alcanzado el límite diario de consultas de la API. Por favor, intenta de nuevo más tarde.")
+                        str_app.warning("⚠️ En este momento el asistente ha alcanzado el límite diario de consultas de la API. Por favor, intenta de nuevo más tarde.")
                     else:
-                        st.error(f"Error al conectar con el servicio de IA: {e}")
+                        str_app.error(f"Error al conectar con el servicio de IA: {e}")
