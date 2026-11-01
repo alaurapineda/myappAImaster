@@ -477,7 +477,7 @@ else:
                 
                 # Llamada directa al modelo usando gemini-3.8-flash
                 response = client.models.generate_content(
-                    model="gemini-3.9-flash",
+                    model="gemini-3.8-flash",
                     contents=user_prompt,
                 )
                 assistant_response = response.text
