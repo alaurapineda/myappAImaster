@@ -78,7 +78,7 @@ textarea,
     color: #000000 !important;
 }
 
-/* Botones con brillo futurista MedTech */
+/* Botones con brillo futurista MedTech (Acción principal) */
 .stButton > button {
     background: linear-gradient(135deg, #00E5FF 0%, #0052CC 100%) !important;
     color: #FFFFFF !important;
@@ -99,22 +99,40 @@ textarea,
     transform: translateY(-2px) !important;
 }
 
+/* Botones de envío dentro de formularios (MUG y Share Point) con texto legible oscuro */
+[data-testid="stFormSubmitButton"] > button {
+    background: linear-gradient(135deg, #00E5FF 0%, #0052CC 100%) !important;
+    color: #FFFFFF !important;
+}
+
+[data-testid="stFormSubmitButton"] > button * {
+    color: #FFFFFF !important;
+    font-weight: 700 !important;
+}
+
 [data-testid="stAlert"] p,
 [data-testid="stAlert"] strong {
     color: #F0F4F8 !important;
 }
 
+/* Legibilidad perfecta en los Expanders (Preguntas sugeridas) */
 [data-testid="stExpander"] summary,
 [data-testid="stExpander"] summary p,
-[data-testid="stExpander"] [data-testid="stMarkdownContainer"],
-[data-testid="stExpander"] p,
-[data-testid="stExpander"] li,
-[data-testid="stExpander"] strong {
+[data-testid="stExpander"] summary span {
+    color: #F0F4F8 !important;
+    font-weight: 600 !important;
+}
+
+[data-testid="stExpander"] [data-testid="stMarkdownContainer"] p,
+[data-testid="stExpander"] [data-testid="stMarkdownContainer"] li,
+[data-testid="stExpander"] [data-testid="stMarkdownContainer"] strong {
     color: #000000 !important;
 }
 
 [data-testid="stExpander"] [data-testid="stExpanderDetails"] {
-    padding: 12px 22px !important;
+    background-color: #FFFFFF !important;
+    border-radius: 0 0 12px 12px !important;
+    padding: 15px !important;
 }
 
 /* === ESTILOS PARA EL CHATBOT === */
