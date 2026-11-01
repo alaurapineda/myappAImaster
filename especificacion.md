@@ -62,6 +62,3 @@ Automatización de la aprobación automática de órdenes de trabajo en sistemas
 
 ## 9. Despliegue
 Ruta: Ruta A (Streamlit Community Cloud) mediante repositorio de GitHub.
-
-- **Ruta:** [A (Streamlit Community Cloud) · B (Hugging Face Spaces)]
-- **Si trabajáis en equipo (opcional):** [qué app o funcionalidad construye cada persona]
