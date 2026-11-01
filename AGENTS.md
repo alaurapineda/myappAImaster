@@ -4,7 +4,7 @@
 
 ## Qué es este proyecto
 
-[Una frase: qué problema resuelve y para quién. Ejemplo: "Asistente que responde las dudas de los vecinos de la asociación X a partir de sus estatutos".]
+Portal web interactivo en Streamlit que centraliza consultas que tienen los ingenieros y clientes del departamento de Tec Ops, como por ejemplo modelers por área, tiempos de SLA para work orders, normativas COP, guías MUG, escalaciones, contactos on-call y un asistente virtual inteligente basado en IA.
 
 ## Cómo está hecho
 
@@ -28,12 +28,10 @@
 - Ruta A: `streamlit run app.py` en local (con `.streamlit/secrets.toml`), o haz push y revisa la app en Streamlit Cloud.
 - Ruta B: `python app.py` con `GEMINI_API_KEY` exportada, o sube los archivos al Space.
 - Casos de prueba (entrada → lo que esperamos):
-  1. [entrada] → [respuesta esperada]
-  2. [entrada] → [respuesta esperada]
-  3. [entrada fuera de tema] → [la app dice amablemente que no puede ayudar con eso]
-
+1. Usuario BSC válido + consulta de modeler para Packaging en CTG → Muestra el nombre correcto del modeler (Ana Pineda).
+2. SLA Work Orders con 25 documentos ingresados → Muestra la advertencia indicando que el cambio se clasifica como proyecto y debe coordinarse directamente con el modeler del área.
+3. Pregunta fuera de tema al Chatbot de IA ("¿Cómo preparar una receta de cocina?") → El asistente responde con amabilidad corporativa ofreciendo ayuda dentro del ámbito de Tec Ops o contactando al manager Francisco Castro.
 ## Qué no hacer
-
 - No borres ni reescribas el README sin preguntar.
 - No cambies el modelo ni la arquitectura sin preguntar.
 - No hagas push ni despliegues sin que yo lo haya revisado.
