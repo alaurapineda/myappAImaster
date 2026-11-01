@@ -9,10 +9,10 @@
 ## Cómo está hecho
 
 - Python 3.12.
-- Interfaz: [Streamlit (ruta A) | Gradio (ruta B)].
+- Interfaz: Streamlit.
 - IA: API de Gemini con el SDK `google-genai`. El modelo está en la constante `MODELO` de `app.py`.
 - Archivos: `app.py` (toda la app), `requirements.txt` (dependencias) y `README.md`.
-- La especificación completa está en [enlace a vuestra especificación].
+- La especificación completa está en https://github.com/alaurapineda/myappAImaster/blob/main/especificacion.md.
 
 ## Reglas
 
