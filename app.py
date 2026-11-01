@@ -430,29 +430,23 @@ if st.session_state.pagina_actual == "principal":
             st.session_state.pagina_actual = "chatbot"
             st.rerun()
 
-        # --- SECCIÓN DE CALIFICACIÓN POR ESTRELLAS ---
+        # --- SECCIÓN DE CALIFICACIÓN POR ESTRELLAS INTERACTIVA ---
         st.markdown("<br>", unsafe_allow_html=True)
         st.markdown("### ⭐ Califica tu experiencia con la aplicación")
         
-        with st.container():
-            col_estrellas, col_enviar = st.columns([3, 1])
-            with col_estrellas:
-                calificacion = st.selectbox(
-                    "Selecciona una puntuación:",
-                    ["⭐ - Muy insatisfecho", "⭐⭐ - Insatisfecho", "⭐⭐⭐ - Neutral", "⭐⭐⭐⭐ - Satisfecho", "⭐⭐⭐⭐⭐ - Excelente"],
-                    key="select_calificacion"
-                )
-            with col_enviar:
-                st.markdown("<br>", unsafe_allow_html=True)
-                if st.button("Enviar Calificación", key="btn_enviar_calif"):
-                    puntos = len(calificacion.split()[0]) # Cuenta las estrellas seleccionadas
-                    st.session_state.calificaciones.append(puntos)
-                    st.success("¡Muchas gracias por calificar la aplicación!")
+        # Componente interactivo de estrellas integrado en Streamlit
+        feedback_estrella = st.feedback("stars", key="rating_stars")
 
-            # Mostrar promedio si hay calificaciones
-            if st.session_state.calificaciones:
-                promedio = sum(st.session_state.calificaciones) / len(st.session_state.calificaciones)
-                st.caption(f"Puntuación promedio de la app: **{promedio:.1f} / 5.0** (Basado en {len(st.session_state.calificaciones)} valoraciones)")
+        if feedback_estrella is not None:
+            puntos = feedback_estrella + 1  # st.feedback devuelve índices de 0 a 4
+            if st.button("Enviar Calificación", key="btn_enviar_calif"):
+                st.session_state.calificaciones.append(puntos)
+                st.success(f"¡Muchas gracias por calificar con {puntos} estrellas!")
+
+        # Mostrar promedio si hay calificaciones
+        if st.session_state.calificaciones:
+            promedio = sum(st.session_state.calificaciones) / len(st.session_state.calificaciones)
+            st.caption(f"Puntuación promedio de la app: **{promedio:.1f} / 5.0** (Basado en {len(st.session_state.calificaciones)} valoraciones)")
 
 
 # ==============================================================================
