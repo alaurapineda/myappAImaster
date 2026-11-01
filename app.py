@@ -190,7 +190,11 @@ else:
                     st.write("- **Tengas dudas sobre el desarrollo, alcance o implementación del proyecto y necesites orientación, recomendaciones o acompañamiento para su adecuada ejecución.**")
 
                 elif cop_limpio == "COP Leads":
-                    st.write("Contacta a los líderes de COP de tu respectivo site para más información.")
+                    st.write("**Líderes de COP por cada Site:**")
+                    st.write("- **Lead de COP CTG:** Eduardo Jenkins")
+                    st.write("- **Lead de COP CYL:** Sergio Monge")
+                    st.write("- **Lead de COP DRD:** Rebeca Alfaro")
+                    st.write("- **Lead de COP HRD:** Amanda Solano")
 
         # --- MUG ---
         elif tipo_consulta_limpio == "MUG":
