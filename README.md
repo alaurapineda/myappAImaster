@@ -1,4 +1,3 @@
-<img width="1440" height="900" alt="Captura de Pantalla 2026-11-01 a la(s) 17 37 55" src="https://github.com/user-attachments/assets/b837b3b3-4f25-41b6-9ffb-9ba062cff1b3" />
 **Aplicación de consultas Tec Ops**
 
 **Enlace a la app:** [https://…streamlit.app o https://…hf.space](https://myappaimaster-7fbuupho2edbt8g9b87dzp.streamlit.app/)
