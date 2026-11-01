@@ -3,18 +3,24 @@ import streamlit as st
 from datetime import datetime
 from google import genai
 
-# --- CONFIGURACIÓN DE NAVEGACIÓN ---
+# --- CONFIGURACIÓN DE PÁGINA Y NAVEGACIÓN ---
+st.set_page_config(
+    page_title="Tec Ops Portal - MedTech Support",
+    page_icon="⚡",
+    layout="wide"
+)
+
 if "pagina_actual" not in st.session_state:
     st.session_state.pagina_actual = "principal"
 
-# --- CONFIGURACIÓN VISUAL GENERAL Y ESTILOS ---
+# --- CONFIGURACIÓN VISUAL GENERAL Y ESTILOS "TECH MED" ---
 st.markdown("""
 <style>
 
-/* Fondo principal azul medianoche */
+/* Fondo degradado Tech Med */
 .stApp,
 [data-testid="stAppViewContainer"] {
-    background-color: #191970 !important;
+    background: linear-gradient(135deg, #0B1021 0%, #121B36 50%, #1A264A 100%) !important;
 }
 
 /* Encabezado */
@@ -22,15 +28,38 @@ st.markdown("""
     background-color: transparent !important;
 }
 
-/* Texto general en blanco */
+/* Texto general en blanco suave */
 h1, h2, h3, h4, h5, h6,
 p, li, label,
 [data-testid="stMarkdownContainer"] {
-    color: #FFFFFF !important;
+    color: #F0F4F8 !important;
 }
 
-h1 { font-weight: 700 !important; }
+h1 { font-weight: 700 !important; letter-spacing: 0.5px; }
 h2, h3 { font-weight: 600 !important; }
+
+/* Tarjetas con efecto Vidrio / Glassmorphism */
+[data-testid="stAlert"], 
+[data-testid="stExpander"], 
+.bot-card-banner,
+div[data-testid="stMetricValue"] {
+    background: rgba(255, 255, 255, 0.04) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(0, 229, 255, 0.25) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Métricas en el Header */
+[data-testid="stMetric"] {
+    background: rgba(15, 23, 42, 0.6) !important;
+    border: 1px solid rgba(0, 229, 255, 0.2) !important;
+    border-radius: 14px !important;
+    padding: 12px 16px !important;
+}
+[data-testid="stMetricLabel"] { color: #94A3B8 !important; }
+[data-testid="stMetricValue"] { color: #00E5FF !important; font-weight: 700 !important; }
 
 /* === GARANTÍA DE LEGIBILIDAD EN INPUTS Y BOTONES === */
 
@@ -41,7 +70,7 @@ textarea,
     background-color: #FFFFFF !important;
     color: #000000 !important;
     -webkit-text-fill-color: #000000 !important;
-    border-radius: 8px !important;
+    border-radius: 10px !important;
     font-weight: 500 !important;
 }
 
@@ -50,7 +79,7 @@ textarea,
     background-color: #FFFFFF !important;
     color: #000000 !important;
     -webkit-text-fill-color: #000000 !important;
-    border-radius: 8px !important;
+    border-radius: 10px !important;
 }
 
 [role="listbox"],
@@ -59,42 +88,30 @@ textarea,
     color: #000000 !important;
 }
 
+/* Botones con brillo futurista MedTech */
 .stButton > button {
-    background-color: #FFFFFF !important;
-    color: #191970 !important;
-    border: 2px solid #191970 !important;
-    border-radius: 12px !important;
+    background: linear-gradient(135deg, #00E5FF 0%, #0052CC 100%) !important;
+    color: #FFFFFF !important;
+    border: none !important;
+    border-radius: 10px !important;
     font-weight: 700 !important;
-    padding: 8px 18px !important;
-    transition: all 0.2s ease-in-out !important;
+    padding: 8px 20px !important;
+    box-shadow: 0px 4px 15px rgba(0, 229, 255, 0.3) !important;
+    transition: all 0.25s ease-in-out !important;
 }
 
 .stButton > button * {
-    color: #191970 !important;
+    color: #FFFFFF !important;
 }
 
 .stButton > button:hover {
-    background-color: #EAF7F7 !important;
-    color: #191970 !important;
-    border-color: #4A90E2 !important;
-}
-
-[data-testid="stAlert"] {
-    background-color: #D9F0FA !important;
-    border-radius: 12px !important;
+    box-shadow: 0px 6px 20px rgba(0, 229, 255, 0.6) !important;
+    transform: translateY(-2px) !important;
 }
 
 [data-testid="stAlert"] p,
 [data-testid="stAlert"] strong {
-    color: #000000 !important;
-}
-
-[data-testid="stExpander"] {
-    background-color: #EAF7F7 !important;
-    border: 1px solid #D2EEEE !important;
-    border-radius: 20px !important;
-    margin-bottom: 14px !important;
-    overflow: hidden;
+    color: #F0F4F8 !important;
 }
 
 [data-testid="stExpander"] summary,
@@ -110,7 +127,7 @@ textarea,
     padding: 12px 22px !important;
 }
 
-/* === ESTILOS FORZADOS A LETRA NEGRA Y BARRA DE CHAT MÁS GRANDE === */
+/* === ESTILOS PARA EL CHATBOT === */
 
 [data-testid="stChatMessage"] {
     background-color: #FFFFFF !important;
@@ -130,7 +147,7 @@ textarea,
 }
 
 [data-testid="stBottomBlockContainer"] {
-    background-color: #191970 !important;
+    background-color: transparent !important;
     padding-bottom: 25px !important;
     padding-top: 10px !important;
 }
@@ -138,8 +155,8 @@ textarea,
 [data-testid="stChatInput"] {
     background-color: #FFFFFF !important;
     border-radius: 14px !important;
-    border: 2px solid #4A90E2 !important;
-    box-shadow: 0px 4px 15px rgba(0,0,0,0.3) !important;
+    border: 2px solid #00E5FF !important;
+    box-shadow: 0px 4px 20px rgba(0, 229, 255, 0.25) !important;
     padding: 4px !important;
 }
 
@@ -150,11 +167,11 @@ textarea,
 }
 
 .bot-card-banner {
-    background: linear-gradient(135deg, #1E3C72 0%, #2A5298 100%);
+    background: linear-gradient(135deg, rgba(0, 229, 255, 0.1) 0%, rgba(0, 114, 255, 0.2) 100%);
     border-radius: 20px;
     padding: 24px;
-    border: 1px solid #4A90E2;
-    box-shadow: 0px 8px 20px rgba(0,0,0,0.3);
+    border: 1px solid #00E5FF;
+    box-shadow: 0px 8px 25px rgba(0, 229, 255, 0.15);
     margin-top: 25px;
     margin-bottom: 15px;
 }
@@ -168,7 +185,21 @@ textarea,
 # ==============================================================================
 if st.session_state.pagina_actual == "principal":
 
-    st.title("Aplicación de consultas Tec Ops")
+    # --- HEADER TECH CON MÉTRICAS OPERACIONALES ---
+    st.title("⚡ Portal Operativo Tec Ops")
+    st.caption("Sistema Centralizado de Soporte y Consultas MedTech")
+
+    m1, m2, m3, m4 = st.columns(4)
+    with m1:
+        st.metric(label="Estado del Sistema", value="🟢 Operativo")
+    with m2:
+        st.metric(label="SLA Estimado", value="3 - 9 Días")
+    with m3:
+        st.metric(label="Servicio On-Call", value="Activo (24/7)")
+    with m4:
+        st.metric(label="Manager Depto.", value="F. Castro")
+
+    st.markdown("---")
 
     ahora = datetime.now().time()
     hora_actual = ahora.hour
@@ -371,30 +402,15 @@ if st.session_state.pagina_actual == "principal":
 
                 st.markdown("### Preguntas sugeridas")
 
-                with st.expander("❔ ¿Quiénes son los Site Leads?"):
+                with st.expander("Control de Escalaciones"):
                     st.markdown("""
                     **Site Leads designados:**
                     - **CTG:** Eduardo Jenkins
                     - **CYL:** Sergio Monge
                     - **DRD:** Rebeca Alfaro
                     - **HRD:** Amanda Solano
-                    """)
-
-                with st.expander("❔ ¿Quién es el Manager de Tec Ops?"):
-                    st.markdown("""
-                    El manager del departamento de Tec Ops es **Francisco Castro**. 
-                    Puedes escalar tu caso con él si, después de abrir el tiquete de soporte y seguir los canales correspondientes, no has obtenido respuesta.
-                    """)
-
-                with st.expander("❔ ¿Qué pasa si mi escalación ocurre un feriado o fin de semana?"):
-                    st.markdown("""
-                    **Protocolo para feriados y fines de semana**
-                    El servicio On-call está disponible para situaciones críticas de líneas detenidas, Turno C, feriados y fines de semana.
-                    **Contactos On-call:**
-                    - **CYL:** 8888-8881
-                    - **HRD:** 8888-8882
-                    - **CTG:** 8888-8883
-                    - **DRD:** 8888-8884
+                    
+                    **Manager:** Francisco Castro
                     """)
 
             # --- SHARE POINT TEC OPS ---
@@ -419,12 +435,12 @@ if st.session_state.pagina_actual == "principal":
                         elif num_docs >= 21:
                             st.warning("El SLA debe verse directamente con el modeler ya que es un proyecto.")
 
-        # --- BANNER Y BOTÓN PARA ABRIR EL CHATBOT ---
+        # --- BANNER ACCESO A IA ---
         st.markdown("""
         <div class="bot-card-banner">
-            <h3 style="margin: 0 0 10px 0; color: #FFFFFF !important;">🤖 ¿Necesitas asistencia personalizada?</h3>
+            <h3 style="margin: 0 0 10px 0; color: #FFFFFF !important;">🤖 Asistente Virtual Inteligente Tec Ops</h3>
             <p style="margin: 0; color: #E0E6ED !important;">
-                Consulta con nuestro asistente virtual inteligente especializado en <strong>Tec Ops</strong> para resolver cualquier duda sobre asignaciones, normas y procesos en tiempo real.
+                ¿Dudas sobre Modelers, COP o procedimientos? Consulta en tiempo real con nuestra Inteligencia Artificial oficial.
             </p>
         </div>
         """, unsafe_allow_html=True)
@@ -456,6 +472,20 @@ elif st.session_state.pagina_actual == "chatbot":
 
     st.markdown("---")
 
+    # --- PILLS / SUGERENCIAS RÁPIDAS DE PREGUNTAS ---
+    st.write("**Consultas rápidas:**")
+    cp1, cp2, cp3 = st.columns(3)
+    prompt_sugerido = None
+    with cp1:
+        if st.button("📞 Ver teléfonos On-Call", key="pill1"):
+            prompt_sugerido = "¿Cuáles son los números de teléfono del servicio On-call?"
+    with cp2:
+        if st.button("📅 Horarios del COP", key="pill2"):
+            prompt_sugerido = "¿Cuáles son los horarios de las sesiones del COP por site?"
+    with cp3:
+        if st.button("👤 Ver Site Leads", key="pill3"):
+            prompt_sugerido = "¿Quiénes son los Site Leads de Tec Ops?"
+
     api_key = os.environ.get("GEMINI_API_KEY")
 
     if not api_key:
@@ -464,11 +494,15 @@ elif st.session_state.pagina_actual == "chatbot":
         if "chat_messages" not in st.session_state:
             st.session_state.chat_messages = []
 
+        # Historial de mensajes
         for message in st.session_state.chat_messages:
             with st.chat_message(message["role"]):
                 st.markdown(message["content"])
 
-        if user_prompt := st.chat_input("Escribe tu consulta sobre Tec Ops..."):
+        # Captura de entrada del usuario o botón sugerido
+        user_prompt = st.chat_input("Escribe tu consulta sobre Tec Ops...") or prompt_sugerido
+
+        if user_prompt:
             st.session_state.chat_messages.append({"role": "user", "content": user_prompt})
             with st.chat_message("user"):
                 st.markdown(user_prompt)
@@ -502,7 +536,7 @@ elif st.session_state.pagina_actual == "chatbot":
                     """
 
                     response = client.models.generate_content(
-                        model="gemini-3.8-flash",
+                        model="gemini-1.5-flash",
                         contents=f"{contexto_tec_ops}\n\nPregunta del usuario: {user_prompt}",
                     )
                     assistant_response = response.text
