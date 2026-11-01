@@ -1,131 +1,123 @@
-import streamlit as st
-from datetime import datetime
+# CONFIGURACIÓN VISUAL GENERAL
+st.markdown("""
+<style>
 
-# Configuración de fondo azul medianoche y estilos de tarjetas FAQ
-st.markdown(
-    """
-    <style>
-    .stApp {
-        background-color: midnightblue; /* Color azul noche */
-    }
-    /* Asegurar legibilidad general */
-    .stApp, p, h1, h2, h3, h4, h5, h6, label {
-        color: #FFFFFF;
-    }
-    /* Estilo para los mensajes de recomendación (info) en celeste claro */
-    div[data-testid="stNotification"] {
-        background-color: #87CEFA !important;
-        color: #000000 !important;
-    }
-    div[data-testid="stNotification"] p {
-        color: #000000 !important;
-    }
+/* Fondo principal */
+.stApp,
+[data-testid="stAppViewContainer"] {
+    background-color: #191970 !important;
+}
 
-    /* --- ESTILOS DE ALTA FIDELIDAD PARA FAQ (CELESTE Y NEGRO) --- */
-    .faq-card-wrapper {
-        background-color: #E3F2FD !important; /* Fondo celeste suave */
-        border-radius: 50px !important;
-        padding: 12px 25px !important;
-        margin-bottom: 16px !important;
-        box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2) !important;
-        border: 1px solid #90CAF9 !important;
-    }
-    
-    /* Círculo azul de interrogación izquierdo */
-    .faq-circle-q-custom {
-        background-color: #1976D2 !important;
-        color: #FFFFFF !important;
-        border-radius: 50% !important;
-        width: 42px !important;
-        height: 42px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        font-weight: bold !important;
-        font-size: 20px !important;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
-        margin-top: 2px !important;
-    }
+/* Encabezado */
+[data-testid="stHeader"] {
+    background-color: transparent !important;
+}
 
-    /* Contenedor de la respuesta en fondo celeste pastel con letras negras */
-    .faq-answer-container-clean {
-        background-color: #E3F2FD !important; /* Mismo celeste consistente */
-        border-radius: 24px !important;
-        padding: 15px 25px !important;
-        border: 1px solid #90CAF9 !important;
-        margin-top: 10px !important;
-        margin-bottom: 5px !important;
-    }
-    
-    /* Forzar letras negras en todo el contenido de la tarjeta de preguntas y de las respuestas */
-    .faq-card-wrapper,
-    .faq-card-wrapper *,
-    .faq-answer-container-clean,
-    .faq-answer-container-clean *,
-    .faq-answer-text-custom,
-    .faq-answer-text-custom p,
-    .faq-answer-text-custom strong,
-    .faq-answer-text-custom li,
-    .faq-answer-text-custom ul,
-    .faq-answer-text-custom ol,
-    div[data-testid="column"] button * {
-        color: #000000 !important; /* Texto negro absoluto para una legibilidad perfecta */
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
-    }
+/* Texto general */
+h1, h2, h3, h4, h5, h6,
+p, li, label,
+[data-testid="stMarkdownContainer"] {
+    color: #FFFFFF !important;
+}
 
-    /* Estilo e interactividad sobre los botones de pregunta (ahora con letra negra garantizada) */
-    div[data-testid="column"] button {
-        background: transparent !important;
-        border: none !important;
-        padding: 0 !important;
-        margin: 0 !important;
-        width: 100% !important;
-        text-align: left !important;
-        box-shadow: none !important;
-        height: 44px !important;
-        color: #000000 !important; 
-        font-size: 17px !important;
-        font-weight: 600 !important;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
-        transition: color 0.2s ease !important;
-    }
-    
-    /* Botón circular celeste de control (+ / -) */
-    div[data-testid="column"] button.faq-trigger-btn {
-        background-color: #1976D2 !important; /* Azul para resaltar */
-        color: #FFFFFF !important;
-        border-radius: 50% !important;
-        width: 38px !important;
-        height: 38px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        font-size: 22px !important;
-        font-weight: bold !important;
-        line-height: 1 !important;
-        margin-top: 3px !important;
-        text-align: center !important;
-    }
-    
-    div[data-testid="column"] button.faq-trigger-btn * {
-        color: #FFFFFF !important; /* El signo + y - permanece blanco */
-    }
-    
-    div[data-testid="column"] button:hover {
-        background: transparent !important;
-        border: none !important;
-        color: #1976D2 !important;
-    }
-    div[data-testid="column"] button.faq-trigger-btn:hover {
-        background-color: #1565C0 !important;
-    }
-    div[data-testid="column"] p {
-        margin: 0 !important;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+/* Títulos */
+h1 {
+    font-weight: 700 !important;
+}
+
+h2, h3 {
+    font-weight: 600 !important;
+}
+
+/* Inputs: fondo blanco y texto oscuro */
+input,
+textarea,
+[data-baseweb="input"] input {
+    background-color: #FFFFFF !important;
+    color: #202020 !important;
+    -webkit-text-fill-color: #202020 !important;
+    border-radius: 8px !important;
+}
+
+/* Etiquetas de los campos */
+[data-testid="stTextInput"] label,
+[data-testid="stTextArea"] label,
+[data-testid="stSelectbox"] label {
+    color: #FFFFFF !important;
+}
+
+/* Dropdowns */
+[data-baseweb="select"] {
+    background-color: #FFFFFF !important;
+    border-radius: 8px !important;
+}
+
+[data-baseweb="select"] * {
+    color: #202020 !important;
+}
+
+/* Opciones de los dropdowns */
+[role="listbox"],
+[role="option"] {
+    background-color: #FFFFFF !important;
+    color: #202020 !important;
+}
+
+/* Botones */
+.stButton > button {
+    border-radius: 10px !important;
+    font-weight: 600 !important;
+}
+
+/* Alertas informativas */
+[data-testid="stAlert"] {
+    background-color: #D9F0FA !important;
+    border-radius: 12px !important;
+}
+
+[data-testid="stAlert"] p,
+[data-testid="stAlert"] strong {
+    color: #172B3A !important;
+}
+
+/* FAQ: tarjetas claras */
+[data-testid="stExpander"] {
+    background-color: #EAF7F7 !important;
+    border: 1px solid #D2EEEE !important;
+    border-radius: 28px !important;
+    margin-bottom: 16px !important;
+    overflow: hidden;
+}
+
+/* Texto de las preguntas */
+[data-testid="stExpander"] summary,
+[data-testid="stExpander"] summary p {
+    color: #172B3A !important;
+    font-size: 17px !important;
+    font-weight: 600 !important;
+}
+
+/* Respuestas FAQ */
+[data-testid="stExpander"] [data-testid="stMarkdownContainer"],
+[data-testid="stExpander"] p,
+[data-testid="stExpander"] li,
+[data-testid="stExpander"] strong {
+    color: #172B3A !important;
+}
+
+/* Separación interna de las respuestas */
+[data-testid="stExpander"] [data-testid="stExpanderDetails"] {
+    padding: 12px 22px !important;
+}
+
+/* Texto procesado */
+[data-testid="stTextArea"] textarea {
+    background-color: #FFFFFF !important;
+    color: #202020 !important;
+}
+
+</style>
+""", unsafe_allow_html=True)
 
 st.title("Aplicación de consultas Tec Ops")
 
