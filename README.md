@@ -5,7 +5,7 @@
 
 ## Pitch
 
-[Cinco frases: el problema y quién lo tiene, qué hace la app, qué aporta la IA, qué aprendisteis de la prueba y qué haríais después, con un dato o un ejemplo.]
+El departamento de Tec Ops se enfrenta a la dispersión de información sobre sus servicios y canales de contacto, lo que retrasa la resolución de incidentes críticos. Esta aplicación web interactiva en Streamlit centraliza consultas generales que se han identificado como las más repetidas por sus clientes dentro de la empresa. La pieza de IA aporta un Asistente Virtual empático y especializado que resuelve dudas en tiempo real usando un contexto técnico interno optimizado. De las pruebas aprendí la importancia crítica de cuidar los contrastes visuales (CSS) y la robustez de los formularios; como siguientes pasos, planeo integrar bases de datos corporativas en tiempo real y automatizar las métricas del departamento.
 
 ## El problema
 
