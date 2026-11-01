@@ -482,7 +482,7 @@ if str_app.session_state.pagina_actual == "principal":
                         elif 11 <= num_docs <= 20:
                             str_app.success("El SLA es de **9 días**.")
                         elif num_docs >= 21:
-                            str_app.warning("El SLA debe verse directamente con el modeler ya que es un proyecto.")
+                            str_app.warning("⚠️ Al tratarse de 21 documentos o más, este cambio se clasifica como un proyecto. La fecha de entrega y el SLA correspondiente deben coordinarse directamente con el Modeler asignado.")
 
         # --- BANNER ACCESO A IA ---
         str_app.markdown("""
