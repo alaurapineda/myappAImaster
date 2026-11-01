@@ -467,18 +467,24 @@ else:
 
     # Capturar la entrada del usuario de forma limpia
     if user_prompt := st.chat_input("Escribe tu consulta para el asistente..."):
-        st.session_state.chat_messages.append({"role": "user", "content": user_prompt})
-        with st.chat_message("user"):
-            st.markdown(user_prompt)
+    st.session_state.chat_messages.append({"role": "user", "content": user_prompt})
+    with st.chat_message("user"):
+        st.markdown(user_prompt)
 
-        with st.chat_message("assistant"):
-            try:
-                client = genai.Client(api_key=api_key)
-                
-                # Llamada directa al modelo usando gemini-3.8-flash
-                response = client.models.generate_content(
-                    model="gemini-3.8-flash",
-                    contents=user_prompt,
+    with st.chat_message("assistant"):
+        try:
+            client = genai.Client(api_key=api_key)
+            
+            # Envía directamente el texto del usuario para evitar errores internos del historial
+            response = client.models.generate_content(
+                model="gemini-2.5-flash",
+                contents=user_prompt,
+            )
+            assistant_response = response.text
+            st.markdown(assistant_response)
+            st.session_state.chat_messages.append({"role": "assistant", "content": assistant_response})
+        except Exception as e:
+            st.error(f"Error al conectar con Gemini: {e}")
                 )
                 assistant_response = response.text
                 st.markdown(assistant_response)
