@@ -121,13 +121,18 @@ textarea,
     color: #202020 !important;
 }
 
-/* Estilos para el Chatbot */
+/* Estilos mejorados para el Chatbot (Burbujas blancas y legibles) */
 [data-testid="stChatMessage"] {
+    background-color: #FFFFFF !important;
     border-radius: 12px !important;
-    padding: 10px 14px !important;
-    margin-bottom: 10px !important;
+    padding: 12px 16px !important;
+    margin-bottom: 12px !important;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.15) !important;
 }
-[data-testid="stChatMessage"] p {
+[data-testid="stChatMessage"] p, 
+[data-testid="stChatMessage"] li, 
+[data-testid="stChatMessage"] span, 
+[data-testid="stChatMessage"] strong {
     color: #202020 !important;
 }
 </style>
@@ -148,7 +153,6 @@ elif 12 <= hora_actual < 18 or (hora_actual == 18 and minuto_actual == 0):
 else:
     saludo = "¡Bienvenido, buenas noches!"
 
-# Mostrar el saludo dinámico
 st.subheader(saludo)
 
 # 1. Entrada de usuario BSC
@@ -157,7 +161,6 @@ usuario_bsc = st.text_input("Escribe tu usuario BSC:", "").strip()
 if not usuario_bsc:
     st.warning("Para continuar por favor ingresa tu usuario BSC")
 else:
-    # 2. Dropdown ordenado alfabéticamente y enumerado
     opciones_base = [
         "Consulta de modeler por área",
         "SLA Work Orders",
@@ -357,7 +360,6 @@ else:
             with st.expander("❔ ¿Quiénes son los Site Leads?"):
                 st.markdown("""
                 **Site Leads designados:**
-
                 - **CTG:** Eduardo Jenkins
                 - **CYL:** Sergio Monge
                 - **DRD:** Rebeca Alfaro
@@ -366,44 +368,24 @@ else:
 
             with st.expander("❔ ¿Quién es el Manager de Tec Ops?"):
                 st.markdown("""
-                El manager del departamento de Tec Ops es 
-                **Francisco Castro**. 
-
-                Puedes escalar tu caso con él si, después de abrir 
-                el tiquete de soporte y seguir los canales de 
-                atención correspondientes, no has obtenido respuesta.
+                El manager del departamento de Tec Ops es **Francisco Castro**. 
+                Puedes escalar tu caso con él si, después de abrir el tiquete de soporte y seguir los canales correspondientes, no has obtenido respuesta.
                 """)
 
             with st.expander("❔ ¿Qué pasa si mi escalación ocurre un feriado o fin de semana?"):
                 st.markdown("""
                 **Protocolo para feriados y fines de semana**
-
-                El servicio On-call está disponible para situaciones 
-                críticas de líneas detenidas, durante el Turno C, 
-                feriados y fines de semana.
-
-                **Pasos a seguir:**
-
-                1. Abre el tiquete correspondiente con toda la 
-                   evidencia y descripción del problema.
-                2. Contacta telefónicamente al servicio On-call 
-                   de tu respectivo site.
-
+                El servicio On-call está disponible para situaciones críticas de líneas detenidas, Turno C, feriados y fines de semana.
                 **Contactos On-call:**
-
                 - **CYL:** 8888-8881
                 - **HRD:** 8888-8882
                 - **CTG:** 8888-8883
                 - **DRD:** 8888-8884
-
-                **Importante:** únicamente llamadas telefónicas. 
-                No se atienden mensajes ni llamadas por WhatsApp.
                 """)
 
         # --- SHARE POINT TEC OPS ---
         elif tipo_consulta_limpio == "Share Point Tec Ops":
             st.write("Visita nuestro share point a través del siguiente enlace: https://tecopssharepoint1234.com")
-            st.write("Si tienes feedback para la guía por favor contactar a uno de los modelers o deja tu comentario en la siguiente caja.")
             st.text_area("Déjanos tu feedback sobre Share Point:", "", key="feedback_sp")
 
         # --- SLA WORK ORDERS ---
@@ -411,7 +393,7 @@ else:
             docs_input = st.text_input("¿Cuántos documentos vas a someter en el cambio?", "")
             if docs_input:
                 if not docs_input.isdigit():
-                    st.error("Número inválido. Por favor, ingresa únicamente números enteros sin letras, comas ni signos.")
+                    st.error("Número inválido. Por favor, ingresa únicamente números enteros.")
                 else:
                     num_docs = int(docs_input)
                     if 1 <= num_docs <= 4:
@@ -421,46 +403,36 @@ else:
                     elif 11 <= num_docs <= 20:
                         st.success("El SLA es de **9 días**.")
                     elif num_docs >= 21:
-                        st.warning("El SLA debe verse directamente con el modeler ya que por la cantidad de markups el mismo sería un proyecto.")
-                    else:
-                        st.error("Por favor ingresa un número mayor a 0.")
+                        st.warning("El SLA debe verse directamente con el modeler ya que es un proyecto.")
 
-    # 3. Caja de texto para procesar (máximo 1000 caracteres)
+    # 3. Caja de texto para procesar
     st.markdown("---")
     texto_entrada = st.text_area("Escribe el texto a procesar (máx. 1000 caracteres):", "", max_chars=1000)
-
-    # Procesamiento del texto (en mayúsculas)
     texto_mayusculas = texto_entrada.upper()
-
-    # Desplegar resultado procesado
     st.subheader("Resultado del procesamiento")
     st.text_area("Texto procesado (en mayúsculas):", value=texto_mayusculas, height=150)
 
-    # Mostrar resumen de datos del formulario
     if st.button("Mostrar Resumen"):
         st.write(f"**Usuario BSC:** {usuario_bsc}")
         st.write(f"**Tipo de Consulta:** {tipo_consulta}")
-        st.write(f"**Longitud del texto:** {len(texto_entrada)} caracteres")
 
-# --- CHATBOT CON GEMINI ---
+# --- CHATBOT CON GEMINI EXPERTO EN TEC OPS ---
 st.markdown("---")
 st.markdown("### ¿Necesitas ayuda extra?")
-st.write("Chatea con nuestro asistente de IA impulsado por Gemini para resolver cualquier duda adicional sobre operaciones técnicas.")
+st.write("Chatea con nuestro asistente de IA experto en Tec Ops para resolver cualquier duda sobre modelers, horarios COP, on-call y más.")
 
 api_key = os.environ.get("GEMINI_API_KEY")
 
 if not api_key:
-    st.info("ℹ️ Para habilitar el Chatbot, asegúrate de configurar la clave en Streamlit Secrets o como variable de entorno `GEMINI_API_KEY`.")
+    st.info("ℹ️ Para habilitar el Chatbot, configura la clave en Streamlit Secrets o como variable de entorno `GEMINI_API_KEY`.")
 else:
     if "chat_messages" not in st.session_state:
         st.session_state.chat_messages = []
 
-    # Mostrar mensajes anteriores
     for message in st.session_state.chat_messages:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
 
-    # Capturar la entrada del usuario de forma limpia
     if user_prompt := st.chat_input("Escribe tu consulta para el asistente..."):
         st.session_state.chat_messages.append({"role": "user", "content": user_prompt})
         with st.chat_message("user"):
@@ -470,22 +442,33 @@ else:
             try:
                 client = genai.Client(api_key=api_key)
                 
-                # Contexto o instrucciones base para que el chatbot sea experto en Tec Ops
+                # Contexto completo de Tec Ops para que Gemini responda con precisión absoluta
                 contexto_tec_ops = """
-                Eres el asistente virtual experto en Tec Ops. Tienes la siguiente información oficial:
+                Eres el asistente virtual experto y oficial de Tec Ops. Debes responder con base en la siguiente información de la empresa:
                 - Modelers por site y área:
                   * CTG: Packaging (Ana Pineda), Boxing (Carlos Alvarado), FP (Victor Campos), ZWG (Jose Acuña), Labs (Sofía Soto), Navegator (Brayan Sanchez)
                   * CYL: Packaging (Mauricio Solís), Boxing (Juan Hernández), FP (Mariana Rojas), ZWG (Esteban Chaves), Labs (Gabriela Quirós), Navegator (Andrés Fonseca)
                   * DRD: Packaging (Valeria Gamboa), Boxing (Roberto Delgado), FP (Natalia Esquivel), ZWG (Kenneth Barboza), Labs (Daniela Meléndez), Navegator (Alejandro Orozco)
                   * HRD: Packaging (Lucía Mora), Boxing (Felipe Herrera), FP (Diego Gutiérrez), ZWG (Tatiana Vargas), Labs (Melissa Blanco), Navegator (Ricardo Brenes)
-                - Horarios COP: CYL (Lunes 10am), HRD (Martes 10am), DRD (Miércoles 10am), CTG (Jueves 10am).
-                - COP Leads: CTG (Eduardo Jenkins), CYL (Sergio Monge), DRD (Rebeca Alfaro), HRD (Amanda Solano).
+                - Horarios de sesiones COP:
+                  * COP CYL - Lunes 10am
+                  * COP HRD - Martes 10am
+                  * COP DRD - Miércoles 10am
+                  * COP CTG - Jueves 10am
+                - COP Leads (y Site Leads):
+                  * CTG: Eduardo Jenkins
+                  * CYL: Sergio Monge
+                  * DRD: Rebeca Alfaro
+                  * HRD: Amanda Solano
                 - Manager de Tec Ops: Francisco Castro.
-                - On-call: Exclusivo para líneas detenidas (CYL: 8888-8881, HRD: 8888-8882, CTG: 8888-8883, DRD: 8888-8884). Solo llamadas.
-                Responde de manera amable, profesional y directa a cualquier duda relacionada con operaciones técnicas de la empresa.
+                - Servicio On-call (exclusivo para líneas detenidas en Turno C, feriados y fines de semana. Solo llamadas telefónicas, no WhatsApp):
+                  * CYL: 8888-8881
+                  * HRD: 8888-8882
+                  * CTG: 8888-8883
+                  * DRD: 8888-8884
+                Responde de manera amable, precisa y útil a cualquier pregunta relacionada con estos datos.
                 """
 
-                # Incluimos las instrucciones de sistema en la llamada
                 response = client.models.generate_content(
                     model="gemini-3.8-flash",
                     contents=f"{contexto_tec_ops}\n\nPregunta del usuario: {user_prompt}",
