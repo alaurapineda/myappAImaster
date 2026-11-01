@@ -184,6 +184,20 @@ textarea,
     margin-bottom: 15px;
 }
 
+/* Caja de explicaciones con fondo celeste */
+.celeste-box {
+    background-color: rgba(0, 229, 255, 0.12) !important;
+    border: 1px solid #00E5FF !important;
+    border-radius: 12px !important;
+    padding: 18px !important;
+    margin-bottom: 15px !important;
+    color: #F0F4F8 !important;
+}
+
+.celeste-box p, .celeste-box strong {
+    color: #F0F4F8 !important;
+}
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -376,10 +390,17 @@ if str_app.session_state.pagina_actual == "principal":
             # --- MUG ---
             elif tipo_consulta_limpio == "MUG":
                 str_app.write("Para accesar al MUG haz click en el siguiente enlace: https://MUG.guide1234.com")
+                
+                # Bloque con fondo celeste y emoji de importancia
                 str_app.markdown("""
-                **¿Qué es el MUG (Mark Ups Guide)?**  
-                Es una guía interactiva que sirve de apoyo visual para realizar los markups. Cabe destacar que la misma **no reemplaza el procedimiento B1009040**.
-                """)
+                <div class="celeste-box">
+                    <p style="margin: 0; font-size: 15px;">
+                        📌 <strong>¿Qué es el MUG (Mark Ups Guide)?</strong><br>
+                        Es una guía interactiva que sirve de apoyo visual para realizar los markups. Cabe destacar que la misma <strong>no reemplaza el procedimiento B1009040</strong>.
+                    </p>
+                </div>
+                """, unsafe_allow_html=True)
+
                 str_app.write("Si tienes feedback para la guía por favor contactar a uno de los modelers o deja tu comentario en la siguiente caja.")
                 
                 with str_app.form(key="form_feedback_mug"):
