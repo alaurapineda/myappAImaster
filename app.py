@@ -34,7 +34,6 @@ h2, h3 { font-weight: 600 !important; }
 
 /* === GARANTÍA DE LEGIBILIDAD EN INPUTS Y BOTONES === */
 
-/* Entradas de texto (Inputs y Textareas): Fondo blanco y letra oscura */
 input,
 textarea,
 [data-baseweb="input"] input,
@@ -46,7 +45,6 @@ textarea,
     font-weight: 500 !important;
 }
 
-/* Listas desplegables (Selectbox): Fondo blanco y texto oscuro */
 [data-baseweb="select"],
 [data-baseweb="select"] * {
     background-color: #FFFFFF !important;
@@ -61,7 +59,6 @@ textarea,
     color: #172B3A !important;
 }
 
-/* Botones estándar: Fondo blanco con texto azul oscuro contrastado */
 .stButton > button {
     background-color: #FFFFFF !important;
     color: #191970 !important;
@@ -82,7 +79,6 @@ textarea,
     border-color: #4A90E2 !important;
 }
 
-/* Alertas informativas */
 [data-testid="stAlert"] {
     background-color: #D9F0FA !important;
     border-radius: 12px !important;
@@ -93,7 +89,6 @@ textarea,
     color: #172B3A !important;
 }
 
-/* Tarjetas Expanders (FAQ) */
 [data-testid="stExpander"] {
     background-color: #EAF7F7 !important;
     border: 1px solid #D2EEEE !important;
@@ -115,7 +110,7 @@ textarea,
     padding: 12px 22px !important;
 }
 
-/* === ESTILOS PROFESIONALES PARA LA INTERFAZ DE CHAT === */
+/* === ESTILOS PROFESIONALES PARA EL CHATBOT === */
 
 [data-testid="stChatMessage"] {
     background-color: #FFFFFF !important;
@@ -132,7 +127,6 @@ textarea,
     color: #172B3A !important;
 }
 
-/* Tarjeta contenedora de llamado al bot */
 .bot-card-banner {
     background: linear-gradient(135deg, #1E3C72 0%, #2A5298 100%);
     border-radius: 20px;
@@ -154,7 +148,6 @@ if st.session_state.pagina_actual == "principal":
 
     st.title("Aplicación de consultas Tec Ops")
 
-    # Saludo dinámico según la hora
     ahora = datetime.now().time()
     hora_actual = ahora.hour
     minuto_actual = ahora.minute
@@ -168,13 +161,11 @@ if st.session_state.pagina_actual == "principal":
 
     st.subheader(saludo)
 
-    # 1. Entrada de usuario BSC
     usuario_bsc = st.text_input("Escribe tu usuario BSC:", "").strip()
 
     if not usuario_bsc:
         st.warning("Para continuar por favor ingresa tu usuario BSC")
     else:
-        # 2. Dropdown ordenado alfabéticamente y enumerado
         opciones_base = [
             "Consulta de modeler por área",
             "SLA Work Orders",
@@ -402,17 +393,6 @@ if st.session_state.pagina_actual == "principal":
                             st.success("El SLA es de **9 días**.")
                         elif num_docs >= 21:
                             st.warning("El SLA debe verse directamente con el modeler ya que es un proyecto.")
-
-        # 3. Caja de texto para procesar (ahora colocada al final del flujo principal)
-        st.markdown("---")
-        texto_entrada = st.text_area("Escribe el texto a procesar (máx. 1000 caracteres):", "", max_chars=1000)
-        texto_mayusculas = texto_entrada.upper()
-        st.subheader("Resultado del procesamiento")
-        st.text_area("Texto procesado (en mayúsculas):", value=texto_mayusculas, height=150)
-
-        if st.button("Mostrar Resumen"):
-            st.write(f"**Usuario BSC:** {usuario_bsc}")
-            st.write(f"**Tipo de Consulta:** {tipo_consulta}")
 
         # --- BANNER Y BOTÓN PARA ABRIR EL CHATBOT ---
         st.markdown("""
