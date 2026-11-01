@@ -447,18 +447,16 @@ if str_app.session_state.pagina_actual == "principal":
 # ==============================================================================
 elif str_app.session_state.pagina_actual == "chatbot":
 
-    col_nav1, col_nav2, col_nav3 = str_app.columns([5, 2.5, 2.5])
+    col_nav1, col_nav2 = str_app.columns([7, 3])
     with col_nav1:
         str_app.title("🤖 Asistente Virtual Tec Ops")
         str_app.caption("Inteligencia Artificial especializada para soporte de Tec Ops")
     with col_nav2:
-        str_app.markdown("<br>", unsafe_allow_html=True)
-        if str_app.button("🗑️ Limpiar Chat", key="btn_limpiar"):
+        # Botones de navegación arriba a la derecha en formato vertical
+        if str_app.button("🗑️ Limpiar Chat", key="btn_limpiar", use_container_width=True):
             str_app.session_state.chat_messages = []
             str_app.rerun()
-    with col_nav3:
-        str_app.markdown("<br>", unsafe_allow_html=True)
-        if str_app.button("⬅️ Menú Principal", key="btn_regresar"):
+        if str_app.button("⬅️ Menú Principal", key="btn_regresar", use_container_width=True):
             str_app.session_state.pagina_actual = "principal"
             str_app.rerun()
 
