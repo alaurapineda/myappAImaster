@@ -359,7 +359,15 @@ if str_app.session_state.pagina_actual == "principal":
             elif tipo_consulta_limpio == "MUG":
                 str_app.write("Para accesar al MUG haz click en el siguiente enlace: https://MUG.guide1234.com")
                 str_app.write("Si tienes feedback para la guía por favor contactar a uno de los modelers o deja tu comentario en la siguiente caja.")
-                str_app.text_area("Déjanos tus comentarios sobre MUG:", "", key="feedback_mug")
+                
+                with str_app.form(key="form_feedback_mug"):
+                    comentario_mug = str_app.text_area("Déjanos tus comentarios sobre MUG:", "", key="feedback_mug")
+                    submit_mug = str_app.form_submit_button("Enviar comentario MUG")
+                    if submit_mug:
+                        if comentario_mug.strip():
+                            str_app.success("¡Muchas gracias! Tu comentario sobre MUG ha sido enviado exitosamente.")
+                        else:
+                            str_app.warning("Por favor escribe un comentario antes de enviar.")
 
             # --- ON-CALL ---
             elif tipo_consulta_limpio == "On-call":
@@ -379,21 +387,42 @@ if str_app.session_state.pagina_actual == "principal":
 
                 str_app.markdown("### Preguntas sugeridas")
 
-                with str_app.expander("Control de Escalaciones"):
+                with str_app.expander("¿Quiénes son los Site Leads designados?"):
                     str_app.markdown("""
-                    **Site Leads designados:**
                     - **CTG:** Eduardo Jenkins
                     - **CYL:** Sergio Monge
                     - **DRD:** Rebeca Alfaro
                     - **HRD:** Amanda Solano
+                    """)
+
+                with str_app.expander("¿Qué pasa si debo escalar alguna ayuda un feriado o fin de semana?"):
+                    str_app.markdown("""
+                    Para líneas detenidas en **turno C, feriados y fines de semana**, se cuenta con el servicio **On-call** (solo llamadas):
+                    - **CYL:** 8888-8881
+                    - **HRD:** 8888-8882
+                    - **CTG:** 8888-8883
+                    - **DRD:** 8888-8884
                     
-                    **Manager:** Francisco Castro
+                    *Nota: Asegúrese de abrir el tiquete primero con toda la evidencia y explicación del issue antes de llamar.*
+                    """)
+
+                with str_app.expander("¿Quién es el manager del departamento?"):
+                    str_app.markdown("""
+                    El manager del departamento de Tec Ops es **Francisco Castro**. Si no recibe respuesta o requiere una escalación mayor de prioridad, puede contactarle directamente.
                     """)
 
             # --- SHARE POINT TEC OPS ---
             elif tipo_consulta_limpio == "Share Point Tec Ops":
                 str_app.write("Visita nuestro share point a través del siguiente enlace: https://tecopssharepoint1234.com")
-                str_app.text_area("Déjanos tu feedback sobre Share Point:", "", key="feedback_sp")
+                
+                with str_app.form(key="form_feedback_sp"):
+                    comentario_sp = str_app.text_area("Déjanos tu feedback sobre Share Point:", "", key="feedback_sp")
+                    submit_sp = str_app.form_submit_button("Enviar comentario Share Point")
+                    if submit_sp:
+                        if comentario_sp.strip():
+                            str_app.success("¡Muchas gracias! Tu comentario sobre Share Point ha sido enviado exitosamente.")
+                        else:
+                            str_app.warning("Por favor escribe un comentario antes de enviar.")
 
             # --- SLA WORK ORDERS ---
             elif tipo_consulta_limpio == "SLA Work Orders":
@@ -417,7 +446,7 @@ if str_app.session_state.pagina_actual == "principal":
         <div class="bot-card-banner">
             <h3 style="margin: 0 0 10px 0; color: #FFFFFF !important;">🤖 Asistente Virtual Inteligente Tec Ops</h3>
             <p style="margin: 0; color: #E0E6ED !important;">
-                ¿Dudas sobre Modelers, COP o procedimientos? Consulta en tiempo real con nuestra Inteligencia Artificial oficial.
+                ¿Dudas sobre nuestros servicios? Consulta en tiempo real con nuestra Inteligencia Artificial oficial.
             </p>
         </div>
         """, unsafe_allow_html=True)
