@@ -99,7 +99,7 @@ textarea,
     transform: translateY(-2px) !important;
 }
 
-/* Botones de envío dentro de formularios (MUG y Share Point) con texto legible oscuro */
+/* Botones de envío dentro de formularios con texto legible */
 [data-testid="stFormSubmitButton"] > button {
     background: linear-gradient(135deg, #00E5FF 0%, #0052CC 100%) !important;
     color: #FFFFFF !important;
@@ -223,7 +223,7 @@ if str_app.session_state.pagina_actual == "principal":
             "COP",
             "Share Point Tec Ops",
             "MUG",
-            "Path escalations",
+            "Escalaciones",
             "On-call"
         ]
 
@@ -398,8 +398,8 @@ if str_app.session_state.pagina_actual == "principal":
                 str_app.warning("⚠️ Solo llamadas, no mensajes ni llamadas por WhatsApp.")
                 str_app.write("Al llamar asegúrese de abrir el tiquete primero con toda la evidencia y explicación del issue. Si no recibe respuesta por favor escalar el caso con el manager del departamento **Francisco Castro**.")
 
-            # --- PATH ESCALATIONS ---
-            elif tipo_consulta_limpio == "Path escalations":
+            # --- ESCALACIONES ---
+            elif tipo_consulta_limpio == "Escalaciones":
                 str_app.write("Si necesita ayuda urgente con la aprobación de un incidente, work order, acceso, aprobación de máscara o aprobación de CN por favor contacte primero al site lead que corresponda o con el manager.")
                 str_app.info("Todas las escalaciones deben documentarse por correo con la explicación de porqué se le debe de dar prioridad.")
 
