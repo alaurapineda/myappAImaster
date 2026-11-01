@@ -1,100 +1,108 @@
 import streamlit as st
 from datetime import datetime
 
-# Configuración de fondo azul medianoche (midnightblue) con CSS personalizado
+# Configuración de fondo azul medianoche y estilos de tarjetas FAQ
 st.markdown(
     """
     <style>
     .stApp {
         background-color: midnightblue; /* Color azul noche */
     }
-    /* Cambiar el color del texto para asegurar que sea legible sobre el fondo azul */
-    .stApp, .stMarkdown, p, h1, h2, h3, h4, h5, h6, label {
-        color: #FFFFFF !important;
+    /* Asegurar legibilidad general */
+    .stApp, p, h1, h2, h3, h4, h5, h6, label {
+        color: #FFFFFF;
     }
-    /* Estilo para los mensajes de recomendación (info) en celeste claro con texto oscuro para legibilidad */
+    /* Estilo para los mensajes de recomendación (info) en celeste claro */
     div[data-testid="stNotification"] {
-        background-color: #87CEFA !important; /* Celeste claro (LightSkyBlue) */
+        background-color: #87CEFA !important;
         color: #000000 !important;
     }
     div[data-testid="stNotification"] p {
         color: #000000 !important;
     }
 
-    /* --- NUEVOS ESTILOS PARA TARJETAS FAQ TIPO ACORDEÓN --- */
-    .faq-container {
-        margin-top: 15px;
-        margin-bottom: 15px;
-    }
-    .faq-card {
+    /* --- ESTILOS DE LAS TARJETAS FAQ BLANCAS --- */
+    .faq-card-wrapper {
         background-color: #FFFFFF !important;
-        border-radius: 20px !important;
-        padding: 18px 24px !important;
+        border-radius: 30px !important;
+        padding: 20px 25px !important;
         margin-bottom: 16px !important;
-        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15) !important;
-        border: 1px solid #E2E8F0 !important;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2) !important;
+        border: none !important;
     }
-    .faq-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        width: 100%;
-    }
-    .faq-left {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-    }
-    .faq-icon-circle {
-        background-color: #0F52BA !important; /* Azul eléctrico / zafiro */
+    
+    /* Círculo azul de interrogación izquierdo */
+    .faq-circle-q {
+        background-color: #0F52BA !important;
         color: #FFFFFF !important;
         border-radius: 50% !important;
-        width: 36px !important;
-        height: 36px !important;
+        width: 40px !important;
+        height: 40px !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
         font-weight: bold !important;
-        font-size: 18px !important;
-        flex-shrink: 0 !important;
-        box-shadow: 0px 2px 6px rgba(15, 82, 186, 0.3) !important;
+        font-size: 20px !important;
     }
-    .faq-title {
+    
+    /* Texto de la pregunta (Negro y centrado verticalmente) */
+    .faq-question-text {
         color: #1E293B !important;
         font-size: 16px !important;
         font-weight: 600 !important;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+        display: flex !important;
+        align-items: center !important;
+        height: 40px !important;
         margin: 0 !important;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
     }
-    .faq-content {
-        margin-top: 14px;
-        padding-top: 14px;
-        border-top: 1px solid #E2E8F0;
+
+    /* Círculo azul claro derecho con el signo + / - */
+    .faq-circle-trigger {
+        background-color: #E0F2FE !important; /* Celeste muy claro */
+        color: #0F52BA !important; /* Símbolo azul */
+        border-radius: 50% !important;
+        width: 40px !important;
+        height: 40px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-weight: bold !important;
+        font-size: 22px !important;
+        cursor: pointer !important;
+        border: none !important;
+    }
+
+    /* Estilos del texto de respuesta desplegado */
+    .faq-answer-container {
+        margin-top: 15px !important;
+        padding-top: 15px !important;
+        border-top: 1px solid #E2E8F0 !important;
+    }
+    .faq-answer-text, .faq-answer-text strong, .faq-answer-text li, .faq-answer-text ul {
         color: #334155 !important;
         font-size: 15px !important;
         line-height: 1.6 !important;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
-    }
-    .faq-content p, .faq-content ul, .faq-content li, .faq-content strong {
-        color: #334155 !important;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
     }
 
-    /* Estilo del botón invisible de Streamlit para hacerlo parecer parte de la tarjeta */
-    div.stButton > button {
-        background-color: transparent !important;
+    /* Eliminar estilos por defecto del botón de Streamlit usado para click en la tarjeta */
+    div[data-testid="column"] button {
+        background: transparent !important;
         border: none !important;
         padding: 0 !important;
-        color: #1E293B !important;
-        text-align: left !important;
         width: 100% !important;
+        text-align: left !important;
         box-shadow: none !important;
+        height: 40px !important;
     }
-    div.stButton > button:hover {
-        background-color: transparent !important;
-        color: #0F52BA !important;
+    div[data-testid="column"] button:hover {
+        background: transparent !important;
+        border: none !important;
     }
-    div.stButton > button:active {
-        background-color: transparent !important;
+    div[data-testid="column"] button:active {
+        background: transparent !important;
+        border: none !important;
     }
     </style>
     """,
@@ -333,100 +341,99 @@ else:
             # Inicializar los estados de expansión de las preguntas en la sesión
             if "faq_1_expanded" not in st.session_state:
                 st.session_state.faq_1_expanded = False
-            if "faq_2_expanded" not in st.session_state:
+            if "faq_2_expanded" not in st.session_state: 
                 st.session_state.faq_2_expanded = False
             if "faq_3_expanded" not in st.session_state:
                 st.session_state.faq_3_expanded = False
 
-            # --- PREGUNTA 1: ¿Quiénes son los Site Leads? ---
-            # Cambiamos de estado al hacer click
-            signo_1 = "−" if st.session_state.faq_1_expanded else "+"
-            html_header_1 = f"""
-            <div class="faq-header">
-                <div class="faq-left">
-                    <div class="faq-icon-circle">?</div>
-                    <div class="faq-title">¿Quiénes son los Site Leads?</div>
-                </div>
-                <div style="color: #0F52BA; font-size: 22px; font-weight: bold;">{signo_1}</div>
-            </div>
-            """
-            st.markdown('<div class="faq-card">', unsafe_allow_html=True)
-            if st.button(html_header_1, key="btn_faq_1"):
-                st.session_state.faq_1_expanded = not st.session_state.faq_1_expanded
-                st.rerun()
-            
+            # --- TARJETA 1 --- 
+            # Render de la tarjeta blanca redondeada
+            st.markdown('<div class="faq-card-wrapper">', unsafe_allow_html=True)
+            # Usamos columnas de Streamlit nativas para organizar horizontalmente el contenido
+            col1, col2, col3 = st.columns([1, 10, 1])
+            with col1:
+                st.markdown('<div class="faq-circle-q">?</div>', unsafe_allow_html=True)
+            with col2:
+                # El botón es transparente y contiene el texto plano
+                if st.button("¿Quiénes son los Site Leads?", key="q1_btn"):
+                    st.session_state.faq_1_expanded = not st.session_state.faq_1_expanded
+                    st.rerun()
+            with col3:
+                signo_1 = "−" if st.session_state.faq_1_expanded else "+"
+                st.markdown(f'<div class="faq-circle-trigger">{signo_1}</div>', unsafe_allow_html=True)
+
             if st.session_state.faq_1_expanded:
                 st.markdown("""
-                <div class="faq-content">
-                    <strong>Site Leads designados:</strong><br>
-                    Los líderes a cargo de coordinar y dar aprobación preliminar en cada planta son los correspondientes <strong>COP Leads</strong>:<br>
-                    <ul>
-                        <li><strong>Site Lead CTG:</strong> Eduardo Jenkins</li>
-                        <li><strong>Site Lead CYL:</strong> Sergio Monge</li>
-                        <li><strong>Site Lead DRD:</strong> Rebeca Alfaro</li>
-                        <li><strong>Site Lead HRD:</strong> Amanda Solano</li>
-                    </ul>
+                <div class="faq-answer-container">
+                    <div class="faq-answer-text">
+                        <strong>Site Leads designados:</strong><br>
+                        Los líderes a cargo de coordinar y dar aprobación preliminar en cada planta son los correspondientes <strong>COP Leads</strong>:<br>
+                        <ul>
+                            <li><strong>Site Lead CTG:</strong> Eduardo Jenkins</li>
+                            <li><strong>Site Lead CYL:</strong> Sergio Monge</li>
+                            <li><strong>Site Lead DRD:</strong> Rebeca Alfaro</li>
+                            <li><strong>Site Lead HRD:</strong> Amanda Solano</li>
+                        </ul>
+                    </div>
                 </div>
                 """, unsafe_allow_html=True)
             st.markdown('</div>', unsafe_allow_html=True)
 
-            # --- PREGUNTA 2: ¿Quién es el Manager de Tec Ops? ---
-            signo_2 = "−" if st.session_state.faq_2_expanded else "+"
-            html_header_2 = f"""
-            <div class="faq-header">
-                <div class="faq-left">
-                    <div class="faq-icon-circle">?</div>
-                    <div class="faq-title">¿Quién es el Manager de Tec Ops?</div>
-                </div>
-                <div style="color: #0F52BA; font-size: 22px; font-weight: bold;">{signo_2}</div>
-            </div>
-            """
-            st.markdown('<div class="faq-card">', unsafe_allow_html=True)
-            if st.button(html_header_2, key="btn_faq_2"):
-                st.session_state.faq_2_expanded = not st.session_state.faq_2_expanded
-                st.rerun()
-            
+            # --- TARJETA 2 ---
+            st.markdown('<div class="faq-card-wrapper">', unsafe_allow_html=True)
+            col1, col2, col3 = st.columns([1, 10, 1])
+            with col1:
+                st.markdown('<div class="faq-circle-q">?</div>', unsafe_allow_html=True)
+            with col2:
+                if st.button("¿Quién es el Manager de Tec Ops?", key="q2_btn"):
+                    st.session_state.faq_2_expanded = not st.session_state.faq_2_expanded
+                    st.rerun()
+            with col3:
+                signo_2 = "−" if st.session_state.faq_2_expanded else "+"
+                st.markdown(f'<div class="faq-circle-trigger">{signo_2}</div>', unsafe_allow_html=True)
+
             if st.session_state.faq_2_expanded:
                 st.markdown("""
-                <div class="faq-content">
-                    El manager del departamento de Tec Ops es <strong>Francisco Castro</strong>. Puedes escalar tu caso con él directamente si tras abrir el tiquete de soporte técnico y seguir los canales de primera línea no has obtenido respuesta.
+                <div class="faq-answer-container">
+                    <div class="faq-answer-text">
+                        El manager del departamento de Tec Ops es <strong>Francisco Castro</strong>. Puedes escalar tu caso con él directamente si tras abrir el tiquete de soporte técnico y seguir los canales de primera línea no has obtenido respuesta.
+                    </div>
                 </div>
                 """, unsafe_allow_html=True)
             st.markdown('</div>', unsafe_allow_html=True)
 
-            # --- PREGUNTA 3: ¿Qué pasa si mi escalación ocurre un feriado o fin de semana? ---
-            signo_3 = "−" if st.session_state.faq_3_expanded else "+"
-            html_header_3 = f"""
-            <div class="faq-header">
-                <div class="faq-left">
-                    <div class="faq-icon-circle">?</div>
-                    <div class="faq-title">¿Qué pasa si mi escalación ocurre un feriado o fin de semana?</div>
-                </div>
-                <div style="color: #0F52BA; font-size: 22px; font-weight: bold;">{signo_3}</div>
-            </div>
-            """
-            st.markdown('<div class="faq-card">', unsafe_allow_html=True)
-            if st.button(html_header_3, key="btn_faq_3"):
-                st.session_state.faq_3_expanded = not st.session_state.faq_3_expanded
-                st.rerun()
-            
+            # --- TARJETA 3 ---
+            st.markdown('<div class="faq-card-wrapper">', unsafe_allow_html=True)
+            col1, col2, col3 = st.columns([1, 10, 1])
+            with col1:
+                st.markdown('<div class="faq-circle-q">?</div>', unsafe_allow_html=True)
+            with col2:
+                if st.button("¿Qué pasa si mi escalación ocurre un feriado o fin de semana?", key="q3_btn"):
+                    st.session_state.faq_3_expanded = not st.session_state.faq_3_expanded
+                    st.rerun()
+            with col3:
+                signo_3 = "−" if st.session_state.faq_3_expanded else "+"
+                st.markdown(f'<div class="faq-circle-trigger">{signo_3}</div>', unsafe_allow_html=True)
+
             if st.session_state.faq_3_expanded:
                 st.markdown("""
-                <div class="faq-content">
-                    <strong>Protocolo para Feriados y Fines de Semana:</strong><br>
-                    Si el caso ocurre durante el fin de semana, un día festivo nacional, o en el Turno C, el servicio se centraliza mediante los contactos del servicio <strong>On-call</strong> únicamente para situaciones críticas de línea detenida.<br><br>
-                    <strong>Pasos obligatorios:</strong>
-                    <ol>
-                        <li>Asegúrate de abrir el tiquete correspondiente adjuntando toda la evidencia disponible y descripción del problema.</li>
-                        <li>Llama directamente por teléfono regular (no mensajes ni WhatsApp) al contacto On-call de tu respectiva planta:
-                            <ul>
-                                <li><strong>CYL:</strong> 8888-8881</li>
-                                <li><strong>HRD:</strong> 8888-8882</li>
-                                <li><strong>CTG:</strong> 8888-8883</li>
-                                <li><strong>DRD:</strong> 8888-8884</li>
-                            </ul>
-                        </li>
-                    </ol>
+                <div class="faq-answer-container">
+                    <div class="faq-answer-text">
+                        <strong>Protocolo para Feriados y Fines de Semana:</strong><br>
+                        Si el caso ocurre durante el fin de semana, un día festivo nacional, o en el Turno C, el servicio se centraliza mediante los contactos del servicio <strong>On-call</strong> únicamente para situaciones críticas de línea detenida.<br><br>
+                        <strong>Pasos obligatorios:</strong>
+                        <ol>
+                            <li>Asegúrate de abrir el tiquete correspondiente adjuntando toda la evidencia disponible y descripción del problema.</li>
+                            <li>Llama directamente por teléfono regular (no mensajes ni WhatsApp) al contacto On-call de tu respectiva planta:
+                                <ul>
+                                    <li><strong>CYL:</strong> 8888-8881</li>
+                                    <li><strong>HRD:</strong> 8888-8882</li>
+                                    <li><strong>CTG:</strong> 8888-8883</li>
+                                    <li><strong>DRD:</strong> 8888-8884</li>
+                                </ul>
+                            </li>
+                        </ol>
+                    </div>
                 </div>
                 """, unsafe_allow_html=True)
             st.markdown('</div>', unsafe_allow_html=True)
