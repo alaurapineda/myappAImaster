@@ -13,6 +13,10 @@ st.set_page_config(
 if "pagina_actual" not in st.session_state:
     st.session_state.pagina_actual = "principal"
 
+# Inicializar almacenamiento de calificaciones en la sesión si no existe
+if "calificaciones" not in st.session_state:
+    st.session_state.calificaciones = []
+
 # --- CONFIGURACIÓN VISUAL GENERAL Y ESTILOS "TECH MED" ---
 st.markdown("""
 <style>
@@ -41,7 +45,8 @@ h2, h3 { font-weight: 600 !important; }
 /* Tarjetas con efecto Vidrio / Glassmorphism */
 [data-testid="stAlert"], 
 [data-testid="stExpander"], 
-.bot-card-banner {
+.bot-card-banner,
+.rating-card {
     background: rgba(255, 255, 255, 0.04) !important;
     backdrop-filter: blur(12px) !important;
     -webkit-backdrop-filter: blur(12px) !important;
@@ -425,6 +430,30 @@ if st.session_state.pagina_actual == "principal":
             st.session_state.pagina_actual = "chatbot"
             st.rerun()
 
+        # --- SECCIÓN DE CALIFICACIÓN POR ESTRELLAS ---
+        st.markdown("<br>", unsafe_allow_html=True)
+        st.markdown("### ⭐ Califica tu experiencia con la aplicación")
+        
+        with st.container():
+            col_estrellas, col_enviar = st.columns([3, 1])
+            with col_estrellas:
+                calificacion = st.selectbox(
+                    "Selecciona una puntuación:",
+                    ["⭐ - Muy insatisfecho", "⭐⭐ - Insatisfecho", "⭐⭐⭐ - Neutral", "⭐⭐⭐⭐ - Satisfecho", "⭐⭐⭐⭐⭐ - Excelente"],
+                    key="select_calificacion"
+                )
+            with col_enviar:
+                st.markdown("<br>", unsafe_allow_html=True)
+                if st.button("Enviar Calificación", key="btn_enviar_calif"):
+                    puntos = len(calificacion.split()[0]) # Cuenta las estrellas seleccionadas
+                    st.session_state.calificaciones.append(puntos)
+                    st.success("¡Muchas gracias por calificar la aplicación!")
+
+            # Mostrar promedio si hay calificaciones
+            if st.session_state.calificaciones:
+                promedio = sum(st.session_state.calificaciones) / len(st.session_state.calificaciones)
+                st.caption(f"Puntuación promedio de la app: **{promedio:.1f} / 5.0** (Basado en {len(st.session_state.calificaciones)} valoraciones)")
+
 
 # ==============================================================================
 # PÁGINA INDEPENDIENTE DEL CHATBOT
@@ -457,7 +486,7 @@ elif st.session_state.pagina_actual == "chatbot":
             prompt_sugerido = "¿Cuáles son los números de teléfono del servicio On-call?"
     with cp2:
         if st.button("📅 Horarios del COP", key="pill2"):
-            prompt_sugerido = "¿Cuáles są los horarios de las sesiones del COP por site?"
+            prompt_sugerido = "¿Cuáles son los horarios de las sesiones del COP por site?"
     with cp3:
         if st.button("👤 Ver Site Leads", key="pill3"):
             prompt_sugerido = "¿Quiénes son los Site Leads de Tec Ops?"
