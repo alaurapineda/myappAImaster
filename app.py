@@ -1,5 +1,7 @@
+import os
 import streamlit as st
 from datetime import datetime
+from google import genai
 
 # CONFIGURACIÓN VISUAL GENERAL Y ESTILOS
 st.markdown("""
@@ -119,6 +121,15 @@ textarea,
     color: #202020 !important;
 }
 
+/* Estilos para el Chatbot */
+[data-testid="stChatMessage"] {
+    border-radius: 12px !important;
+    padding: 10px 14px !important;
+    margin-bottom: 10px !important;
+}
+[data-testid="stChatMessage"] p {
+    color: #202020 !important;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -186,7 +197,6 @@ else:
                 if area_seleccionada != "Selecciona una opción de área...":
                     area_limpia = area_seleccionada.split(". ", 1)[1] if ". " in area_seleccionada else area_seleccionada
 
-                    # Definición de modeladores específicos para cada site y área
                     modelers_database = {
                         "CTG": {
                             "Packaging": "Ana Pineda",
@@ -261,8 +271,9 @@ else:
                     st.info("💡 **Recomendación:** entre más clara y completa sea la información presentada, más efectiva será la evaluación del caso y la orientación que los Modelers puedan brindar durante la sesión.")
 
                 elif cop_limpio == "Representantes por área":
-                    st.write("**Consulta de Representantes por Area y Site**")
-                    sites_cop = ["Selecciona site...", "CTG", "CYL", "DRD"]
+                    st.write("**Consulta de Representantes por Área y Site**")
+                    # Incluye CTG, CYL, HRD y DRD
+                    sites_cop = ["Selecciona site...", "CTG", "CYL", "DRD", "HRD"]
                     site_cop_sel = st.selectbox("Selecciona el site para los representantes:", sites_cop)
                     
                     if site_cop_sel != "Selecciona site...":
@@ -294,6 +305,14 @@ else:
                                     "Navegator": {"mfg": "David Brenes", "qa": "Lucía Madrigal"},
                                     "Packaging": {"mfg": "Francisco Fonseca", "qa": "Elena Carvajal"},
                                     "ZWG": {"mfg": "Daniela Ortiz", "qa": "Gabriel Navarro"}
+                                },
+                                "HRD": {
+                                    "Boxing": {"mfg": "Felipe Herrera", "qa": "María Mora"},
+                                    "FP": {"mfg": "Diego Gutiérrez", "qa": "Andrea Solís"},
+                                    "Labs": {"mfg": "Melissa Blanco", "qa": "Kevin Araya"},
+                                    "Navegator": {"mfg": "Ricardo Brenes", "qa": "Valeria Montero"},
+                                    "Packaging": {"mfg": "Lucía Mora", "qa": "Esteban Cordero"},
+                                    "ZWG": {"mfg": "Tatiana Vargas", "qa": "Gabriel Porras"}
                                 }
                             }
 
@@ -427,3 +446,52 @@ else:
         st.write(f"**Usuario BSC:** {usuario_bsc}")
         st.write(f"**Tipo de Consulta:** {tipo_consulta}")
         st.write(f"**Longitud del texto:** {len(texto_entrada)} caracteres")
+
+    # --- CHATBOT CON GEMINI ---
+    st.markdown("---")
+    st.markdown("### ¿Necesitas ayuda extra?")
+    st.write("Chatea con nuestro asistente de IA impulsado por Gemini para resolver cualquier duda adicional sobre operaciones técnicas.")
+
+    # Inicializar cliente de Gemini si la variable de entorno está presente
+    api_key = os.environ.get("GEMINI_API_KEY")
+    
+    if not api_key:
+        st.info("ℹ️ Para habilitar el Chatbot, asegúrate de configurar la variable de entorno `GEMINI_API_KEY` con tu clave de API de Google Gemini.")
+    else:
+        # Inicializar historial de chat en session_state
+        if "chat_messages" not in st.session_state:
+            st.session_state.chat_messages = []
+
+        # Mostrar historial de conversación previa
+        for message in st.session_state.chat_messages:
+            with st.chat_message(message["role"]):
+                st.markdown(message["content"])
+
+        # Input del usuario para el chat
+        if user_prompt := st.chat_input("Escribe tu consulta para el asistente..."):
+            # Mostrar mensaje del usuario
+            st.session_state.chat_messages.append({"role": "user", "content": user_prompt})
+            with st.chat_message("user"):
+                st.markdown(user_prompt)
+
+            # Generar respuesta con Gemini SDK
+            with st.chat_message("assistant"):
+                try:
+                    client = genai.Client(api_key=api_key)
+                    
+                    # Preparar historial formateado para la API
+                    formatted_contents = [
+                        {"role": m["role"], "parts": [{"text": m["content"]}]}
+                        for m in st.session_state.chat_messages
+                    ]
+                    
+                    response = client.models.generate_content(
+                        model="gemini-2.5-flash",
+                        contents=formatted_contents,
+                    )
+                    
+                    assistant_response = response.text
+                    st.markdown(assistant_response)
+                    st.session_state.chat_messages.append({"role": "assistant", "content": assistant_response})
+                except Exception as e:
+                    st.error(f"Error al conectar con Gemini: {e}")
