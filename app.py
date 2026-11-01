@@ -403,7 +403,7 @@ if st.session_state.pagina_actual == "principal":
                         elif num_docs >= 21:
                             st.warning("El SLA debe verse directamente con el modeler ya que es un proyecto.")
 
-        # 3. Caja de texto para procesar
+        # 3. Caja de texto para procesar (ahora colocada al final del flujo principal)
         st.markdown("---")
         texto_entrada = st.text_area("Escribe el texto a procesar (máx. 1000 caracteres):", "", max_chars=1000)
         texto_mayusculas = texto_entrada.upper()
@@ -488,7 +488,7 @@ elif st.session_state.pagina_actual == "chatbot":
                     """
 
                     response = client.models.generate_content(
-                        model="gemini-2.5-flash",
+                        model="gemini-3.8-flash",
                         contents=f"{contexto_tec_ops}\n\nPregunta del usuario: {user_prompt}",
                     )
                     assistant_response = response.text
