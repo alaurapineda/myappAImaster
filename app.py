@@ -216,7 +216,25 @@ else:
         # --- PATH ESCALATIONS ---
         elif tipo_consulta_limpio == "Path escalations":
             st.write("Si necesita ayuda urgente con la aprobación de un incidente, work order, acceso, aprobación de máscara o aprobación de CN por favor contacte primero al site lead que corresponda o con el manager.")
-            st.info("Todas las escalafones deben documentarse por correo con la explicación de porqué se le debe de dar prioridad.")
+            st.info("Todas las escalaciones deben documentarse por correo con la explicación de porqué se le debe de dar prioridad.")
+            
+            st.markdown("### Preguntas sugeridas:")
+            pregunta_escalacion = st.selectbox(
+                "Selecciona una pregunta sugerida:",
+                [
+                    "Selecciona una pregunta...",
+                    "¿Quiénes son los site leads?",
+                    "¿Quién es el manager de Tec Ops?",
+                    "¿Qué pasa si mi escalación ocurre un feriado o fin de semana?"
+                ]
+            )
+            
+            if pregunta_escalacion == "¿Quiénes son los site leads?":
+                st.info("**Site Leads designados:**\nLos líderes a cargo de coordinar y dar aprobación preliminar en cada planta son los correspondientes **COP Leads**: \n- **Site Lead CTG:** Eduardo Jenkins\n- **Site Lead CYL:** Sergio Monge\n- **Site Lead DRD:** Rebeca Alfaro\n- **Site Lead HRD:** Amanda Solano")
+            elif pregunta_escalacion == "¿Quién es el manager de Tec Ops?":
+                st.info("El manager del departamento de Tec Ops es **Francisco Castro**. Puedes escalar su caso con él directamente si tras abrir el tiquete de soporte técnico y seguir los canales de primera línea no has obtenido respuesta.")
+            elif pregunta_escalacion == "¿Qué pasa si mi escalación ocurre un feriado o fin de semana?":
+                st.info("**Protocolo para Feriados y Fines de Semana:**\nSi el caso ocurre durante el fin de semana, un día festivo nacional, o en el Turno C, el servicio se centraliza mediante los contactos del servicio **On-call** únicamente para situaciones críticas de línea detenida.\n\n**Pasos obligatorios:**\n1. Asegúrate de abrir el tiquete correspondiente adjuntando toda la evidencia disponible y descripción del problema.\n2. Llama directamente por teléfono regular (no mensajes ni WhatsApp) al contacto On-call de tu respectiva planta:\n   - **CYL:** 8888-8881\n   - **HRD:** 8888-8882\n   - **CTG:** 8888-8883\n   - **DRD:** 8888-8884")
 
         # --- SHARE POINT TEC OPS ---
         elif tipo_consulta_limpio == "Share Point Tec Ops":
