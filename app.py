@@ -39,8 +39,8 @@ textarea,
 [data-baseweb="input"] input,
 [data-testid="stTextArea"] textarea {
     background-color: #FFFFFF !important;
-    color: #172B3A !important;
-    -webkit-text-fill-color: #172B3A !important;
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
     border-radius: 8px !important;
     font-weight: 500 !important;
 }
@@ -48,15 +48,15 @@ textarea,
 [data-baseweb="select"],
 [data-baseweb="select"] * {
     background-color: #FFFFFF !important;
-    color: #172B3A !important;
-    -webkit-text-fill-color: #172B3A !important;
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
     border-radius: 8px !important;
 }
 
 [role="listbox"],
 [role="option"] {
     background-color: #FFFFFF !important;
-    color: #172B3A !important;
+    color: #000000 !important;
 }
 
 .stButton > button {
@@ -86,7 +86,7 @@ textarea,
 
 [data-testid="stAlert"] p,
 [data-testid="stAlert"] strong {
-    color: #172B3A !important;
+    color: #000000 !important;
 }
 
 [data-testid="stExpander"] {
@@ -103,14 +103,14 @@ textarea,
 [data-testid="stExpander"] p,
 [data-testid="stExpander"] li,
 [data-testid="stExpander"] strong {
-    color: #172B3A !important;
+    color: #000000 !important;
 }
 
 [data-testid="stExpander"] [data-testid="stExpanderDetails"] {
     padding: 12px 22px !important;
 }
 
-/* === ESTILOS PROFESIONALES PARA EL CHATBOT === */
+/* === ESTILOS FORZADOS A LETRA NEGRA PARA EL CHATBOT === */
 
 [data-testid="stChatMessage"] {
     background-color: #FFFFFF !important;
@@ -123,8 +123,10 @@ textarea,
 [data-testid="stChatMessage"] p, 
 [data-testid="stChatMessage"] li, 
 [data-testid="stChatMessage"] span, 
-[data-testid="stChatMessage"] strong {
-    color: #172B3A !important;
+[data-testid="stChatMessage"] strong,
+[data-testid="stChatMessage"] div {
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
 }
 
 .bot-card-banner {
@@ -417,7 +419,7 @@ elif st.session_state.pagina_actual == "chatbot":
     col_nav1, col_nav2 = st.columns([7, 3])
     with col_nav1:
         st.title("🤖 Asistente Virtual Tec Ops")
-        st.caption("Inteligencia Artificial especializada para soporte de Operaciones Técnicas")
+        st.caption("Inteligencia Artificial especializada para soporte de Tec Ops")
     with col_nav2:
         st.markdown("<br>", unsafe_allow_html=True)
         if st.button("⬅️ Regresar al Menú Principal", key="btn_regresar"):
