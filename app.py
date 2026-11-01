@@ -1,5 +1,9 @@
-# CONFIGURACIÓN VISUAL GENERAL
-st.markdown("""
+import streamlit as st
+from datetime import datetime
+
+# Configuración de fondo azul medianoche y estilos de tarjetas FAQ
+st.markdown(
+  """
 <style>
 
 /* Fondo principal */
@@ -118,6 +122,7 @@ textarea,
 
 </style>
 """, unsafe_allow_html=True)
+}
 
 st.title("Aplicación de consultas Tec Ops")
 
