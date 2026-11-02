@@ -20,7 +20,7 @@ Máximo tres funcionalidades. Si hay más, van al apartado 8.
 ## 3. Entradas y salidas
 
 | El usuario da… | La app devuelve… | Ejemplo |
-| Usuario BSC e indicador de área/site | El nombre del modeler o el tiempo de SLA correspondiente | Usuario BSC: 1111, Site: CTG, Área: Packaging $\rightarrow$ Ana Pineda |
+| Usuario BSC e indicador de área/site | El nombre del modeler o el tiempo de SLA correspondiente | Usuario BSC: otr12, Site: CTG, Área: Packaging $\rightarrow$ Ana Pineda |
 | Una pregunta en lenguaje natural al Chatbot de IA | Una respuesta precisa y amable basada en el contexto corporativo | "¿Quiénes son los Site Leads?" $\rightarrow$ CTG: Eduardo Jenkins, CYL: Sergio Monge... |
 | Texto de comentarios en MUG o Share Point | Mensaje de éxito de envío del formulario | Comentario escrito $\rightarrow$ "¡Muchas gracias! Tu comentario ha sido enviado exitosamente." |
 
