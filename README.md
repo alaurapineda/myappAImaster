@@ -27,7 +27,7 @@ Los ingenieros de manufactura, calidad, producción o cualquier cliente operativ
 ## Cómo la he construido
 
 - **Herramientas:** Cursor, Google AI studios, Google Collab, Copilot y Streamlit.
-- **Fichero de contexto del agente:** [enlace a vuestro AGENTS.md, CLAUDE.md o GEMINI.md]
+- **Fichero de contexto del agente:** (https://github.com/alaurapineda/myappAImaster/blob/main/AGENTS.md)
 - **Prompts clave:** 
 1. Prompt para definir el diseño visual, tema oscuro y legibilidad perfecta
 "Hola, estoy creando una aplicación en Streamlit para el departamento de Tec Ops con un estilo visual futurista Medtech. Necesito que por favor configures todo el CSS global para garantizar una legibilidad absoluta: los textos generales deben ser claros, pero los campos de texto, los menús desplegables, las opciones y los elementos dentro de los contenedores desplegables deben tener un contraste perfecto para que nunca se pierda la visibilidad. Asegúrate también de que los botones de envío dentro de los formularios tengan texto blanco visible y resalten bien."
