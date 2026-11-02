@@ -39,7 +39,7 @@ Los ingenieros de manufactura, calidad, producción o cualquier cliente operativ
 - **Qué delegué al agente y qué revisé a mano:** Delegué la generación masiva del código CSS para el diseño Glassmorphism y la estructura condicional de Streamlit, revisé y ajusté manualmente los selectores CSS de los componentes nativos para asegurar la legibilidad del texto y corregí los textos específicos de los SLAs para proyectos complejos. Además, Gemini el codigo siempre me lo tiraba con Gemini-1.5, así que lo cambié a 3.8 flash.
 
 ## Prueba y mejora
-**Quién la probó:** Yo como desarrolladora, mi esposo para revisar funcionalidad y wording.
+**Quién la probó:** Yo como desarrolladora, mi esposo como usuario para revisar funcionalidad y wording.
 
 **Qué probó:** La legibilidad de los textos en modo oscuro, el comportamiento de los formularios en las secciones de MUG y Share Point, y la visualización de los expanders de "Preguntas sugeridas". Y sobretodo el chatboot, fue lo que más probamos. 
 **Qué pasó:** Inicialmente, el color de los textos dentro de los expanders colisionaba con el fondo oscuro y los botones de envío carecían de contraste adecuado. El chatboot no funcionaba porque estaba llamadando a Gemini-1.5. 
