@@ -9,7 +9,7 @@ El departamento de Tec Ops se enfrenta a la dispersión de información sobre su
 
 ## El problema
 
-Los ingenieros de manufactura, calidad, producción o cualquier cliente operativo en la empresa necesitan consultar constantemente normativas, modelers según el área, políticas de cambios y tiempos de SLA. Hoy en día, esto se resuelve buscando manualmente en correos antiguos, chats vía teams, llamadas o manuales extensos y poco dinámicos, lo que genera errores humanos, llamadas innecesarias y retrasos en la aprobación de cambios críticos que pueden detener líneas de producción.
+Los ingenieros de manufactura, calidad, producción o cualquier cliente operativo en la empresa necesitan consultar constantemente normativas, modelers según el área, políticas de cambios y tiempos de SLA del departamento de Tec Ops. Hoy en día, esto se resuelve buscando manualmente en correos antiguos, chats vía teams, llamadas o manuales extensos y poco dinámicos, lo que genera errores humanos, llamadas innecesarias y retrasos en la aprobación de cambios críticos que pueden detener líneas de producción.
 
 ## Qué hace la app
 
