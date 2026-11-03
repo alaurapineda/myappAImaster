@@ -17,6 +17,9 @@ if "pagina_actual" not in str_app.session_state:
 if "usuario_bsc" not in str_app.session_state:
     str_app.session_state.usuario_bsc = ""
 
+if "autenticado" not in str_app.session_state:
+    str_app.session_state.autenticado = False
+
 # --- CONFIGURACIÓN VISUAL GENERAL Y ESTILOS "TECH MED" ---
 str_app.markdown("""
 <style>
@@ -227,21 +230,36 @@ if str_app.session_state.pagina_actual == "principal":
 
     str_app.subheader(saludo)
 
-    # El campo toma el valor guardado en session_state y se actualiza en tiempo real
-    usuario_ingresado = str_app.text_input("Escribe tu usuario BSC:", value=str_app.session_state.usuario_bsc, key="input_usuario_bsc").strip()
-    str_app.session_state.usuario_bsc = usuario_ingresado
+    # --- PANTALLA 1: PEDIR USUARIO (SI NO ESTÁ AUTENTICADO) ---
+    if not str_app.session_state.autenticado:
+        usuario_temp = str_app.text_input("Escribe tu usuario BSC:", value=str_app.session_state.usuario_bsc).strip()
 
-    usuario_bsc = str_app.session_state.usuario_bsc
+        if str_app.button("Ingresar"):
+            if not usuario_temp:
+                str_app.info("Recuerda que el usuario BSC debe contener al menos 5 caracteres alfanuméricos.")
+            elif len(usuario_temp) < 5 or not usuario_temp.isalnum():
+                str_app.warning("⚠️ Usuario no reconocido. Por favor, verifica tus datos. Recuerda que el usuario BSC debe contener al menos 5 caracteres alfanuméricos.")
+            else:
+                str_app.session_state.usuario_bsc = usuario_temp
+                str_app.session_state.autenticado = True
+                str_app.rerun()
 
-    # Validación de usuario BSC
-    if not usuario_bsc:
-        str_app.info("Recuerda que el usuario BSC debe contener al menos 5 caracteres alfanuméricos.")
-    elif len(usuario_bsc) < 5 or not usuario_bsc.isalnum():
-        str_app.warning("⚠️ Usuario no reconocido. Por favor, verifica tus datos. Recuerda que el usuario BSC debe contener al menos 5 caracteres alfanuméricos.")
+    # --- PANTALLA 2: CONTENIDO PRINCIPAL (UNA VEZ INGRESADO EL USUARIO) ---
     else:
+        col_user1, col_user2 = str_app.columns([7, 3])
+        with col_user1:
+            str_app.write(f"👤 **Usuario activo:** `{str_app.session_state.usuario_bsc}`")
+        with col_user2:
+            if str_app.button("⬅️ Volver a la página anterior (Cambiar usuario)", key="btn_logout", use_container_width=True):
+                str_app.session_state.autenticado = False
+                str_app.session_state.usuario_bsc = ""
+                str_app.rerun()
+
+        str_app.markdown("---")
+
         opciones_base = [
             "Consulta de modeler por área",
-            "SLA Work Orders",
+            "🧮 Calculadora SLA Word Orders",
             "COP",
             "Share Point Tec Ops",
             "MUG",
@@ -475,8 +493,8 @@ if str_app.session_state.pagina_actual == "principal":
                         else:
                             str_app.warning("Por favor escribe un comentario antes de enviar.")
 
-            # --- SLA WORK ORDERS ---
-            elif tipo_consulta_limpio == "SLA Work Orders":
+            # --- CALCULADORA SLA WORK ORDERS ---
+            elif tipo_consulta_limpio == "🧮 Calculadora SLA Word Orders":
                 docs_input = str_app.text_input("¿Cuántos documentos vas a someter en el cambio?", "")
                 if docs_input:
                     if not docs_input.isdigit():
@@ -510,11 +528,10 @@ if str_app.session_state.pagina_actual == "principal":
         str_app.markdown("<br>", unsafe_allow_html=True)
         str_app.markdown("### ⭐ Califica tu experiencia con la aplicación")
         
-        # Componente interactivo de estrellas integrado en Streamlit
         feedback_estrella = str_app.feedback("stars", key="rating_stars")
 
         if feedback_estrella is not None:
-            puntos = feedback_estrella + 1  # st.feedback devuelve índices de 0 a 4
+            puntos = feedback_estrella + 1
             if str_app.button("Enviar Calificación", key="btn_enviar_calif"):
                 if puntos <= 3:
                     str_app.info("💡 ¡Muchas gracias por tu comentario! Ten por seguro que seguiremos mejorando, ya que la aplicación está en constante cambio para brindarte una mejor experiencia.")
@@ -532,7 +549,6 @@ elif str_app.session_state.pagina_actual == "chatbot":
         str_app.title("🤖 Asistente Virtual Tec Ops")
         str_app.caption("Inteligencia Artificial especializada para soporte de Tec Ops")
     with col_nav2:
-        # Botones de navegación arriba a la derecha en formato vertical
         if str_app.button("🗑️ Limpiar Chat", key="btn_limpiar", use_container_width=True):
             str_app.session_state.chat_messages = []
             str_app.rerun()
