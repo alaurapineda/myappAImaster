@@ -494,7 +494,7 @@ if str_app.session_state.pagina_actual == "principal":
                             str_app.warning("Por favor escribe un comentario antes de enviar.")
 
             # --- CALCULADORA SLA WORK ORDERS ---
-            elif tipo_consulta_limpio == "🧮 Calculadora SLA Word Orders":
+            elif tipo_consulta_limpio == "Calculadora SLA Word Orders":
                 docs_input = str_app.text_input("¿Cuántos documentos vas a someter en el cambio?", "")
                 if docs_input:
                     if not docs_input.isdigit():
