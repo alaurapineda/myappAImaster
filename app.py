@@ -10,8 +10,12 @@ str_app.set_page_config(
     layout="wide"
 )
 
+# Inicialización de variables en Session State
 if "pagina_actual" not in str_app.session_state:
     str_app.session_state.pagina_actual = "principal"
+
+if "usuario_bsc" not in str_app.session_state:
+    str_app.session_state.usuario_bsc = ""
 
 # --- CONFIGURACIÓN VISUAL GENERAL Y ESTILOS "TECH MED" ---
 str_app.markdown("""
@@ -223,7 +227,11 @@ if str_app.session_state.pagina_actual == "principal":
 
     str_app.subheader(saludo)
 
-    usuario_bsc = str_app.text_input("Escribe tu usuario BSC:", "").strip()
+    # El campo toma el valor guardado en session_state y se actualiza en tiempo real
+    usuario_ingresado = str_app.text_input("Escribe tu usuario BSC:", value=str_app.session_state.usuario_bsc, key="input_usuario_bsc").strip()
+    str_app.session_state.usuario_bsc = usuario_ingresado
+
+    usuario_bsc = str_app.session_state.usuario_bsc
 
     # Validación de usuario BSC
     if not usuario_bsc:
@@ -541,7 +549,7 @@ elif str_app.session_state.pagina_actual == "chatbot":
     if str_app.button("📞 Ver teléfonos On-Call", key="pill1"):
         prompt_sugerido = "¿Cuáles son los números de teléfono del servicio On-call?"
     if str_app.button("📅 Horarios del COP", key="pill2"):
-        prompt_sugerido = "¿Cuáles sąn los horarios de las sesiones del COP por site?" # kept safe
+        prompt_sugerido = "¿Cuáles son los horarios de las sesiones del COP por site?"
     if str_app.button("👤 Ver Site Leads", key="pill3"):
         prompt_sugerido = "¿Quiénes son los Site Leads de Tec Ops?"
 
@@ -606,4 +614,4 @@ elif str_app.session_state.pagina_actual == "chatbot":
                     if "429" in str(e) or "RESOURCE_EXHAUSTED" in str(e):
                         str_app.warning("⚠️ En este momento el asistente ha alcanzado el límite diario de consultas de la API. Por favor, intenta de nuevo más tarde.")
                     else:
-                        str_app.error(f"Error al conectar con el servicio de IA: {e}")
+                        str_app.error(f"Ocurrió un error al procesar la solicitud: {e}")
