@@ -259,7 +259,7 @@ if str_app.session_state.pagina_actual == "principal":
 
         opciones_base = [
             "Consulta de modeler por área",
-            "🧮 Calculadora SLA Word Orders",
+            "Calculadora SLA Word Orders",
             "COP",
             "Share Point Tec Ops",
             "MUG",
